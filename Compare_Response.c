@@ -1,4 +1,7 @@
 #include "common.h"
+/*******************************************************************
+	This function will compare the response from GSM Module
+*******************************************************************/
 extern void compare(void)
 {
 	OK_FLAG = FALSE;
