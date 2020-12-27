@@ -1,31 +1,38 @@
-/************************************************************************
-*     Below are the inclusion of required header files.                 *
-************************************************************************/
 #include "common.h"
-/************************************************************************
-*     Below is the initialization of global parameters.                 *                                               *
-************************************************************************/
-UINT8* commands[]={"AT+CMGF=1\r","AT+CPMS=\"SM\"\r",
-"AT+CMGR=1\r","AT+CMGS=9915990657"};  //Array which store all the necessary commands
-UINT8 characters[]={12,40};    //Array which have length of message which contains extra information
-UINT8 ENTER = 0x0D;            //To send any command
-UINT8 MESSAGE_SEND = 0x1A;     //To send message
-UINT8 PARK_MODE = 0;           //To detect whether vehicle is in Parking Mode
-UINT8 response[50];            //To store necessary response received from GSM
-UINT8 response_temp[50];       //To store full response received from GSM
-UINT8 OK_FLAG=FALSE;           //Variable used to compare response from GSM
-unsigned char x=0;
-UINT8 i=0;
+const INT8 * GSM_INIT[]={"AT+CMGF=1\r","AT+CPMS=\"SM\"\r","AT+CMGD=1,4\r"};
+const INT8 * GSM_READ_MSG[]={"AT+CMGR=1\r"};
+const INT8 * GPS_LOCATION[]={"AT+CGNSINF\r"};
+const INT8 * GSM_DELETE_MSG[]={"AT+CMGD=1,4\r"};
+const INT8 * GPS_INIT[1] = {"AT+CGPSPWR=1\r"};
+const INT8 * USER_NUMBER[1]={"+919915990657"};
+const INT8 * SEND_MESSAGE[1] = {"AT+CMGS=\""};
+const INT8 * MAP_LINK[1] = {"maps.google.com/maps/place/"};
+char extracted_message[50];
+char extracted_location[50];
+char joined_string[100];
+UINT8 ENTER = 0x0D;
+UINT8 DATA_SEND = 0x1A;
+UINT32 PARK_MODE = 0;
+INT8 response_temp[200];
+UINT32 REC= OFF;
+UINT32 receiving = 0;
+UINT32 buffer_counter=0;
+UINT32 i=0;
 
-/************************************************************************
-*     Function Name: Main                                               *
-*     Description: This function starts project functionality and       *
-*                  call initialization function.                        *
-*     Function Return type: Void                                        *
-*     Parameters Name and type: N/A(Void)                               *
-************************************************************************/
-void main()
+
+
+
+int main(void)
 {
-	init();        //Call to initialization function.
-	while(1);      //To stop controller from again and again executing code
+		IO0DIR=0X0000FFFC;
+		timer_init();
+		pll_init();
+		uart_init();
+#ifdef DEBUG_START
+		uart_init_debug();
+#endif
+		interrupt_init();
+		gsm_init();
+		gps_init();
+		wait_for_message();
 }
