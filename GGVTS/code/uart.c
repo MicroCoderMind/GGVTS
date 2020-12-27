@@ -1,4 +1,5 @@
 #include "common.h"
+#define DEBUG_START
 __irq void uart_isr(void)
 {
 	UINT32 iir_value;
@@ -21,6 +22,8 @@ __irq void uart_isr(void)
 
 void uart_init(void)
 {
+	if (!ERROR)
+	{
 		PINSEL0 = PINSEL0 | 0x00050005;	/* Enable UART0 Rx0 and Tx0 pins of UART0 */
 		U0LCR = 0x83;	                  /* DLAB = 1, 1 stop bit, 8-bit character length */
 		U0DLM = 0x00;	                  /* For baud rate of 9600 with Pclk = 12MHz */
@@ -28,10 +31,13 @@ void uart_init(void)
 		U0LCR = 0x03;                   /* DLAB = 0 */
 		U0TER = 0x80;   	
 		U0IER = 0x00000003;	            /* Enable THRE and RBR interrupt */
+	}
 }
 
 void interrupt_init(void)
 {
+	if (!ERROR)
+	{
 		VICVectAddr0 = (unsigned) uart_isr;	/* UART0 ISR Address */
 #ifdef DEBUG_START
 		VICVectAddr1 = (unsigned) uart_isr_debug;	/* UART0 ISR Address need to remove this line after finishing*/
@@ -40,4 +46,5 @@ void interrupt_init(void)
 		VICVectCntl1 = 0x00000027;	/* Enable UART1 IRQ slot need to remove this line after finishing*/
 		VICIntEnable = 0x000000C0;	/* Enable UART0 interrupt c needs to be replaced with 4 after finishing*/
 		VICIntSelect = 0x00000000;	/* UART0 configured as IRQ */
+	}
 }

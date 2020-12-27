@@ -1,10 +1,28 @@
 #include "common.h"
-void gsm_init(void)
+//#define DEBUG_START
+void gsm_init()
 {
-	unsigned int k;
-	for (k=0;k<3;k++)
+	if (!ERROR)
 	{
-	    gsm_transmit(GSM_INIT[k]);
+	    unsigned int k;
+	    for (k=0;k<3;k++)
+	    {
+	        gsm_transmit(GSM_INIT[k]);
+	    	  if (!check_response())
+	    		{
+	    			//Do Nothing
+	    		}
+	    		else
+	    		{
+	    			ERROR++;
+	    			response_to_user("Initialization Unsuccessfull!! Trying Again...");
+	    			return;
+	    		}
+	    }
+  }
+	if (ERROR == 0)
+	{
+		response_to_user("Initialising System!!! Please Wait...");
 	}
 }
 
@@ -15,9 +33,12 @@ void gsm_transmit(const INT8 * str1)
 	{
 	    IO0SET = 0x00000008;
 	    U0THR = str1[k];
-	    delay(9);
+	    delay(15);
 	}
 	delay(1);
+	#ifdef DEBUG_START
+  	debug(response_temp);
+  #endif
 	IO0CLR = 0x00000008;
 }
 
@@ -60,9 +81,9 @@ void read_message(void)
 		{
 		    IO0SET = 0x00000008;
 		    U0THR = GSM_READ_MSG[0][k];
-		    delay(9);
+		    delay(15);
 		}
-		delay(1);
+		delay(2);
 	  IO0CLR = 0x00000008;
 #ifdef DEBUG_START
 		debug(response_temp);
@@ -82,7 +103,7 @@ void delete_message(void)
 		    U0THR = GSM_DELETE_MSG[0][k];
 		    delay(9);
 		}
-		delay(1);
+		delay(2);
 	  IO0CLR = 0x00000008;
 		buffer_counter = 0;
 		REC = OFF;

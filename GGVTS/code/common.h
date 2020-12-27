@@ -1,6 +1,5 @@
 #ifndef __COMMON__
 #define __COMMON__
-
 		#include<LPC214X.h>
 		#include<string.h>
 		#include<stdlib.h>
@@ -11,8 +10,7 @@
 		#include"gsm.h"
 		#include"gps.h"
 		#include"functionality.h"
-	#ifdef DEBUG_START
-	#include"debug.h"
-	#endif
+		#include"response.h"
+	  #include"debug.h"
 
 #endif

@@ -1,4 +1,25 @@
 #include "common.h"
+void gps_init(void)
+{
+	if (!ERROR)
+	{
+	  gsm_transmit(GPS_INIT[0]);
+	}
+	if (!check_response())
+	{
+	  //Do Nothing
+	}
+	else
+	{
+		ERROR++;
+		response_to_user("Initialization Unsuccessfull!! Trying Again...");
+	}
+	if (ERROR == 0)
+	{
+		check_gps_status();
+	}
+}
+
 void get_gps_location(void)
 {
 		unsigned int k;
@@ -13,6 +34,55 @@ void get_gps_location(void)
 	#ifdef DEBUG_START
 		debug(response_temp);
 	#endif
+}
+
+void check_gps_status(void)
+{
+	UINT32 i,j=0,store = 0;
+	if(!ERROR)
+	{
+	  response_to_user("Collecting Location Info!!! Please Wait...");
+    while(1)
+		{			
+		  gsm_transmit(GPS_STATUS[0]);
+	    for (i=0;i<strlen_mod(response_temp);i++)
+		  {
+		  	if (response_temp[i] == ':')
+				{
+					store++;
+				}
+				else if (store>0)
+				{
+					if (response_temp[i+1] != 'x')
+					{
+						extracted_location[j++] = response_temp[i+1];
+					}
+					else
+					{
+						extracted_location[j++] = response_temp[i+1];
+						break;
+					}
+				}
+				else
+				{
+					continue;
+				}
+		  }
+			extracted_location[j] = '\0';
+			if (strcmp(extracted_location,"Location 2D Fix\0")==0 || strcmp(extracted_location,"Location 3D Fix\0"))
+			{
+				response_to_user("System is Healthy and Working...");
+				break;
+			}
+			{
+				delay(0.2);
+			}
+	  }
+			#ifdef DEBUG_START
+			debug(extracted_location);
+			#endif
+			memset(response_temp,0,50);
+  }
 }
 
 void extract_location(void)
@@ -65,21 +135,8 @@ void send_location(void)
 		U0THR = DATA_SEND;
 		delay(9);
 		memset(joined_string,0,100);
-		memset(extracted_location,0,100);
-		memset(extracted_message,0,100);
-		memset(response_temp,0,100);
+		memset(extracted_location,0,50);
+		memset(extracted_message,0,50);
+		memset(response_temp,0,200);
 		buffer_counter = 0;
-}
-
-void gps_init(void)
-{
-		unsigned int k;
-		for (k=0;k<strlen_mod(GPS_INIT[0]);k++)
-		{
-				IO0SET = 0x00000008;
-				U0THR = GPS_INIT[0][k];
-				delay(9);
-		}
-		delay(1);
-		IO0CLR = 0x00000008;
 }
