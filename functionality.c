@@ -1,38 +1,72 @@
-/************************************************************************
-*     Below are the inclusion of required header files.                 *                                        *
-************************************************************************/
 #include "common.h"
-/************************************************************************                                           *
-*     Description: This function will compare the response              *
-*                  from GSM Module.                                     *
-************************************************************************/
-extern void compare(void)
+void join_strings(const INT8 * str1,const INT8 *str2)
 {
-	#ifdef __DEBUG__       //This block is for debug purpose
-    P1=response[1];
-  #else
-	  OK_FLAG = FALSE;        //Initialization of variable used to check response from GSM
-	  response[0]=response_temp[characters[i]];      //For Debug Purpose
-	  response[1]=response_temp[characters[i]+1];    //For Debug Purpose
-	  OK_FLAG = TRUE;                                //To move to response for next command
+		UINT32 i=strlen_mod(joined_string),j;
+		for (j=0;j<strlen_mod(str1);j++)
+		{
+			joined_string[i++] = str1[j];
+		}
+		i=strlen_mod(joined_string);
+		for (j=0;j<strlen_mod(str2);j++)
+		{
+			joined_string[i++] = str2[j];
+		}
+		joined_string[i] = '\0';
+}
 
-	  if (response[0]=='O' && response[1] == 'K')
-	  {
-		  OK_FLAG = TRUE;       //Setting flag because response was as expected
-	  }
-	  else
-	  {
-		  OK_FLAG = FALSE;      //Not setting flag because ressponse was not as unexpected
-	  }
-		if (OK_FLAG==TRUE)      //Lighting green LED if response was OK
+
+UINT32 strlen_mod(const char * ptr)
+{
+	int i;
+	UINT32 j=0;
+	for (i=0;ptr[i]!='\0';i++)
+	{
+		j++;
+	}
+	return j;
+}
+
+void functionality(void)
+{
+		if (strcmp(extracted_message,"Bulb ON\0") == 0)
 		{
-			green = TRUE;
-		  red = FALSE;
+			IO0SET = IO0SET | 0x00000010;
+			memset(extracted_message,0,20);
 		}
-		else                    //Lighting red LED if response is not OK
+		else if(strcmp(extracted_message,"Bulb OFF\0") == 0)
 		{
-			red = TRUE;
-			green = FALSE;
+			IO0CLR = 0x00000010;
+			memset(extracted_message,0,20);
 		}
-  #endif
+		else if(strcmp(extracted_message,"LCTN\0") == 0)
+		{
+			get_gps_location();
+			extract_location();
+			send_location();
+			delete_message();
+		}
+}
+
+void wait_for_message(void)
+{
+		memset(response_temp,0,200);
+		buffer_counter = 0;
+		REC = OFF;
+		while(1)
+		{
+			if(REC == OFF && strlen_mod(response_temp) != 0 )
+			{
+					delay(0.5);
+	#ifdef DEBUG_START
+			debug(response_temp);
+	#endif
+					read_message();
+					delete_message();
+					functionality();
+			}
+			else
+			{
+					continue;
+			}
+		}
 }

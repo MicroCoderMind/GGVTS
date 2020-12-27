@@ -3,5 +3,6 @@
 
 typedef unsigned char UINT8;
 typedef char INT8;
+typedef unsigned int UINT32;
 
 #endif

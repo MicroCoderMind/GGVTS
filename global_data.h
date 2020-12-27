@@ -1,18 +1,23 @@
   #ifndef __GLOBAL__
 	#define __GLOBAL__ 1
-	
-	#define FALSE 0
-  #define TRUE 1
+//  #define DEBUG_START
+	#define OFF 0
+  #define ON 1
   #define LCD P2
-  extern UINT8* commands[5];
+  extern const INT8 * GSM_INIT[4];
+	extern const INT8 * GSM_READ_MSG[1];
+  extern const INT8 * GSM_DELETE_MSG[1];
+	extern const INT8 * user_number[1];
+	extern const INT8 * SEND_MESSAGE[1];
+	extern const INT8 * USER_NUMBER[1];
+	extern const INT8 * MAP_LINK[1];
   extern UINT8 ENTER;
-  extern UINT8 MESSAGE_SEND;
-  extern UINT8 PARK_MODE;
-	extern UINT8 characters[2];
-  extern UINT8 response_temp[50];
-	extern UINT8 response[50];
-  extern UINT8 OK_FLAG;
-	extern UINT8 i;
-	extern unsigned char x;
-	
+  extern UINT8 DATA_SEND;
+  extern UINT32 PARK_MODE;
+  extern INT8 response_temp[200];
+	extern UINT32 i;
+	extern UINT32 buffer_counter;
+	extern UINT32 REC;
+	extern UINT32 receiving;
+  extern char extracted_message[50];
 	#endif
