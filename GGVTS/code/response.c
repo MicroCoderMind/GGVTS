@@ -28,25 +28,6 @@ UINT32 check_response(void)
 	}
 }
 
-void collecting_location_info(void)
-{
-		join_strings(SEND_MESSAGE[0],USER_NUMBER[0]);
-		join_strings("","\"\r");
-	#ifdef DEBUG_START
-		debug(joined_string);
-	#endif
-		gsm_transmit(joined_string);
-		memset(joined_string,0,100);
-	  gsm_transmit("Collecting Location Info!!! Please Wait...");
-		U0THR = DATA_SEND;
-		delay(0.2);
-		memset(extracted_location,0,50);
-		memset(extracted_message,0,50);
-		memset(response_temp,0,200);
-		buffer_counter = 0;
-		delay(2);
-}
-
 void response_to_user(const INT8 * str1)
 {
 		join_strings(SEND_MESSAGE[0],USER_NUMBER[0]);
