@@ -1,4 +1,5 @@
 #include "common.h"
+#define DEBUG_START
 #ifdef DEBUG_START
 __irq void uart_isr_debug(void)
 {

@@ -1,4 +1,4 @@
-#include "common.h"
+#include"common.h"
 void join_strings(const INT8 * str1,const INT8 *str2)
 {
 		UINT32 i=strlen_mod(joined_string),j;
@@ -49,6 +49,8 @@ void functionality(void)
 
 void wait_for_message(void)
 {
+	if (!ERROR)
+	{
 		memset(response_temp,0,200);
 		buffer_counter = 0;
 		REC = OFF;
@@ -61,12 +63,13 @@ void wait_for_message(void)
 			debug(response_temp);
 	#endif
 					read_message();
-					delete_message();
 					functionality();
+				  delete_message();
 			}
 			else
 			{
 					continue;
 			}
 		}
+	}
 }
