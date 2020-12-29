@@ -4,8 +4,8 @@
 *  Description: This file includes all the required header files.          *
 *                                                                          *
 *--------------------------------------------------------------------------*
-*  Comments:								   *
-*									   *
+*  Comments:	                                                               *
+*                                                                          *
 ***************************************************************************/
 #ifndef __COMMON__
 #define __COMMON__
