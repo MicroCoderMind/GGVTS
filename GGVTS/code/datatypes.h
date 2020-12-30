@@ -4,7 +4,7 @@
 *  Description: This file contains all typedefed data types.               *
 *                                                                          *
 *--------------------------------------------------------------------------*
-*  Comments:	                                                               *
+*  Comments:	                                                           *
 *                                                                          *
 ***************************************************************************/
 #ifndef __DATATYPES__
@@ -15,4 +15,4 @@ typedef char INT8;             /*Typedefed +ve/-ve bits (-128 - 127)*/
 typedef unsigned int UINT32;   /*Tepedefed +ve 32 bits (0 - 4294967295)*/ 
 
 #endif
-/*******************************End of File*******************************/
+/********************************End of File*******************************/

@@ -6,7 +6,7 @@
 *               for eg. join strings, counting string length etc.          *
 *                                                                          *
 *--------------------------------------------------------------------------*
-*  Comments:	                                                               *
+*  Comments:	                                                           *
 *                                                                          *
 /**************************************************************************/
 
@@ -17,17 +17,6 @@
 
 /***************************************************************************
 *  Funtion Name: join_strings                                              *
-*--------------------------------------------------------------------------*
-*  Description: This function takes two strings as input and store them in *
-                global array after joining.                                *
-*--------------------------------------------------------------------------*
-*  Input Parameters: two strings(str1 and str2)                            *
-*  Output Parameters: None                                                 *
-*--------------------------------------------------------------------------*
-*  Comments:	 Format will be joined_string = str1 followed by str2          *
-*            for example:                                                  *
-*            if str1 = "Hello" and str2 = "Rohan" then                     *
-*            joined_string will be "Hello Rohan"                           *
 /**************************************************************************/
 void join_strings(const INT8 * str1,const INT8 *str2)
 {
@@ -46,19 +35,6 @@ void join_strings(const INT8 * str1,const INT8 *str2)
 
 /***************************************************************************
 *  Funtion Name: strlen_mod                                                *
-*--------------------------------------------------------------------------*
-*  Description: This function counts the number of charcters in input      *
-*               string excluding NULL character.                           *
-*--------------------------------------------------------------------------*
-*  Input Parameters: string for which characters to be counted             *
-*  Output Parameters: (Unsigned int)Numbers of charaqcters in string       * 
-                      excluding NULL character.                            *
-*--------------------------------------------------------------------------*
-*  Comments:	 To use this function, input string must have NULL character   *
-*            as last character, this fun cion has same functionality as    *
-*            strlen library function                                       *
-*            for example:                                                  *
-*            if str1 = "Hello" then output from thi function will be 5     *
 /**************************************************************************/
 UINT32 strlen_mod(const char * ptr)
 {
@@ -73,21 +49,6 @@ UINT32 strlen_mod(const char * ptr)
 
 /***************************************************************************
 *  Funtion Name: functionality                                             *
-*--------------------------------------------------------------------------*
-*  Description: This function definition contains the main functionality   *
-*               related to user input. Functionality inside end user's     *
-*               message will be performed here.                            *
-*--------------------------------------------------------------------------*
-*  Input Parameters: None                                                  *
-*  Output Parameters: None                                                 *
-*--------------------------------------------------------------------------*
-*  Comments:	 As of now this function contains only 3 functionalities which *
-*            are below:                                                    *
-*            1. Engine ON(To be done in future, currently LED is used)     *
-*            2. Engine OFF(To be done in future, currently LED is used)    *
-*            3. LCTN(After receiving this input, current location will be  *
-*               extracted and sent to user via sms after converting        *
-*               it to a web link)                                          *
 ***************************************************************************/
 void functionality(void)
 {
@@ -112,14 +73,6 @@ void functionality(void)
 
 /***************************************************************************
 *  Funtion Name: wait_for_message                                          *
-*--------------------------------------------------------------------------*
-*  Description: In this function processor will wait until user sends      *
-*               some input.                                                *
-*--------------------------------------------------------------------------*
-*  Input Parameters: None                                                  *
-*  Output Parameters: None                                                 *
-*--------------------------------------------------------------------------*
-*  Comments:                                                               *
 ***************************************************************************/
 void wait_for_message(void)
 {
@@ -132,19 +85,19 @@ void wait_for_message(void)
 		{
 			if(REC == OFF && strlen_mod(response_temp) != 0 )
 			{
-					delay(0.5);
+			    delay(0.5);
 	#ifdef DEBUG_START
-			debug(response_temp);
+			    debug(response_temp);
 	#endif
-					read_message();
-					functionality();
-				  delete_message();
+			    read_message();
+			    functionality();
+			    delete_message();
 			}
 			else
 			{
-					continue;
+				continue;
 			}
 		}
 	}
 }
-/********************************End of File***************************/
+/********************************End of File*******************************/
