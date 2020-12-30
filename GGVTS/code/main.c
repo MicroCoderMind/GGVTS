@@ -33,28 +33,28 @@ int main(void)
 		response_to_user("Initialization Unsuccessfull and System Struct!! Hard Reset Required...");
 		while(1);
 	}
-	   IO0DIR=0X0000FFFC;
-	   timer_init();
-	   pll_init();
-	   uart_init();
-  #ifdef DEBUG_START
-  		uart_init_debug();
-  #endif
-  		interrupt_init();
-  	  delay(9);
-  		gsm_init();
-	  #ifdef DEBUG_START
-  		debug(response_temp);
-  #endif
-  		gps_init();
-	  #ifdef DEBUG_START
-  		debug(response_temp);
-  #endif
-  		wait_for_message();
-	  if(ERROR > 0)
-		{
-		  ATTEMPTS++;
-			ERROR=0;
-			goto START;
-		}
+	IO0DIR=0X0000FFFC;
+	timer_init();
+	pll_init();
+	uart_init();
+#ifdef DEBUG_START
+  	uart_init_debug();
+#endif
+  	interrupt_init();
+  	delay(9);
+  	gsm_init();
+#ifdef DEBUG_START
+	debug(response_temp);
+#endif
+ 	gps_init();
+#ifdef DEBUG_START
+    debug(response_temp);
+#endif
+	wait_for_message();
+    if(ERROR > 0)
+	{
+	    ATTEMPTS++;
+		ERROR=0;
+		goto START;
+	}
 }

@@ -5,29 +5,19 @@
 *               debugging purpose.                                         *
 *                                                                          *
 *--------------------------------------------------------------------------*
-*  Comments:	                                                               *
+*  Comments:	                                                           *
 *                                                                          *
 /**************************************************************************/
 
-/**************************************************************************/
+/***************************************************************************
 *  Below are the header files required to build this file                  *
-/**************************************************************************/
+***************************************************************************/
 #include "common.h"
 #define DEBUG_START /*Used for conditional compilation of code related to debug*/
 #ifdef DEBUG_START
 
 /***************************************************************************
 *  Funtion Name: uart_isr_debug                                            *
-*--------------------------------------------------------------------------*
-*  Description: This function contains ISR for the interrupt happened for  *
-*               UART1. UART1 is only used to tarnsfer data to terminal     *
-*               hence this function only contains clearing of IIR flag.    *
-*--------------------------------------------------------------------------*
-*  Input Parameters: None                                                  *
-*  Output Parameters: None                                                 *
-*--------------------------------------------------------------------------*
-*  Comments:	                                                               *
-*                                                                          *
 /**************************************************************************/
 __irq void uart_isr_debug(void)
 {
@@ -39,15 +29,6 @@ __irq void uart_isr_debug(void)
 
 /***************************************************************************
 *  Funtion Name: uart_init_debug                                           *
-*--------------------------------------------------------------------------*
-*  Description: This function contains initialization of all the registers *
-*               required for UART1 functionality.                          *
-*--------------------------------------------------------------------------*
-*  Input Parameters: None                                                  *
-*  Output Parameters: None                                                 *
-*--------------------------------------------------------------------------*
-*  Comments:	                                                               *
-*                                                                          *
 /**************************************************************************/
 void uart_init_debug(void)
 {
@@ -61,16 +42,6 @@ void uart_init_debug(void)
 
 /***************************************************************************
 *  Funtion Name: debug                                                     *
-*--------------------------------------------------------------------------*
-*  Description: In this function data is sent to Transmit hold             *
-*               register(buffer)                                           *       
-*--------------------------------------------------------------------------*
-*  Input Parameters: String of data which needs to be transmitted to       *
-*                    terminal through UART1                                *
-*  Output Parameters: None                                                 *
-*--------------------------------------------------------------------------*
-*  Comments:	                                                               *
-*                                                                          *
 /**************************************************************************/
 void debug(const char * str1)
 {
@@ -87,4 +58,4 @@ void debug(const char * str1)
 	  IO0CLR = 0x00000008;
 }
 #endif
-/*********************************End of File******************************/
+/********************************End of File*******************************/
