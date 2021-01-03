@@ -1,11 +1,11 @@
 /***************************************************************************
-*  File Name: functionality.h                                                     *
+*  File Name: functionality.h                                              *
 *--------------------------------------------------------------------------*
 *  Description: This file contains all the prototypes of functions used    *
 *               for functionality performed on strings.                    *
 *                                                                          *
 *--------------------------------------------------------------------------*
-*  Comments:	                                                           *
+*  Comments:	                                                             *
 *                                                                          *
 ***************************************************************************/
 #ifndef __FUNCTIONALITY__
@@ -26,7 +26,7 @@
 *            strlen library function                                       *
 *            for example:                                                  *
 *            if str1 = "Hello" then output from thi function will be 5     *
-/**************************************************************************/
+***************************************************************************/
 	extern UINT32 strlen_mod(const char * ptr);
 	
 /***************************************************************************
@@ -75,7 +75,7 @@
 *            for example:                                                  *
 *            if str1 = "Hello" and str2 = "Rohan" then                     *
 *            joined_string will be "Hello Rohan"                           *
-/**************************************************************************/	
+***************************************************************************/	
 	extern void join_strings(const INT8 *,const INT8 *);
 		
 #endif
