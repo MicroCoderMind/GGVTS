@@ -18,7 +18,9 @@
     extern const INT8 * GSM_DELETE_MSG[1];
 	extern const INT8 * user_number[1];
 	extern const INT8 * SEND_MESSAGE[1];
-	extern const INT8 * USER_NUMBER[1];
+	extern const INT8 * OWNER_NUMBER[1];
+	extern INT8 USER_NAME[20];
+	extern INT8 USER_NUMBER[14];
 	extern const INT8 * MAP_LINK[1];
     extern UINT8 ENTER;
 	extern UINT32 ERROR;
