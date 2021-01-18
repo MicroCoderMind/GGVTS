@@ -28,10 +28,23 @@
   extern UINT32 check_response(void);
   
 /***************************************************************************
+*  Funtion Name: response_to_owner                                         *
+*--------------------------------------------------------------------------*
+*  Description: This function will interact with owner(Rohan).             *
+*--------------------------------------------------------------------------*
+*  Input Parameters: String(Message which needs to be sent to user)        *
+*  Output Parameters: None                                                 *
+*--------------------------------------------------------------------------*
+*  Comments:                                                               *
+*                                                                          *
+***************************************************************************/
+  extern void response_to_owner(const INT8 *);
+	
+	  
+/***************************************************************************
 *  Funtion Name: response_to_user                                          *
 *--------------------------------------------------------------------------*
-*  Description: This function will initialize GSM with appropriate         *
-*               commands after checking any errors.                        *
+*  Description: This function will interact with user provided by owner    *
 *--------------------------------------------------------------------------*
 *  Input Parameters: String(Message which needs to be sent to user)        *
 *  Output Parameters: None                                                 *
@@ -40,5 +53,21 @@
 *                                                                          *
 ***************************************************************************/
   extern void response_to_user(const INT8 *);
+	
+		
+/***************************************************************************
+*  Funtion Name: get_user_info                                             *
+*--------------------------------------------------------------------------*
+*  Description: This function collects user name and contact number from   *
+*               owner(Rohan).                                              *
+*--------------------------------------------------------------------------*
+*  Input Parameters: two strings(str1 and str2)                            *
+*  Output Parameters: None                                                 *
+*--------------------------------------------------------------------------*
+*  Comments:                                                               *
+*                                                                          *
+***************************************************************************/
+	void get_user_info(void);
+		
 #endif
 /********************************End of File*******************************/

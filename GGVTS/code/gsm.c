@@ -34,14 +34,15 @@ void gsm_init()
 	    	else
 	    	{
 	    		ERROR++;
-	    		response_to_user("Initialization Unsuccessfull!! Trying Again...");
+	    		response_to_owner("Initialization Unsuccessfull!! Trying Again...");
 	    		return;
 	    	}
 	    }
     }
 	if (ERROR == 0)
 	{
-		response_to_user("Initialising System!!! Please Wait...");
+		response_to_owner("Initialising System!!! Please Wait...");
+		delay(0.5);
 	}
 }
 

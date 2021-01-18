@@ -42,7 +42,7 @@
   extern void timer_init(void);
   
 /***************************************************************************
-*  Funtion Name: response_to_user                                          *
+*  Funtion Name: response_to_owner                                          *
 *--------------------------------------------------------------------------*
 *  Description: This function will initialize all the global registers
 *               related to PLL to use processor at 12 MHz frequency.       *

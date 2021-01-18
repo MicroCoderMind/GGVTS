@@ -6,9 +6,11 @@ const INT8 * GPS_LOCATION[]={"AT+CGNSINF\r"};
 const INT8 * GPS_STATUS[]={"AT+CGPSSTATUS?\r"};
 const INT8 * GSM_DELETE_MSG[]={"AT+CMGD=1,4\r"};
 const INT8 * GPS_INIT[1] = {"AT+CGPSPWR=1\r"};
-const INT8 * USER_NUMBER[1]={"+919915990657"};
+const INT8 * OWNER_NUMBER[1]={"+919915990657"};
 const INT8 * SEND_MESSAGE[1] = {"AT+CMGS=\""};
 const INT8 * MAP_LINK[1] = {"maps.google.com/maps/place/"};
+INT8 USER_NAME[20];
+INT8 USER_NUMBER[14];
 char extracted_message[50];
 char extracted_location[50];
 char joined_string[100];
@@ -30,7 +32,8 @@ int main(void)
 	if (ATTEMPTS == 2)
 	{
 		SYSTEM_STRUCT++;
-		response_to_user("Initialization Unsuccessfull and System Struct!! Hard Reset Required...");
+		response_to_owner("Initialization Unsuccessfull and System Struct!! Hard Reset Required...");
+		delay(0.5);
 		while(1);
 	}
 	IO0DIR=0X0000FFFC;
@@ -50,7 +53,10 @@ int main(void)
 #ifdef DEBUG_START
     debug(response_temp);
 #endif
-	wait_for_message();
+	get_user_info();
+	wait_for_message(0);
+
+	wait_for_message(1);
     if(ERROR > 0)
 	{
 	    ATTEMPTS++;

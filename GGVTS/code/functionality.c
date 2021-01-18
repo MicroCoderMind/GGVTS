@@ -14,7 +14,7 @@
 *  Below are the header files required to build project                    *
 ***************************************************************************/
 #include"common.h"
-
+#define DEBUG_START
 /***************************************************************************
 *  Funtion Name: join_strings                                              *
 ***************************************************************************/
@@ -74,9 +74,9 @@ void functionality(void)
 /***************************************************************************
 *  Funtion Name: wait_for_message                                          *
 ***************************************************************************/
-void wait_for_message(void)
+void wait_for_message(UINT32 user_name_stored)
 {
-	if (!ERROR)
+	if (!ERROR && user_name_stored)
 	{
 		memset(response_temp,0,200);
 		buffer_counter = 0;
@@ -99,5 +99,80 @@ void wait_for_message(void)
 			}
 		}
 	}
+	else if(!ERROR)
+	{
+		memset(response_temp,0,200);
+		buffer_counter = 0;
+		REC = OFF;
+		while(1)
+		{
+			if(REC == OFF && strlen_mod(response_temp) != 0 )
+			{
+			    delay(0.5);
+	#ifdef DEBUG_START
+			    debug(response_temp);
+	#endif
+			    read_message();
+			    extract_user_name();
+			    delete_message();
+				  break;
+			}
+			else
+			{
+				continue;
+			}
+		}
+	}
+	else
+  {
+		//Do Nothing
+	}
 }
+
+
+/***************************************************************************
+*  Funtion Name: extract_user_name                                           *
+***************************************************************************/
+void extract_user_name(void)
+{
+	UINT32 i,j=0,new_lines=0;
+	for (i=0;i<strlen_mod(response_temp);i++)
+	{
+		if (response_temp[i] == 0x0A)
+		{
+			new_lines++;
+		}
+		else if(new_lines == 2 && (response_temp[i] != 0x0D || response_temp[i] != 0x0A))
+		{
+			extracted_message[j++] = response_temp[i];
+		}
+		else
+		{
+			continue;
+		}
+	}
+	extracted_message[j-1] = '\0';
+	for (i=0;extracted_message[i] != ' ';i++)
+	{
+		USER_NAME[i]=extracted_message[i];
+	}
+	USER_NAME[i]='\0';
+	#ifdef DEBUG_START
+	debug(USER_NAME);
+  #endif
+	USER_NUMBER[j++] = '+';
+	USER_NUMBER[j++] = '9';
+	USER_NUMBER[j++] = '1';
+	for (i++;extracted_message[i]!='\0';j++,i++)
+	{
+		USER_NUMBER[j] = extracted_message[i];
+	}
+	USER_NUMBER[j] = '\0';
+#ifdef DEBUG_START
+	debug(USER_NUMBER);
+#endif
+	memset(response_temp,0,200);
+	buffer_counter = 0;
+}
+
 /********************************End of File*******************************/

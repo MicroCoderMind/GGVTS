@@ -14,7 +14,7 @@
 *  Below are the header files required to build project                    *
 ***************************************************************************/
 #include "common.h"
-
+#define DEBUG_START
 /***************************************************************************
 *  Funtion Name: gps_init                                                  *
 ***************************************************************************/
@@ -31,7 +31,8 @@ void gps_init(void)
 	else
 	{
 		ERROR++;
-		response_to_user("Initialization Unsuccessfull!! Trying Again...");
+		response_to_owner("Initialization Unsuccessfull!! Trying Again...");
+		delay(0.5);
 	}
 	if (ERROR == 0)
 	{
@@ -63,14 +64,17 @@ void get_gps_location(void)
 ***************************************************************************/
 void check_gps_status(void)
 {
-	UINT32 i,j=0,store = 0;
+	UINT32 i,j,store = 0;
 	if(!ERROR)
 	{
-	  response_to_user("Collecting Location Info!!! Please Wait...");
+	  response_to_owner("Collecting Location Info!!! Please Wait...");
+		delay(0.5);
+		memset(response_temp,0,200);
+		buffer_counter = 0;
     while(1)
 		{			
 		  gsm_transmit(GPS_STATUS[0]);
-	    for (i=0;i<strlen_mod(response_temp);i++)
+	    for (j=0,i=0;i<strlen_mod(response_temp);i++)
 		  {
 		  	if (response_temp[i] == ':')
 				{
@@ -94,19 +98,27 @@ void check_gps_status(void)
 				}
 		  }
 			extracted_location[j] = '\0';
-			if (strcmp(extracted_location,"Location 2D Fix\0")==0 || strcmp(extracted_location,"Location 3D Fix\0"))
+			#ifdef DEBUG_START
+		      debug(extracted_location);
+	    #endif
+			if (strcmp(extracted_location,"Location 3D Fix\0")==0)
 			{
-				response_to_user("System is Healthy and Working...");
+				response_to_owner("System is Healthy and Working...Location is 3D");
+				delay(0.5);
 				break;
 			}
+			else if(strcmp(extracted_location,"Location 2D Fix\0")==0)
 			{
-				delay(0.2);
+				response_to_owner("System is Healthy and Working...Location is 2D");
+				delay(0.5);
+				break;
 			}
+			memset(response_temp,0,200);
+			buffer_counter = 0;
+			memset(extracted_location,0,50);
+			j=0;
+			delay(0.2);
 	  }
-			#ifdef DEBUG_START
-			debug(extracted_location);
-			#endif
-			memset(response_temp,0,50);
   }
 }
 
@@ -152,7 +164,7 @@ void extract_location(void)
 ***************************************************************************/
 void send_location(void)
 {
-		join_strings(SEND_MESSAGE[0],USER_NUMBER[0]);
+		join_strings(SEND_MESSAGE[0],OWNER_NUMBER[0]);
 		join_strings("","\"\r");
 	#ifdef DEBUG_START
 		debug(joined_string);
