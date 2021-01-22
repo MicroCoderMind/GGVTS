@@ -33,7 +33,6 @@ int main(void)
 	{
 		SYSTEM_STRUCT++;
 		response_to_owner("Initialization Unsuccessfull and System Struct!! Hard Reset Required...");
-		delay(0.5);
 		while(1);
 	}
 	IO0DIR=0X0000FFFC;

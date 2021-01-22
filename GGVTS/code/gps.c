@@ -31,8 +31,7 @@ void gps_init(void)
 	else
 	{
 		ERROR++;
-		response_to_owner("Initialization Unsuccessfull!! Trying Again...");
-		delay(0.5);
+		//response_to_owner("Initialization Unsuccessfull!! Trying Again...");
 	}
 	if (ERROR == 0)
 	{
@@ -52,7 +51,6 @@ void get_gps_location(void)
 				U0THR = GPS_LOCATION[0][k];
 				delay(9);
 		}
-		delay(1);
 		IO0CLR = 0x00000008;
 	#ifdef DEBUG_START
 		debug(response_temp);
@@ -67,13 +65,14 @@ void check_gps_status(void)
 	UINT32 i,j,store = 0;
 	if(!ERROR)
 	{
-	  response_to_owner("Collecting Location Info!!! Please Wait...");
-		delay(0.5);
-		memset(response_temp,0,200);
-		buffer_counter = 0;
+	  //response_to_owner("Collecting Location Info!!! Please Wait...");
     while(1)
-		{			
+		{				
+			memset(response_temp,0,200);
+			buffer_counter = 0;
+			memset(extracted_location,0,50);
 		  gsm_transmit(GPS_STATUS[0]);
+			check_response();
 	    for (j=0,i=0;i<strlen_mod(response_temp);i++)
 		  {
 		  	if (response_temp[i] == ':')
@@ -89,6 +88,7 @@ void check_gps_status(void)
 					else
 					{
 						extracted_location[j++] = response_temp[i+1];
+						store=0;
 						break;
 					}
 				}
@@ -100,23 +100,18 @@ void check_gps_status(void)
 			extracted_location[j] = '\0';
 			#ifdef DEBUG_START
 		      debug(extracted_location);
+			debug("\n");
 	    #endif
 			if (strcmp(extracted_location,"Location 3D Fix\0")==0)
 			{
 				response_to_owner("System is Healthy and Working...Location is 3D");
-				delay(0.5);
 				break;
 			}
 			else if(strcmp(extracted_location,"Location 2D Fix\0")==0)
 			{
 				response_to_owner("System is Healthy and Working...Location is 2D");
-				delay(0.5);
 				break;
 			}
-			memset(response_temp,0,200);
-			buffer_counter = 0;
-			memset(extracted_location,0,50);
-			j=0;
 			delay(0.2);
 	  }
   }

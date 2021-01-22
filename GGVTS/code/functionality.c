@@ -69,6 +69,10 @@ void functionality(void)
 			send_location();
 			delete_message();
 		}
+		else
+		{
+			response_to_owner("Unrecognised Command, Try Again!!!");
+		}
 }
 
 /***************************************************************************
@@ -160,9 +164,12 @@ void extract_user_name(void)
 	#ifdef DEBUG_START
 	debug(USER_NAME);
   #endif
-	USER_NUMBER[j++] = '+';
-	USER_NUMBER[j++] = '9';
-	USER_NUMBER[j++] = '1';
+	if(extracted_message[i+1]!='+')
+	{
+	    USER_NUMBER[j++] = '+';
+	    USER_NUMBER[j++] = '9';
+	    USER_NUMBER[j++] = '1';
+	}
 	for (i++;extracted_message[i]!='\0';j++,i++)
 	{
 		USER_NUMBER[j] = extracted_message[i];
