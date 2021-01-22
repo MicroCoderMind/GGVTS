@@ -26,7 +26,7 @@ void gsm_init()
 	    unsigned int k;
 	    for (k=0;k<3;k++)
 	    {
-	        gsm_transmit(GSM_INIT[k]);
+	      gsm_transmit(GSM_INIT[k]);
 	    	if (!check_response())
 	    	{
 	    		//Do Nothing
@@ -34,15 +34,14 @@ void gsm_init()
 	    	else
 	    	{
 	    		ERROR++;
-	    		response_to_owner("Initialization Unsuccessfull!! Trying Again...");
+	    		//response_to_owner("Initialization Unsuccessfull!! Trying Again...");
 	    		return;
 	    	}
 	    }
     }
 	if (ERROR == 0)
 	{
-		response_to_owner("Initialising System!!! Please Wait...");
-		delay(0.5);
+		//response_to_owner("Initialising System!!! Please Wait...");
 	}
 }
 
@@ -58,7 +57,6 @@ void gsm_transmit(const INT8 * str1)
 	    U0THR = str1[k];
 	    delay(15);
 	}
-	delay(1);
 #ifdef DEBUG_START
   	debug(response_temp);
 #endif
