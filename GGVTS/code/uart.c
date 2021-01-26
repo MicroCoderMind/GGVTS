@@ -3,12 +3,29 @@
 __irq void uart_isr(void)
 {
 	UINT32 iir_value;
+	char temp;
   iir_value = U0IIR;
 	if( iir_value & 0x00000004 )
 	{
 		REC = ON;
-		IO0SET = 0x00000004;
-		response_temp[buffer_counter++] = U0RBR;
+		temp = U0RBR;
+		if((temp == '+' || temp == 'C' || temp == 'M' || temp == 'T' || temp == 'I')  && ((comp-new_mes)==1))
+		{
+			new_mes++;
+			if(new_mes == 5)
+			{
+				new_message++;
+				new_mes = 0;
+			  comp=0;
+			}
+		}
+		else
+		{
+			new_mes = 0;
+			comp=0;
+		}
+		response_temp[buffer_counter++] = temp;
+		comp++;
 	}
 	else
 	{
@@ -16,7 +33,6 @@ __irq void uart_isr(void)
 		while( (U0LSR & 0x40) == 0 );
 	}
 	REC = OFF;
-	IO0CLR = 0x00000004;
 	VICVectAddr = 0x00;
 }
 

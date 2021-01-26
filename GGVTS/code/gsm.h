@@ -65,7 +65,7 @@
 *            memory is used. Message is always deleted after reading       *
 *                                                                          *
 ***************************************************************************/
-	extern void delete_message(void);
+	extern void delete_message(UINT32);
 	
 /***************************************************************************
 *  Funtion Name: read_message                                              *
@@ -79,6 +79,6 @@
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-	extern void read_message(void);
+	extern void read_message(UINT32);
 #endif
 /********************************End of File*******************************/

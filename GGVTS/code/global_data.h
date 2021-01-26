@@ -13,12 +13,14 @@
 #define OFF 0
 #define ON 1
 #define LCD P2
+#define DEBUG_START
     extern const INT8 * GSM_INIT[4];
 	extern const INT8 * GSM_READ_MSG[1];
     extern const INT8 * GSM_DELETE_MSG[1];
 	extern const INT8 * user_number[1];
 	extern const INT8 * SEND_MESSAGE[1];
 	extern const INT8 * OWNER_NUMBER[1];
+	extern const INT8 alpha[11][2];
 	extern INT8 USER_NAME[20];
 	extern INT8 USER_NUMBER[14];
 	extern const INT8 * MAP_LINK[1];
@@ -33,6 +35,8 @@
 	extern UINT32 receiving;
 	extern UINT32 ATTEMPTS;
 	extern UINT32 SYSTEM_STRUCT;
+	extern char joined_string[100];
     extern char extracted_message[50];
+		extern UINT32 new_mes,comp,new_message;
 #endif
 /********************************End of File*******************************/
