@@ -14,7 +14,7 @@
 *  Below are the header files required to build project                    *
 ***************************************************************************/
 #include"common.h"
-#define DEBUG_START
+//#define DEBUG_START
 /***************************************************************************
 *  Funtion Name: join_strings                                              *
 ***************************************************************************/
@@ -48,30 +48,63 @@ UINT32 strlen_mod(const char * ptr)
 }
 
 /***************************************************************************
+*  Funtion Name: strcmp_mod                                                *
+***************************************************************************/
+INT32 strcmp_mod(const char * str1, const char * str2)
+{
+	INT32 i,return_var=0;
+	if (strlen_mod(str1) == strlen_mod(str2))
+	{
+		for(i=0; i<strlen_mod(str1); i++)
+		{
+			if (str1[i] == str2[i])
+			{
+				continue;
+			}
+			else
+			{
+				return_var = -1;
+				break;
+			}
+		}
+	}
+	else
+  {
+		return_var = -1;
+	}
+	return return_var;
+}
+
+/***************************************************************************
 *  Funtion Name: functionality                                             *
 ***************************************************************************/
 void functionality(void)
 {
-		if (strcmp(extracted_message,"Bulb ON\0") == 0)
+		if (strcmp_mod(extracted_message,"Bulb ON\0") == 0)
 		{
 			IO0SET = IO0SET | 0x00000010;
+			delay(1);
 			memset(extracted_message,0,20);
 		}
-		else if(strcmp(extracted_message,"Bulb OFF\0") == 0)
+		else if(strcmp_mod(extracted_message,"Bulb OFF\0") == 0)
 		{
 			IO0CLR = 0x00000010;
+			delay(1);
 			memset(extracted_message,0,20);
 		}
-		else if(strcmp(extracted_message,"LCTN\0") == 0)
+		else if(strcmp_mod(extracted_message,"LCTN\0") == 0)
 		{
 			get_gps_location();
 			extract_location();
 			send_location();
-			delete_message();
+			delay(1);
+			memset(extracted_message,0,20);
 		}
 		else
 		{
 			response_to_owner("Unrecognised Command, Try Again!!!");
+			delay(1);
+			memset(extracted_message,0,20);
 		}
 }
 
@@ -80,6 +113,7 @@ void functionality(void)
 ***************************************************************************/
 void wait_for_message(UINT32 user_name_stored)
 {
+	int message=0;
 	if (!ERROR && user_name_stored)
 	{
 		memset(response_temp,0,200);
@@ -87,15 +121,21 @@ void wait_for_message(UINT32 user_name_stored)
 		REC = OFF;
 		while(1)
 		{
-			if(REC == OFF && strlen_mod(response_temp) != 0 )
+			message=0;
+			if(REC == OFF != 0 )
 			{
-			    delay(0.5);
-	#ifdef DEBUG_START
-			    debug(response_temp);
-	#endif
-			    read_message();
+				while(new_message > 0)
+				{	message++;
+					delay(2);
+					memset(response_temp,0,200);
+	        buffer_counter = 0;
+			    read_message(message);
 			    functionality();
-			    delete_message();
+			    delete_message(message);
+						#ifdef DEBUG_START
+			    debug(alpha[new_message]);
+	          #endif
+				}
 			}
 			else
 			{
@@ -103,7 +143,7 @@ void wait_for_message(UINT32 user_name_stored)
 			}
 		}
 	}
-	else if(!ERROR)
+/*	else if(!ERROR)
 	{
 		memset(response_temp,0,200);
 		buffer_counter = 0;
@@ -126,7 +166,7 @@ void wait_for_message(UINT32 user_name_stored)
 				continue;
 			}
 		}
-	}
+	}*/
 	else
   {
 		//Do Nothing

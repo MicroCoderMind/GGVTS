@@ -30,6 +30,23 @@
 	extern UINT32 strlen_mod(const char * ptr);
 	
 /***************************************************************************
+*  Funtion Name: strcmp_mod                                                *
+*--------------------------------------------------------------------------*
+*  Description: This function compares twominput strings                   *
+*               string excluding NULL character.                           *
+*--------------------------------------------------------------------------*
+*  Input Parameters: Two strings which needs to be compared                *
+*  Output Parameters: return 0 if matched, -1 otherwise                    *
+*--------------------------------------------------------------------------*
+*  Comments: To use this function, input string must have NULL character   *
+*            as last character, this fun cion has same functionality as    *
+*            strlen library function                                       *
+*            for example:                                                  *
+*            if str1 = "Hello" then output from thi function will be 5     *
+***************************************************************************/
+	extern INT32 strcmp_mod(const char *,const char *);
+	
+/***************************************************************************
 *  Funtion Name: wait_for_message                                          *
 *--------------------------------------------------------------------------*
 *  Description: In this function processor will wait until user sends      *

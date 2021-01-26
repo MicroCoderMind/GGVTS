@@ -14,7 +14,7 @@
 *  Below are the header files required to build project                    *
 ***************************************************************************/
 #include "common.h"
-#define DEBUG_START
+//#define DEBUG_START
 /***************************************************************************
 *  Funtion Name: gps_init                                                  *
 ***************************************************************************/
@@ -26,12 +26,15 @@ void gps_init(void)
 	}
 	if (!check_response())
 	{
-	  //Do Nothing
+	  		buffer_counter = 0;
+	  	  memset(response_temp,0,200);
 	}
 	else
 	{
 		ERROR++;
 		//response_to_owner("Initialization Unsuccessfull!! Trying Again...");
+				buffer_counter = 0;
+	  	  memset(response_temp,0,200);
 	}
 	if (ERROR == 0)
 	{
@@ -68,8 +71,6 @@ void check_gps_status(void)
 	  //response_to_owner("Collecting Location Info!!! Please Wait...");
     while(1)
 		{				
-			memset(response_temp,0,200);
-			buffer_counter = 0;
 			memset(extracted_location,0,50);
 		  gsm_transmit(GPS_STATUS[0]);
 			check_response();
@@ -100,11 +101,10 @@ void check_gps_status(void)
 			extracted_location[j] = '\0';
 			#ifdef DEBUG_START
 		      debug(extracted_location);
-			debug("\n");
 	    #endif
 			if (strcmp(extracted_location,"Location 3D Fix\0")==0)
 			{
-				response_to_owner("System is Healthy and Working...Location is 3D");
+				//response_to_owner("System is Healthy and Working...Location is 3D");
 				break;
 			}
 			else if(strcmp(extracted_location,"Location 2D Fix\0")==0)
@@ -114,6 +114,8 @@ void check_gps_status(void)
 			}
 			delay(0.2);
 	  }
+		memset(response_temp,0,200);
+	  buffer_counter = 0;
   }
 }
 

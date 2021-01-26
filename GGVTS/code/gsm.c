@@ -13,7 +13,7 @@
 *  Below are the header files required to build project                    *
 ***************************************************************************/
 #include "common.h"
-
+#define DEBUG_START
 //#define DEBUG_START    /*This macro is used to enable debug related code*/
 
 /***************************************************************************
@@ -29,12 +29,15 @@ void gsm_init()
 	      gsm_transmit(GSM_INIT[k]);
 	    	if (!check_response())
 	    	{
-	    		//Do Nothing
+	    				buffer_counter = 0;
+	  	        memset(response_temp,0,200);
 	    	}
 	    	else
 	    	{
 	    		ERROR++;
 	    		//response_to_owner("Initialization Unsuccessfull!! Trying Again...");
+							buffer_counter = 0;
+	  	        memset(response_temp,0,200);
 	    		return;
 	    	}
 	    }
@@ -88,6 +91,7 @@ void extract_message(void)
 #ifdef DEBUG_START
 	debug(extracted_message);
 #endif
+	delay(2);
 	memset(response_temp,0,200);
 	buffer_counter = 0;
 }
@@ -95,47 +99,30 @@ void extract_message(void)
 /***************************************************************************
 *  Funtion Name: read_message                                              *
 ***************************************************************************/
-void read_message(void)
+void read_message(UINT32 message)
 {
-	unsigned int k;
-	buffer_counter = 0;
-	REC = OFF;
-	if (strcmp(response_temp,"\r\n+CMTI: \"SM\",1\r\n")==0)
-	{
-		memset(response_temp,0,200);
-		for (k=0;k<strlen_mod(GSM_READ_MSG[0]);k++)
-		{
-		    IO0SET = 0x00000008;
-		    U0THR = GSM_READ_MSG[0][k];
-		    delay(15);
-		}
-		delay(2);
-	    IO0CLR = 0x00000008;
-#ifdef DEBUG_START
-		debug(response_temp);
-#endif
-		REC = OFF;
-		buffer_counter = 0;
+	  memset(response_temp,0,200);
+	  buffer_counter = 0;
+	  join_strings(GSM_READ_MSG[0],alpha[message]);
+	  join_strings("","\r");
+		gsm_transmit(joined_string);
+		delay(1);
+	  memset(joined_string,0,100);
+		new_message--;
 		extract_message();
-	}
 }
 
 /***************************************************************************
 *  Funtion Name: delete_message                                            *
 ***************************************************************************/
-void delete_message(void)
+void delete_message(UINT32 message)
 {
-	unsigned int k;
-	for (k=0;k<strlen_mod(GSM_DELETE_MSG[0]);k++)
-	{
-	    IO0SET = 0x00000008;
-	    U0THR = GSM_DELETE_MSG[0][k];
-	    delay(9);
-	}
-	delay(2);
-	   IO0CLR = 0x00000008;
+	join_strings(GSM_DELETE_MSG[0],alpha[message]);
+	join_strings("","\r");
+	gsm_transmit(joined_string);
+	delay(1);
+	memset(joined_string,0,100);
 	buffer_counter = 0;
-	REC = OFF;
 	memset(response_temp,0,200);
 }
 /******************************End of File*********************************/

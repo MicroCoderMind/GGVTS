@@ -46,12 +46,12 @@ void uart_init_debug(void)
 void debug(const char * str1)
 {
 	  UINT32 k=0;
-	  delay(0.5);
+	  delay(1);
 	   for (k=0;k<strlen_mod(str1);k++)
 	   {
 	       IO0SET = 0x00000008;
 	       U1THR = str1[k];
-	  		delay(9);
+	  		delay(18);
 	   }
 	  REC = OFF;
 	  buffer_counter = 0;
