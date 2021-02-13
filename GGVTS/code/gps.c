@@ -73,7 +73,15 @@ void check_gps_status(void)
 		{				
 			memset(extracted_location,0,50);
 		  gsm_transmit(GPS_STATUS[0]);
-			check_response();
+			if(check_response())
+			{
+				memset(extracted_location,0,50);
+				memset(response_temp,0,200);
+	      buffer_counter = 0;
+				response_to_owner("Initialization Unsuccessfull!! Trying Again...");
+				ERROR = 0;
+				continue;
+			}
 	    for (j=0,i=0;i<strlen_mod(response_temp);i++)
 		  {
 		  	if (response_temp[i] == ':')
@@ -105,17 +113,23 @@ void check_gps_status(void)
 			if (strcmp(extracted_location,"Location 3D Fix\0")==0)
 			{
 				//response_to_owner("System is Healthy and Working...Location is 3D");
+				memset(extracted_location,0,50);
+				memset(response_temp,0,200);
+	      buffer_counter = 0;
 				break;
 			}
 			else if(strcmp(extracted_location,"Location 2D Fix\0")==0)
 			{
 				response_to_owner("System is Healthy and Working...Location is 2D");
+				memset(extracted_location,0,50);
+				memset(response_temp,0,200);
+	      buffer_counter = 0;
 				break;
 			}
+			memset(response_temp,0,200);
+	    buffer_counter = 0;
 			delay(0.2);
 	  }
-		memset(response_temp,0,200);
-	  buffer_counter = 0;
   }
 }
 
