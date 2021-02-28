@@ -1,5 +1,4 @@
 #include "common.h"
-#define DEBUG_START
 __irq void uart_isr(void)
 {
 	UINT32 iir_value;
@@ -9,14 +8,15 @@ __irq void uart_isr(void)
 	{
 		REC = ON;
 		temp = U0RBR;
-		if((temp == '+' || temp == 'C' || temp == 'M' || temp == 'T' || temp == 'I')  && ((comp-new_mes)==1))
+		if((temp == '+' || temp == 'C' || temp == 'M' || temp == 'T' || temp == 'I' || temp == ':' || temp == ' ' || temp == '"' || temp == 'S' || temp == 'M' || temp == ',')  && ((comp-new_mes)==1))
 		{
 			new_mes++;
-			if(new_mes == 5)
+			if(new_mes == 11)
 			{
 				new_message++;
 				new_mes = 0;
 			  comp=0;
+				buffer_counter -= 13;
 			}
 		}
 		else
@@ -32,6 +32,7 @@ __irq void uart_isr(void)
 		iir_value = U0IIR;
 		while( (U0LSR & 0x40) == 0 );
 	}
+
 	REC = OFF;
 	VICVectAddr = 0x00;
 }
@@ -55,12 +56,14 @@ void interrupt_init(void)
 	if (!ERROR)
 	{
 		VICVectAddr0 = (unsigned) uart_isr;	/* UART0 ISR Address */
+		VICVectAddr2 = (unsigned) timer_isr;	/* UART0 ISR Address */
 #ifdef DEBUG_START
 		VICVectAddr1 = (unsigned) uart_isr_debug;	/* UART0 ISR Address need to remove this line after finishing*/
 #endif
 		VICVectCntl0 = 0x00000026;	/* Enable UART0 IRQ slot */
 		VICVectCntl1 = 0x00000027;	/* Enable UART1 IRQ slot need to remove this line after finishing*/
-		VICIntEnable = 0x000000C0;	/* Enable UART0 interrupt c needs to be replaced with 4 after finishing*/
+		VICVectCntl2 = 0x00000025;	/* Enable TImer 1 Interrupt*/
+		VICIntEnable = 0x000000E0;	/* Enable UART0, UART1 and Timer1 interrupt*/
 		VICIntSelect = 0x00000000;	/* UART0 configured as IRQ */
 	}
 }

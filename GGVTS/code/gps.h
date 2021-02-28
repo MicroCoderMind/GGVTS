@@ -13,7 +13,6 @@
 	extern const INT8 * GPS_INIT[1];
 	extern const INT8 * GPS_LOCATION[1];
 	extern const INT8 * GPS_STATUS[1];
-	extern char joined_string[100];
 	extern char extracted_location[50];
 /***************************************************************************
 *  Funtion Name: get_gps_location                                          *
@@ -56,20 +55,6 @@
 *                                                                          *
 ***************************************************************************/
 	extern void extract_location(void);
-	
-/***************************************************************************
-*  Funtion Name: send_location                                             *
-*--------------------------------------------------------------------------*
-*  Description: This function will send longitude and latitude to user     *
-*               after making it a google location link.                    *
-*--------------------------------------------------------------------------*
-*  Input Parameters: None                                                  *
-*  Output Parameters: None                                                 *
-*--------------------------------------------------------------------------*
-*  Comments:                                                               *
-*                                                                          *
-***************************************************************************/
-	extern void send_location(void);
 
 /***************************************************************************
 *  Funtion Name: check_gps_status                                          *
