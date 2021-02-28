@@ -21,6 +21,7 @@
 	  #include"functionality.h" /*This file contains declaration of various functionality functions and variables*/
 	  #include"response.h"	    /*This file contains declaration of functions and variables used to respond to user*/
 	  #include"debug.h"	    /*This file contains declaration of functions used to debug the program*/
+		#include"message_handler.h"
 
 #endif
 

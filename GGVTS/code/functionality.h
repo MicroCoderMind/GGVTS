@@ -10,6 +10,10 @@
 ***************************************************************************/
 #ifndef __FUNCTIONALITY__
 #define __FUNCTIONALITY__
+
+void reset_module(void);
+
+UINT32 strstr_mod(const char *, const char *);
 	
 /***************************************************************************
 *  Funtion Name: strlen_mod                                                *
@@ -28,6 +32,24 @@
 *            if str1 = "Hello" then output from thi function will be 5     *
 ***************************************************************************/
 	extern UINT32 strlen_mod(const char * ptr);
+	
+/***************************************************************************
+*  Funtion Name: strcpy_mod                                               *
+*--------------------------------------------------------------------------*
+*  Description: This function counts the number of charcters in input      *
+*               string excluding NULL character.                           *
+*--------------------------------------------------------------------------*
+*  Input Parameters: string for which characters to be counted             *
+*  Output Parameters: (Unsigned int)Numbers of charaqcters in string       * 
+                      excluding NULL character.                            *
+*--------------------------------------------------------------------------*
+*  Comments: To use this function, input string must have NULL character   *
+*            as last character, this fun cion has same functionality as    *
+*            strlen library function                                       *
+*            for example:                                                  *
+*            if str1 = "Hello" then output from thi function will be 5     *
+***************************************************************************/
+ extern void strcpy_mod(char *,char *);
 	
 /***************************************************************************
 *  Funtion Name: strcmp_mod                                                *
@@ -57,7 +79,7 @@
 *--------------------------------------------------------------------------*
 *  Comments:                                                               *
 ***************************************************************************/
-	extern void wait_for_message(UINT32);
+	extern void wait_for_message(void);
 	
 /***************************************************************************
 *  Funtion Name: functionality                                             *
@@ -105,6 +127,6 @@
 *--------------------------------------------------------------------------*
 *  Comments:                                                               *
 ***************************************************************************/	
-  void extract_user_name(void);
+  UINT32 extract_user_info(void);
 #endif
 /********************************End of File*******************************/

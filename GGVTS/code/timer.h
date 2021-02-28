@@ -10,6 +10,8 @@
 ***************************************************************************/
 #ifndef __TIMER__
 #define __TIMER__
+
+__irq void timer_isr(void);
     
 /***************************************************************************
 *  Funtion Name: delay                                                     *
@@ -42,7 +44,7 @@
   extern void timer_init(void);
   
 /***************************************************************************
-*  Funtion Name: response_to_owner                                          *
+*  Funtion Name: response_back                                          *
 *--------------------------------------------------------------------------*
 *  Description: This function will initialize all the global registers
 *               related to PLL to use processor at 12 MHz frequency.       *
@@ -54,6 +56,10 @@
 *                                                                          *
 ***************************************************************************/
   extern void pll_init(void);
+	
+	void module_reset_timer(UINT32 start_stop);
+	
+	
     
 #endif
 /********************************End of File*******************************/

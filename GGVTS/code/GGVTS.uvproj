@@ -470,6 +470,16 @@
               <FileType>5</FileType>
               <FilePath>.\response.h</FilePath>
             </File>
+            <File>
+              <FileName>message_handler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\message_handler.c</FilePath>
+            </File>
+            <File>
+              <FileName>message_handler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\message_handler.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

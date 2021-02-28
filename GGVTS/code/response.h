@@ -28,7 +28,7 @@
   extern UINT32 check_response(void);
   
 /***************************************************************************
-*  Funtion Name: response_to_owner                                         *
+*  Funtion Name: response_back                                         *
 *--------------------------------------------------------------------------*
 *  Description: This function will interact with owner(Rohan).             *
 *--------------------------------------------------------------------------*
@@ -38,7 +38,7 @@
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-  extern void response_to_owner(const INT8 *);
+  extern void response_back(const INT8 *,const INT8 *);
 	
 	  
 /***************************************************************************

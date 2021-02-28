@@ -13,9 +13,7 @@
 *  Below are the header files required to build this file                  *
 ***************************************************************************/
 #include "common.h"
-#define DEBUG_START /*Used for conditional compilation of code related to debug*/
 #ifdef DEBUG_START
-
 /***************************************************************************
 *  Funtion Name: uart_isr_debug                                            *
 ***************************************************************************/
@@ -54,7 +52,7 @@ void debug(const char * str1)
 	  		delay(18);
 	   }
 	  REC = OFF;
-	  buffer_counter = 0;
+	  //buffer_counter = 0;
 	  IO0CLR = 0x00000008;
 }
 #endif

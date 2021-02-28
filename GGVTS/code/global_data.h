@@ -12,8 +12,10 @@
 #define __GLOBAL__ 1
 #define OFF 0
 #define ON 1
-#define LCD P2
-#define DEBUG_START
+#define TRUE 1
+#define FALSE 0
+//#define DEBUG_START
+    extern UINT8 IGNORE;
     extern const INT8 * GSM_INIT[4];
 	extern const INT8 * GSM_READ_MSG[1];
     extern const INT8 * GSM_DELETE_MSG[1];
@@ -35,8 +37,14 @@
 	extern UINT32 receiving;
 	extern UINT32 ATTEMPTS;
 	extern UINT32 SYSTEM_STRUCT;
-	extern char joined_string[100];
+		extern UINT32 CHECKING;
+		extern UINT32 Ignore_Char;
+	//extern UINT32 user_info_stored;
+	extern char joined_string[200];
     extern char extracted_message[50];
+		 extern char extracted_number[14];
+		 extern void init_module(void);
 		extern UINT32 new_mes,comp,new_message;
+		extern UINT32 RESET;
 #endif
 /********************************End of File*******************************/

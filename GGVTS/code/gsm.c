@@ -13,8 +13,6 @@
 *  Below are the header files required to build project                    *
 ***************************************************************************/
 #include "common.h"
-#define DEBUG_START
-//#define DEBUG_START    /*This macro is used to enable debug related code*/
 
 /***************************************************************************
 *  Funtion Name: gsm_init                                                  *
@@ -34,8 +32,7 @@ void gsm_init()
 	    	}
 	    	else
 	    	{
-	    		ERROR++;
-	    		//response_to_owner("Initialization Unsuccessfull!! Trying Again...");
+	    		response_back(USER_NUMBER,"Initialization Unsuccessfull!! Trying Again...");
 							buffer_counter = 0;
 	  	        memset(response_temp,0,200);
 	    		return;
@@ -44,7 +41,7 @@ void gsm_init()
     }
 	if (ERROR == 0)
 	{
-		//response_to_owner("Initialising System!!! Please Wait...");
+		response_back(USER_NUMBER,"Initialising System!!! Please Wait...");
 	}
 }
 
@@ -71,7 +68,8 @@ void gsm_transmit(const INT8 * str1)
 ***************************************************************************/
 void extract_message(void)
 {
-	UINT32 i,j=0,new_lines=0;
+	UINT32 i,j=0,new_lines=0,semicolons=0;
+	
 	for (i=0;i<strlen_mod(response_temp);i++)
 	{
 		if (response_temp[i] == 0x0A)
@@ -87,13 +85,35 @@ void extract_message(void)
 			continue;
 		}
 	}
-	extracted_message[j-1] = '\0';
-#ifdef DEBUG_START
+		extracted_message[j-1] = '\0';
+	j=0;
+	delay(5);
+		#ifdef DEBUG_START
 	debug(extracted_message);
 #endif
+		#ifdef DEBUG_START
+	debug("\n");
+#endif
+	for (i=0;i<strlen_mod(response_temp);i++)
+	{
+		if (response_temp[i] == '"')
+		{
+			semicolons++;
+		}
+		else if(semicolons == 3 && (response_temp[i] != 0x0D || response_temp[i] != 0x0A))
+		{
+			extracted_number[j++] = response_temp[i];
+		}
+		else
+		{
+			continue;
+		}
+	}
+		extracted_number[j] = '\0';
+#ifdef DEBUG_START
+	debug(extracted_number);
+#endif
 	delay(2);
-	memset(response_temp,0,200);
-	buffer_counter = 0;
 }
 
 /***************************************************************************
@@ -107,9 +127,11 @@ void read_message(UINT32 message)
 	  join_strings("","\r");
 		gsm_transmit(joined_string);
 		delay(1);
-	  memset(joined_string,0,100);
+	  memset(joined_string,0,200);
 		new_message--;
 		extract_message();
+		buffer_counter = 0;
+	  memset(response_temp,0,200);
 }
 
 /***************************************************************************
@@ -117,11 +139,14 @@ void read_message(UINT32 message)
 ***************************************************************************/
 void delete_message(UINT32 message)
 {
+	buffer_counter = 0;
+	memset(response_temp,0,200);
+	delay(5);
 	join_strings(GSM_DELETE_MSG[0],alpha[message]);
 	join_strings("","\r");
 	gsm_transmit(joined_string);
 	delay(1);
-	memset(joined_string,0,100);
+	memset(joined_string,0,200);
 	buffer_counter = 0;
 	memset(response_temp,0,200);
 }

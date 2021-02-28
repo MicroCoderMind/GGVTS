@@ -14,7 +14,6 @@
 *  Below are the header files required to build project                    *
 ***************************************************************************/
 #include"common.h"
-//#define DEBUG_START
 /***************************************************************************
 *  Funtion Name: join_strings                                              *
 ***************************************************************************/
@@ -48,6 +47,18 @@ UINT32 strlen_mod(const char * ptr)
 }
 
 /***************************************************************************
+*  Funtion Name: strcpy_mod                                                *
+***************************************************************************/
+void strcpy_mod(char * str1,char * str2)
+{
+	UINT32 i;
+	for (i=0;str2[i]!='\0';i++)
+	{
+		str1[i] = str2[i];
+	}
+	str1[i] = '\n';
+}
+/***************************************************************************
 *  Funtion Name: strcmp_mod                                                *
 ***************************************************************************/
 INT32 strcmp_mod(const char * str1, const char * str2)
@@ -80,122 +91,180 @@ INT32 strcmp_mod(const char * str1, const char * str2)
 ***************************************************************************/
 void functionality(void)
 {
+	UINT32 in_message=0;
+	char temp_reply[200];
+#ifdef DEBUG_START
+  debug(extracted_message);
+#endif
 		if (strcmp_mod(extracted_message,"Bulb ON\0") == 0)
 		{
-			IO0SET = IO0SET | 0x00000010;
-			delay(1);
-			memset(extracted_message,0,20);
+			if (IGNORE == OFF)
+			{
+			  IO0SET = IO0SET | 0x00000010;
+			  delay(1);
+			  memset(extracted_message,0,50);
+				in_message=0;
+			}
+			else
+			{
+				in_message = 1;
+			}
 		}
 		else if(strcmp_mod(extracted_message,"Bulb OFF\0") == 0)
 		{
-			IO0CLR = 0x00000010;
-			delay(1);
-			memset(extracted_message,0,20);
+			if (IGNORE == OFF)
+			{
+			  IO0CLR = 0x00000010;
+			  delay(1);
+				in_message=0;
+			}
+			else
+			{
+				in_message = 1;
+			}
 		}
 		else if(strcmp_mod(extracted_message,"LCTN\0") == 0)
 		{
-			get_gps_location();
-			extract_location();
-			send_location();
-			delay(1);
-			memset(extracted_message,0,20);
+			if (IGNORE == OFF)
+			{
+			  get_gps_location();
+				join_strings(MAP_LINK[0],extracted_location);
+			  strcpy_mod(temp_reply,joined_string);
+				delay(5);
+			  memset(joined_string,0,200);
+			  response_back(USER_NUMBER,temp_reply);
+			  delay(1);
+				in_message=0;
+			}
+			else
+			{
+				in_message = 1;
+			}
 		}
 		else
 		{
-			response_to_owner("Unrecognised Command, Try Again!!!");
-			delay(1);
-			memset(extracted_message,0,20);
+			if (IGNORE == OFF)
+			{
+			  response_back(USER_NUMBER,"Unrecognised Command, Try Again!!!");
+			  delay(1);
+				in_message=0;
+			}
 		}
+		if (IGNORE == ON && in_message == 1)
+		{
+		  join_strings("Security Violation Alert!!!","\n");
+		  join_strings(extracted_number,extracted_message);
+			strcpy_mod(temp_reply,joined_string);
+			delay(5);
+			memset(joined_string,0,200);
+		  response_back(USER_NUMBER,temp_reply);
+		  IGNORE = OFF;
+		  delay(4);
+		}
+		else if(IGNORE == ON && in_message == 0)
+		{
+			join_strings(extracted_number,extracted_message);
+			strcpy_mod(temp_reply,joined_string);
+			delay(5);
+			memset(joined_string,0,200);
+		  response_back(USER_NUMBER,temp_reply);
+		  IGNORE = OFF;
+		  delay(4);
+		}
+		memset(temp_reply,0,200);
+		memset(extracted_message,0,50);
+		memset(extracted_number,0,14);
 }
 
 /***************************************************************************
 *  Funtion Name: wait_for_message                                          *
 ***************************************************************************/
-void wait_for_message(UINT32 user_name_stored)
+void wait_for_message()
 {
-	int message=0;
-	if (!ERROR && user_name_stored)
+	UINT32 user_info_stored = ON;
+	if (user_info_stored)
 	{
-		memset(response_temp,0,200);
-		buffer_counter = 0;
-		REC = OFF;
-		while(1)
-		{
-			message=0;
-			if(REC == OFF != 0 )
-			{
-				while(new_message > 0)
-				{	message++;
-					delay(2);
-					memset(response_temp,0,200);
+			response_back(USER_NUMBER,"User Name and Number please!!!");
+	}
+	int message=0;
+	 buffer_counter = 0;
+	memset(response_temp,0,200);
+	while(ON)
+	{
+		delay(5);
+	  if (!ERROR && user_info_stored == OFF)
+	  {
+	  	if(REC == OFF)
+	  	{
+				message=0;
+				delay(5);
+	  		while(new_message > 0)
+	  		{	
+				  message++;
+	  			delay(2);
+	  			memset(response_temp,0,200);
 	        buffer_counter = 0;
+					if (!CHECKING)
+					{
+	  	      read_message(message);
+						check_authentication(extracted_number);
+	  	      functionality();
+	  	      delete_message(message);
+					}
+#ifdef DEBUG_START
+  debug(alpha[new_message]);
+#endif
+					#ifdef DEBUG_START
+  debug(alpha[message]);
+#endif
+					}
+			}
+			else
+			{
+#ifdef DEBUG_START
+  debug(response_temp);
+#endif
+				continue;
+			}
+	}
+	else if(!ERROR && user_info_stored)
+	{
+
+			
+			if(REC == OFF)
+			{message=0;
+				while(new_message > 0)
+				{	
+					message++;
+			    delay(0.5);
+#ifdef DEBUG_START
+  debug(response_temp);
+#endif
 			    read_message(message);
-			    functionality();
+			    user_info_stored = extract_user_info();
 			    delete_message(message);
-						#ifdef DEBUG_START
-			    debug(alpha[new_message]);
-	          #endif
+				  break;
 				}
 			}
-			else
-			{
-				continue;
-			}
-		}
-	}
-/*	else if(!ERROR)
-	{
-		memset(response_temp,0,200);
-		buffer_counter = 0;
-		REC = OFF;
-		while(1)
-		{
-			if(REC == OFF && strlen_mod(response_temp) != 0 )
-			{
-			    delay(0.5);
-	#ifdef DEBUG_START
-			    debug(response_temp);
-	#endif
-			    read_message();
-			    extract_user_name();
-			    delete_message();
-				  break;
-			}
-			else
-			{
-				continue;
-			}
-		}
-	}*/
+	 }
 	else
-  {
-		//Do Nothing
+	{
+#ifdef DEBUG_START
+	debug(alpha[new_message]);
+#endif
+			continue;
 	}
+ }
 }
 
 
 /***************************************************************************
-*  Funtion Name: extract_user_name                                           *
+*  Funtion Name: extract_user_info                                           *
 ***************************************************************************/
-void extract_user_name(void)
+UINT32 extract_user_info(void)
 {
-	UINT32 i,j=0,new_lines=0;
-	for (i=0;i<strlen_mod(response_temp);i++)
-	{
-		if (response_temp[i] == 0x0A)
-		{
-			new_lines++;
-		}
-		else if(new_lines == 2 && (response_temp[i] != 0x0D || response_temp[i] != 0x0A))
-		{
-			extracted_message[j++] = response_temp[i];
-		}
-		else
-		{
-			continue;
-		}
-	}
-	extracted_message[j-1] = '\0';
+	UINT32 i,j;
+	char temp[200];
 	for (i=0;extracted_message[i] != ' ';i++)
 	{
 		USER_NAME[i]=extracted_message[i];
@@ -206,20 +275,90 @@ void extract_user_name(void)
   #endif
 	if(extracted_message[i+1]!='+')
 	{
-	    USER_NUMBER[j++] = '+';
-	    USER_NUMBER[j++] = '9';
-	    USER_NUMBER[j++] = '1';
+		response_back(USER_NUMBER,"Invalid Format!!! Try again!! Pro Tip: Add Country code!!");
+					memset(extracted_message,0,50);
+			memset(extracted_number,0,14);
+		return ON;
 	}
-	for (i++;extracted_message[i]!='\0';j++,i++)
+	else
 	{
-		USER_NUMBER[j] = extracted_message[i];
+		for (j=0,i++;j<14;j++)
+		{
+			USER_NUMBER[j] = extracted_message[i++];
+		}
 	}
-	USER_NUMBER[j] = '\0';
-#ifdef DEBUG_START
+	#ifdef DEBUG_START
 	debug(USER_NUMBER);
-#endif
-	memset(response_temp,0,200);
-	buffer_counter = 0;
+	debug(alpha[OFF]);
+  #endif
+	join_strings("Hello Mr. ",USER_NAME);
+	strcpy_mod(temp,joined_string);
+	memset(joined_string,0,200);
+  response_back(USER_NUMBER,temp);
+	memset(extracted_message,0,50);
+	memset(extracted_number,0,14);
+	return OFF;
+}
+
+void reset_module(void)
+{
+		  			memset(response_temp,0,200);
+	        buffer_counter = 0;
+	delay(8);
+		#ifdef DEBUG_START
+	debug("RESET");
+  #endif
+	  gsm_transmit("AT+CFUN=0\r");
+	  delay(0.5);
+	  if(!check_response())
+		{
+				  			memset(response_temp,0,200);
+	        buffer_counter = 0;
+	      gsm_transmit("AT+CFUN=1\r");
+			  //delay(0.03125);
+			  check_response();
+			RESET = ON;
+		}
+			  			memset(response_temp,0,200);
+	        buffer_counter = 0;
+	  
+}
+
+UINT32 strstr_mod(const char *strmain, const char *strsub)
+{
+	INT8 i=0,l=0,temp=0,match=0,main_len=0,sub_len=0;
+	main_len = strlen_mod(strmain);
+	sub_len = strlen_mod(strsub);
+	for (i=0;i<main_len;i++)
+	{
+		if(strmain[i] == strsub[0])
+		{
+			temp = i;
+			for (l=0;l<sub_len;l++,i++)
+			{
+				if (strmain[i] == strsub[l])
+				{
+					match++;
+					continue;
+				}
+				else
+				{
+					i=temp;
+					break;
+				}
+			}
+			if (match == sub_len)
+			{
+				return 0;
+			}
+			else
+			{
+				match = 0;
+				continue;
+			}
+		}
+	}
+  return 1;	
 }
 
 /********************************End of File*******************************/
