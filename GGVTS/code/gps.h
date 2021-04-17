@@ -14,6 +14,11 @@
 	extern const INT8 * GPS_LOCATION[1];
 	extern const INT8 * GPS_STATUS[1];
 	extern char extracted_location[50];
+	extern UINT8 COLD_START_DONE;
+	extern UINT8 WARM_START_DONE;
+	extern UINT8 WARM_START;
+	extern UINT8 check_location;
+	extern UINT8 location_fixed;
 /***************************************************************************
 *  Funtion Name: get_gps_location                                          *
 *--------------------------------------------------------------------------*
@@ -27,6 +32,7 @@
 *                                                                          *
 ***************************************************************************/
 	extern void get_gps_location(void);
+	extern void send_location(void);
 /***************************************************************************
 *  Funtion Name: gps_init                                                  *
 *--------------------------------------------------------------------------*

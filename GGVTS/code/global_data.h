@@ -16,6 +16,7 @@
 #define FALSE 0
 //#define DEBUG_START
     extern UINT8 IGNORE;
+		extern UINT8 SEND_LOCATION;
     extern const INT8 * GSM_INIT[4];
 	extern const INT8 * GSM_READ_MSG[1];
     extern const INT8 * GSM_DELETE_MSG[1];

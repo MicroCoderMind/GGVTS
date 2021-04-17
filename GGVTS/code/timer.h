@@ -28,6 +28,7 @@ __irq void timer_isr(void);
 *                                                                          *
 ***************************************************************************/
   extern void delay(float);
+	void set_location_frequency(UINT32);
   
 /***************************************************************************
 *  Funtion Name: timer_init                                                *

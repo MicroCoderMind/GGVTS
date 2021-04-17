@@ -9,6 +9,7 @@
 ***************************************************************************/
 #ifndef __COMMON__
 #define __COMMON__
+#undef DEBUG_START
 	  #include<LPC214X.h>	    /*This file contains all processor related addresses*/
 	  #include<string.h>	    /*This file contains all the string related C library functions*/
 	  #include<stdlib.h>	    /*This file contains all the standard C library functions*/

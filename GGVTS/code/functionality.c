@@ -14,6 +14,7 @@
 *  Below are the header files required to build project                    *
 ***************************************************************************/
 #include"common.h"
+#undef DEBUG_START
 /***************************************************************************
 *  Funtion Name: join_strings                                              *
 ***************************************************************************/
@@ -89,7 +90,7 @@ INT32 strcmp_mod(const char * str1, const char * str2)
 /***************************************************************************
 *  Funtion Name: functionality                                             *
 ***************************************************************************/
-void functionality(void)
+void functionality(UINT32 message)
 {
 	UINT32 in_message=0;
 	char temp_reply[200];
@@ -101,7 +102,7 @@ void functionality(void)
 			if (IGNORE == OFF)
 			{
 			  IO0SET = IO0SET | 0x00000010;
-			  delay(1);
+			  delay(0.1);
 			  memset(extracted_message,0,50);
 				in_message=0;
 			}
@@ -127,13 +128,88 @@ void functionality(void)
 		{
 			if (IGNORE == OFF)
 			{
-			  get_gps_location();
-				join_strings(MAP_LINK[0],extracted_location);
-			  strcpy_mod(temp_reply,joined_string);
-				delay(5);
-			  memset(joined_string,0,200);
-			  response_back(USER_NUMBER,temp_reply);
+        send_location();
 			  delay(1);
+				in_message=0;
+			}
+			else
+			{
+				in_message = 1;
+			}
+		}
+		else if(strcmp_mod(extracted_message,"LCTN FREQ 1\0") == 0)
+		{
+			if (IGNORE == OFF)
+			{
+			  set_location_frequency(1);
+			  delay(1);
+				in_message=0;
+			}
+			else
+			{
+				in_message = 1;
+			}
+		}
+		else if(strcmp_mod(extracted_message,"LCTN FREQ 3\0") == 0)
+		{
+			if (IGNORE == OFF)
+			{
+			  set_location_frequency(3);
+			  delay(1);
+				in_message=0;
+			}
+			else
+			{
+				in_message = 1;
+			}
+		}
+		else if(strcmp_mod(extracted_message,"LCTN FREQ 5\0") == 0)
+		{
+			if (IGNORE == OFF)
+			{
+			  set_location_frequency(5);
+			  delay(1);
+				in_message=0;
+			}
+			else
+			{
+				in_message = 1;
+			}
+		}
+		else if(strcmp_mod(extracted_message,"LCTN FREQ 7\0") == 0)
+		{
+			if (IGNORE == OFF)
+			{
+			  set_location_frequency(7);
+			  delay(1);
+				in_message=0;
+			}
+			else
+			{
+				in_message = 1;
+			}
+		}
+		else if(strcmp_mod(extracted_message,"LCTN FREQ 10\0") == 0)
+		{
+			if (IGNORE == OFF)
+			{
+			  set_location_frequency(10);
+			  delay(1);
+				in_message=0;
+			}
+			else
+			{
+				in_message = 1;
+			}
+		}
+		else if(strcmp_mod(extracted_message,"LCTN FREQ 0\0") == 0)
+		{
+			if (IGNORE == OFF)
+			{
+				SEND_LOCATION = OFF;
+				T1TCR = 0x02;        //Stop Timer
+	      delay(1);
+				response_back(USER_NUMBER,"LCTN_FREQ stopped!!!");
 				in_message=0;
 			}
 			else
@@ -146,7 +222,8 @@ void functionality(void)
 			if (IGNORE == OFF)
 			{
 			  response_back(USER_NUMBER,"Unrecognised Command, Try Again!!!");
-			  delay(1);
+			  delay(0.1);
+			  memset(extracted_message,0,50);
 				in_message=0;
 			}
 		}
@@ -155,21 +232,21 @@ void functionality(void)
 		  join_strings("Security Violation Alert!!!","\n");
 		  join_strings(extracted_number,extracted_message);
 			strcpy_mod(temp_reply,joined_string);
-			delay(5);
+			delay(0.1);
 			memset(joined_string,0,200);
 		  response_back(USER_NUMBER,temp_reply);
 		  IGNORE = OFF;
-		  delay(4);
+		  delay(0.1);
 		}
 		else if(IGNORE == ON && in_message == 0)
 		{
 			join_strings(extracted_number,extracted_message);
 			strcpy_mod(temp_reply,joined_string);
-			delay(5);
+			delay(0.1);
 			memset(joined_string,0,200);
 		  response_back(USER_NUMBER,temp_reply);
 		  IGNORE = OFF;
-		  delay(4);
+		  delay(0.1);
 		}
 		memset(temp_reply,0,200);
 		memset(extracted_message,0,50);
@@ -187,29 +264,29 @@ void wait_for_message()
 			response_back(USER_NUMBER,"User Name and Number please!!!");
 	}
 	int message=0;
-	 buffer_counter = 0;
+	buffer_counter = 0;
 	memset(response_temp,0,200);
 	while(ON)
 	{
-		delay(5);
+		delay(0.1);
 	  if (!ERROR && user_info_stored == OFF)
 	  {
 	  	if(REC == OFF)
 	  	{
 				message=0;
-				delay(5);
+				delay(0.1);
 	  		while(new_message > 0)
 	  		{	
 				  message++;
-	  			delay(2);
+	  			delay(0.1);
 	  			memset(response_temp,0,200);
 	        buffer_counter = 0;
 					if (!CHECKING)
 					{
 	  	      read_message(message);
 						check_authentication(extracted_number);
-	  	      functionality();
-	  	      delete_message(message);
+	  	      functionality(message);
+						delete_message(message);
 					}
 #ifdef DEBUG_START
   debug(alpha[new_message]);
@@ -218,6 +295,12 @@ void wait_for_message()
   debug(alpha[message]);
 #endif
 					}
+				if (SEND_LOCATION == ON)
+				{
+					send_location();
+					SEND_LOCATION = OFF;
+				  T1TCR = 0x01;        //Start Timer
+				}
 			}
 			else
 			{
@@ -299,31 +382,30 @@ UINT32 extract_user_info(void)
 	memset(extracted_number,0,14);
 	return OFF;
 }
-
+/*
 void reset_module(void)
 {
 		  			memset(response_temp,0,200);
 	        buffer_counter = 0;
-	delay(8);
+	delay(0.1);
 		#ifdef DEBUG_START
 	debug("RESET");
   #endif
 	  gsm_transmit("AT+CFUN=0\r");
-	  delay(0.5);
-	  if(!check_response())
+	  delay(2);
+	  if(!check_response_command())
 		{
 				  			memset(response_temp,0,200);
 	        buffer_counter = 0;
 	      gsm_transmit("AT+CFUN=1\r");
-			  //delay(0.03125);
-			  check_response();
+			  check_response_command();
 			RESET = ON;
 		}
 			  			memset(response_temp,0,200);
 	        buffer_counter = 0;
 	  
 }
-
+*/
 UINT32 strstr_mod(const char *strmain, const char *strsub)
 {
 	INT8 i=0,l=0,temp=0,match=0,main_len=0,sub_len=0;

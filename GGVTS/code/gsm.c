@@ -25,7 +25,7 @@ void gsm_init()
 	    for (k=0;k<3;k++)
 	    {
 	      gsm_transmit(GSM_INIT[k]);
-	    	if (!check_response())
+	    	if (!check_response_command())
 	    	{
 	    				buffer_counter = 0;
 	  	        memset(response_temp,0,200);
@@ -41,7 +41,7 @@ void gsm_init()
     }
 	if (ERROR == 0)
 	{
-		response_back(USER_NUMBER,"Initialising System!!! Please Wait...");
+		//response_back(USER_NUMBER,"Initialising System!!! Please Wait...");
 	}
 }
 
@@ -55,7 +55,7 @@ void gsm_transmit(const INT8 * str1)
 	{
 	    IO0SET = 0x00000008;
 	    U0THR = str1[k];
-	    delay(15);
+	    delay(0.08);
 	}
 #ifdef DEBUG_START
   	debug(response_temp);
@@ -87,7 +87,7 @@ void extract_message(void)
 	}
 		extracted_message[j-1] = '\0';
 	j=0;
-	delay(5);
+	delay(0.05);
 		#ifdef DEBUG_START
 	debug(extracted_message);
 #endif
@@ -113,7 +113,7 @@ void extract_message(void)
 #ifdef DEBUG_START
 	debug(extracted_number);
 #endif
-	delay(2);
+	delay(0.05);
 }
 
 /***************************************************************************
@@ -126,7 +126,7 @@ void read_message(UINT32 message)
 	  join_strings(GSM_READ_MSG[0],alpha[message]);
 	  join_strings("","\r");
 		gsm_transmit(joined_string);
-		delay(1);
+		delay(0.05);
 	  memset(joined_string,0,200);
 		new_message--;
 		extract_message();
@@ -141,7 +141,7 @@ void delete_message(UINT32 message)
 {
 	buffer_counter = 0;
 	memset(response_temp,0,200);
-	delay(5);
+	delay(0.4);
 	join_strings(GSM_DELETE_MSG[0],alpha[message]);
 	join_strings("","\r");
 	gsm_transmit(joined_string);

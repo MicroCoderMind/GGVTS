@@ -99,7 +99,7 @@ UINT32 strstr_mod(const char *, const char *);
 *               extracted and sent to user via sms after converting        *
 *               it to a web link)                                          *
 ***************************************************************************/
-	extern void functionality(void);
+	extern void functionality(UINT32);
 	
 /***************************************************************************
 *  Funtion Name: join_strings                                              *

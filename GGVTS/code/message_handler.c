@@ -4,7 +4,7 @@
 void check_authentication(const INT8 * str1)
 {
 
-	delay(2);
+	delay(0.05);
 	buffer_counter = 0;
 	memset(response_temp,0,200);
 	if (strcmp(str1,USER_NUMBER))
@@ -18,7 +18,7 @@ void check_authentication(const INT8 * str1)
 	   #endif
 		IGNORE = OFF;
 	}
-	delay(8);
+	delay(0.1);
 	buffer_counter = 0;
 	memset(response_temp,0,200);
 }

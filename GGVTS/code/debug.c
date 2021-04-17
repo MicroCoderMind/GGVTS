@@ -13,7 +13,7 @@
 *  Below are the header files required to build this file                  *
 ***************************************************************************/
 #include "common.h"
-#ifdef DEBUG_START
+//#ifdef DEBUG_START
 /***************************************************************************
 *  Funtion Name: uart_isr_debug                                            *
 ***************************************************************************/
@@ -44,16 +44,16 @@ void uart_init_debug(void)
 void debug(const char * str1)
 {
 	  UINT32 k=0;
-	  delay(1);
+	  delay(0.2);
 	   for (k=0;k<strlen_mod(str1);k++)
 	   {
 	       IO0SET = 0x00000008;
 	       U1THR = str1[k];
-	  		delay(18);
+	  		delay(0.01);
 	   }
 	  REC = OFF;
 	  //buffer_counter = 0;
 	  IO0CLR = 0x00000008;
 }
-#endif
+//#endif
 /********************************End of File*******************************/
