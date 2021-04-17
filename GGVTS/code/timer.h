@@ -11,6 +11,20 @@
 #ifndef __TIMER__
 #define __TIMER__
 
+/***************************************************************************
+*  Funtion Name: timer_isr                                                 *
+*--------------------------------------------------------------------------*
+*  Description: This function will be called when timer 1 runs for time    *
+*               desired by user and this will set global parameter which   *
+*               will further be used to send location after user desired   *
+*               time.                                                      *
+*--------------------------------------------------------------------------*
+*  Input Parameters: none                                                  *
+*  Output Parameters: None                                                 *
+*--------------------------------------------------------------------------*
+*  Comments:                                                               *
+*                                                                          *
+***************************************************************************/
 __irq void timer_isr(void);
     
 /***************************************************************************
@@ -21,14 +35,25 @@ __irq void timer_isr(void);
 *  Input Parameters: float                                                 *
 *  Output Parameters: None                                                 *
 *--------------------------------------------------------------------------*
-*  Comments: Formula used in this is 1sec divided by enetered float value. *
+*  Comments: Formula used in this is 1sec multiplied by input float value. *
 *            For example: If input is 1, generated delay will be 1 second  *
-*            and input is 2 generated delay will be of                     * 
-*			 500ms.                                                        *
+*            and input is 2 generated delay will be of 2 seconds           * 
 *                                                                          *
 ***************************************************************************/
   extern void delay(float);
-	void set_location_frequency(UINT32);
+  
+/***************************************************************************
+*  Funtion Name: sel_location_frequency                                    *
+*--------------------------------------------------------------------------*
+*  Description: This function will start timer 1 for user desired time     *
+*--------------------------------------------------------------------------*
+*  Input Parameters: unsigned integer                                      *
+*  Output Parameters: None                                                 *
+*--------------------------------------------------------------------------*
+*  Comments: User can set timer for 1,3,5,7,10 minutes and after this much *
+*            time location will be sent to user continously.               *
+***************************************************************************/
+  extern void set_location_frequency(UINT32);
   
 /***************************************************************************
 *  Funtion Name: timer_init                                                *
@@ -45,9 +70,9 @@ __irq void timer_isr(void);
   extern void timer_init(void);
   
 /***************************************************************************
-*  Funtion Name: response_back                                          *
+*  Funtion Name: pll_init                                                  *
 *--------------------------------------------------------------------------*
-*  Description: This function will initialize all the global registers
+*  Description: This function will initialize all the global registers     *
 *               related to PLL to use processor at 12 MHz frequency.       *
 *--------------------------------------------------------------------------*
 *  Input Parameters:None                                                   *
