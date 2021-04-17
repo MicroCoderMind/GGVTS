@@ -1,8 +1,56 @@
 #include "common.h"
-UINT32 check_response(void)
+#undef DEBUG_START
+UINT32 check_response_command(void)
 {
-	int check=2,timer =OFF;
-	T1MCR = 0x07;				 //Tell processor to reset timer after 1 sec
+	int check=10;
+	while(ON)
+	{
+		CHECKING = ON;
+		if (REC == ON)
+		{
+			check++;
+		}
+		else
+		{
+			delay(0.1);
+			check--;
+		}
+		if(check <= 0)
+		{
+	      UINT32 i = strlen_mod(response_temp);
+	      if (!(strstr_mod(response_temp,"OK")))
+	      {
+					  ERROR = 0;
+					  CHECKING = OFF;
+	#ifdef DEBUG_START
+		debug("Command response checked Without Error\n");
+	#endif
+	      	  return 0;
+	      }
+	      else if(!(strstr_mod(response_temp,"ERROR")))
+	      {
+					  ERROR=1;
+					  CHECKING = OFF;
+	#ifdef DEBUG_START
+		debug("Command response checked With Error\n");
+	#endif
+	      	  return 1;
+	      }
+				else
+				{
+					#ifdef DEBUG_START
+					    debug(response_temp);
+					    debug("\n");
+					    debug("No Response\n");
+					#endif
+				}
+		}
+  }
+}
+	
+UINT32 check_response_message(void)
+{
+	int check=4,WAIT = OFF;
 	while(ON)
 	{
 		CHECKING = ON;
@@ -22,36 +70,27 @@ UINT32 check_response(void)
 	      {
 					  ERROR = 0;
 					  CHECKING = OFF;
-					module_reset_timer(OFF);
-						  T1MCR = 0x06;				 //Tell processor to reset timer after 1 sec
 	      	  return 0;
 	      }
 	      else if(!(strstr_mod(response_temp,"ERROR")))
 	      {
 					  ERROR=1;
 					  CHECKING = OFF;
-					module_reset_timer(OFF);
-					T1MCR = 0x06;				 //Tell processor to reset timer after 1 sec
 	      	  return 1;
 	      }
-				else if (RESET == OFF)
-					{
-						if(timer == OFF)
-						{
-								module_reset_timer(ON);
-							timer = ON;
-						}
-						continue;
-					}
-					else if (RESET == ON && !(strstr_mod(response_temp,"READY")))
-					{
-						RESET = OFF;
-						CHECKING = OFF;
-						 T1MCR = 0x06;				 //Tell processor to reset timer after 1 sec
-						module_reset_timer(OFF);
+				else if (WAIT == ON)
+				{
+					  U0THR = ESCAPE;
+					  delay(0.5);
 						ERROR=1;
-						return 1;
-					}
+					  CHECKING = OFF;
+	      	  return 1;
+				}
+				else
+				{
+					delay(20);
+					WAIT = ON;
+				}
 		}
   }
 }
@@ -67,17 +106,15 @@ void response_back(const INT8 * ph_number,const INT8 *msg)
 		memset(joined_string,0,200);
 #ifdef DEBUG_START
   debug(msg);
-	debug("Next");
 #endif
 	  gsm_transmit(msg);
-	  delay(1);
-				memset(response_temp,0,200);
+	  delay(0.2);
+		memset(response_temp,0,200);
 		buffer_counter = 0;
 		U0THR = DATA_SEND;
-	  check_response();
-		delay(2);
+	  check_response_message();
 		memset(extracted_location,0,50);
-		delay(8);
+		delay(0.05);
 		memset(response_temp,0,200);
 		buffer_counter = 0;
 	}

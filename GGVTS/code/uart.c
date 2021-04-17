@@ -30,7 +30,6 @@ __irq void uart_isr(void)
 	else
 	{
 		iir_value = U0IIR;
-		while( (U0LSR & 0x40) == 0 );
 	}
 
 	REC = OFF;
@@ -57,9 +56,7 @@ void interrupt_init(void)
 	{
 		VICVectAddr0 = (unsigned) uart_isr;	/* UART0 ISR Address */
 		VICVectAddr2 = (unsigned) timer_isr;	/* UART0 ISR Address */
-#ifdef DEBUG_START
 		VICVectAddr1 = (unsigned) uart_isr_debug;	/* UART0 ISR Address need to remove this line after finishing*/
-#endif
 		VICVectCntl0 = 0x00000026;	/* Enable UART0 IRQ slot */
 		VICVectCntl1 = 0x00000027;	/* Enable UART1 IRQ slot need to remove this line after finishing*/
 		VICVectCntl2 = 0x00000025;	/* Enable TImer 1 Interrupt*/

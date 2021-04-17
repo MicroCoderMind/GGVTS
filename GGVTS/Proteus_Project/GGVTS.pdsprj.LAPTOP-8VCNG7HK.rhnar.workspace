@@ -1,13 +1,12 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <WORKSPACE>
- <FRAME activewindow="1">
+ <FRAME activewindow="0">
   <PLACEMENT>2c0000000200000003000000ffffffffffffffffffffffffffffffffae0000000c000000d2060000fe030000</PLACEMENT>
-  <WINDOW type="default" module="STARTUP"/>
   <WINDOW type="default" module="ISIS"/>
  </FRAME>
  <MODULE name="VSMDEBUG">
   <PWI>
-   <POPUP w="800" x="914" flags="00000002" y="0" h="200" pid="0" iid="-1">
+   <POPUP w="800" x="914" flags="00000003" y="0" h="200" pid="0" iid="-1">
     <PROPERTIES>
      <ITEM name="Message Column Width">528</ITEM>
      <ITEM name="ShowGrid">No</ITEM>
@@ -32,7 +31,9 @@
      <ITEM name="Item 16">"PC","0xE0008010",00000001,00008002,16,4,4,00000004,0,00000000,00000000</ITEM>
      <ITEM name="Item 17">"TC","0xE0008008",00000001,00008002,8,4,4,00000004,0,00000000,00000000</ITEM>
      <ITEM name="Item 18">"MR0","0xE0008018",00000001,00008002,24,4,4,00000004,0,00000000,00000000</ITEM>
+     <ITEM name="Item 19">"TCR","0xE0008004",00000001,00008002,4,1,2,E4010000,0,00000000,00000000</ITEM>
      <ITEM name="Item 2">"LCR","0xE000C00C",00000001,00008003,12,1,2,4B950000,0,00000000,00000000</ITEM>
+     <ITEM name="Item 20">"IR","0xE0008000",00000001,00008002,0,1,2,593D0000,0,00000000,00000000</ITEM>
      <ITEM name="Item 3">"LSR","0xE000C014",00000001,00008003,20,1,2,C58C0000,0,00000000,00000000</ITEM>
      <ITEM name="Item 4">"VECTADDR0","0xFFFFF100",00000001,0000FFFF,256,4,2,00000004,0,00000000,00000000</ITEM>
      <ITEM name="Item 5">"IRQSTATUS","0xFFFFF000",00000001,0000FFFF,0,4,2,00000004,0,00000000,00000000</ITEM>
@@ -49,10 +50,10 @@
      <ITEM name="Value Column Width">193</ITEM>
      <ITEM name="Version">100</ITEM>
      <ITEM name="Watch Expression Column Width">81</ITEM>
-     <ITEM name="nItems">19</ITEM>
+     <ITEM name="nItems">21</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="1325" x="0" flags="00000063" y="0" h="338" pid="0" iid="2">
+   <POPUP w="1828" x="0" flags="00008023" y="599" h="448" pid="0" iid="2">
     <PROPERTIES>
      <ITEM name="AutoEcho">1</ITEM>
      <ITEM name="HexMode">0</ITEM>
@@ -264,7 +265,7 @@
      <ITEM name="TopLineAddress">FFFFF000</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="1326" x="-1" flags="00008063" y="331" h="133" pid="0" iid="7">
+   <POPUP w="1824" x="3" flags="00000023" y="6" h="347" pid="0" iid="7">
     <PROPERTIES>
      <ITEM name="AutoEcho">1</ITEM>
      <ITEM name="HexMode">0</ITEM>

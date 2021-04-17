@@ -1,46 +1,35 @@
 #include "common.h"
+#undef DEBUG_START
 __irq void timer_isr(void)
 {
-	#ifdef DEBUG_START
-  debug("Timer Interrupt");
-#endif
-		T1TCR = 0x02;        //Stop Timer
-	  reset_module();
+	  T1IR = 0x01;
+	  #ifdef DEBUG_START
+        debug("Timer Interrupt Start\n");
+    #endif
+    SEND_LOCATION = ON;
+		  #ifdef DEBUG_START
+        debug("Timer Interrupt End\n");
+    #endif
 		VICVectAddr = 0x00;
 }
-
-void module_reset_timer(UINT32 start_stop)
+void set_location_frequency(UINT32 freq)
 {
-		
-	if (start_stop == ON)
-	{
-		T1PR = 11999/(0.015625); 			 //Value to make delay of 2 minute
-			#ifdef DEBUG_START
-  debug("Timer Start");
-#endif
-	  T1TCR = 0x01;        //Start Timer
-	}
-	else if (start_stop == OFF)
-	{
-
-		T1TCR = 0x02;				 //Reset Timer
-			#ifdef DEBUG_START
-  debug("Timer Stop");
-#endif
-	}
-	else
-	{
-		//Do Nothing
-	}
+	T1PR = 11999 * freq * 60; 			 //Value to make delay of 2 minute
+	#ifdef DEBUG_START
+      debug("Timer Start");
+  #endif
+	T1TCR = 0x01;        //Start Timer
+	return;
 }
 
-void delay(float divisor)
+void delay(float seconds)
 {
-		T0PR = 11999/divisor; 			 //Value to make delay of 1ms
+		T0PR = (UINT32)(11999 * seconds); 			 //Value to make delay of 1ms
 	  T0TCR = 0x01;        //Start Timer
 		while(T0TCR);        //Wait until timer reset (1 sec delay generated)
 		T0TCR = 0x00;        //Stop Timer
 }
+
 void timer_init(void)
 {
 	if (!ERROR)

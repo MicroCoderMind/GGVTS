@@ -11,6 +11,8 @@
 #ifndef __RESPONSE__
 #define __RESPONSE__
 
+extern UINT8 ESCAPE;
+
 /***************************************************************************
 *  Funtion Name: check_response                                            *
 *--------------------------------------------------------------------------*
@@ -25,7 +27,8 @@
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-  extern UINT32 check_response(void);
+extern UINT32 check_response_command(void);
+extern UINT32 check_response_message(void);
   
 /***************************************************************************
 *  Funtion Name: response_back                                         *
