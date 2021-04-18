@@ -5,7 +5,7 @@
 *               debugging purpose.                                         *
 *                                                                          *
 *--------------------------------------------------------------------------*
-*  Comments:	                                                             *
+*  Comments:	                                                           *
 *                                                                          *
 ***************************************************************************/
   
@@ -21,10 +21,10 @@
 *  Input Parameters: None                                                  *
 *  Output Parameters: None                                                 *
 *--------------------------------------------------------------------------*
-*  Comments:	                                                             *
+*  Comments:	                                                           *
 *                                                                          *
 ***************************************************************************/
-  __irq void uart_isr_debug(void);        /*This function contains ISR for interrupt related to UART1*/
+  __irq void uart_isr_debug(void);
 
 /***************************************************************************
 *  Funtion Name: uart_init_debug                                           *
@@ -35,10 +35,10 @@
 *  Input Parameters: None                                                  *
 *  Output Parameters: None                                                 *
 *--------------------------------------------------------------------------*
-*  Comments:	                                                             *
+*  Comments:	                                                           *
 *                                                                          *
 ***************************************************************************/
-  extern void uart_init_debug(void);      /*This function contains initialization of all the registers used for UART1*/
+  extern void uart_init_debug(void);
 
 /***************************************************************************
 *  Funtion Name: debug                                                     *
@@ -50,10 +50,10 @@
 *                    terminal through UART1                                *
 *  Output Parameters: None                                                 *
 *--------------------------------------------------------------------------*
-*  Comments:	                                                             *
+*  Comments:	                                                           *
 *                                                                          *
 ***************************************************************************/
-  extern void debug(const char *);        /*This function contains funct  onality in which data is sent to UART1 */
+  extern void debug(const char *);
 
 #endif
 /******************************End of File*********************************/
