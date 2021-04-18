@@ -5,7 +5,7 @@
 *               debugging purpose.                                         *
 *                                                                          *
 *--------------------------------------------------------------------------*
-*  Comments:	                                                             *
+*  Comments:	                                                           *
 *                                                                          *
 ***************************************************************************/
 
@@ -14,15 +14,15 @@
 ***************************************************************************/
 #include "common.h"
 //#ifdef DEBUG_START
+
 /***************************************************************************
 *  Funtion Name: uart_isr_debug                                            *
 ***************************************************************************/
 __irq void uart_isr_debug(void)
 {
-	UINT32 iir_value;
-  iir_value = U1IIR;
-	iir_value = iir_value;
-	VICVectAddr = 0x00;
+	UINT32 iir_value;       /* Local variable to clear interrupt */
+    iir_value = U1IIR;      /* Cleaaring interrupt */
+	VICVectAddr = 0x00;     /* Informing processor that interrupt ends here */
 }
 
 /***************************************************************************
@@ -43,17 +43,15 @@ void uart_init_debug(void)
 ***************************************************************************/
 void debug(const char * str1)
 {
-	  UINT32 k=0;
-	  delay(0.2);
-	   for (k=0;k<strlen_mod(str1);k++)
-	   {
-	       IO0SET = 0x00000008;
-	       U1THR = str1[k];
-	  		delay(0.01);
-	   }
-	  REC = OFF;
-	  //buffer_counter = 0;
-	  IO0CLR = 0x00000008;
+    UINT32 k=0;                         /* Local variable used as counter */
+	delay(0.2);                         /* Delay of 0.2 seconds */
+	for (k=0;k<strlen_mod(str1);k++)    /* For loop */
+	{
+	    U1THR = str1[k];                /* Writing data in transmit buffer */
+	    delay(0.01);                    /* delay of 0.01 seconds */
+	}
+	REC = OFF;                          /* Flag used for debug purpose */
 }
 //#endif
+
 /********************************End of File*******************************/
