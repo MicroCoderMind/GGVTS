@@ -6,7 +6,7 @@
 *               for eg. join strings, counting string length etc.          *
 *                                                                          *
 *--------------------------------------------------------------------------*
-*  Comments:	                                                           *
+*  Comments:	                                                               *
 *                                                                          *
 ***************************************************************************/
 
@@ -290,8 +290,6 @@ void wait_for_message()
                     }
 #ifdef DEBUG_START
     debug(alpha[new_message]);
-#endif
-#ifdef DEBUG_START
     debug(alpha[message]);
 #endif
                 }
