@@ -6,7 +6,7 @@
 *               for eg. join strings, counting string length etc.          *
 *                                                                          *
 *--------------------------------------------------------------------------*
-*  Comments:	                                                               *
+*  Comments:	                                                           *
 *                                                                          *
 ***************************************************************************/
 
@@ -15,6 +15,7 @@
 ***************************************************************************/
 #include"common.h"
 #undef DEBUG_START
+
 /***************************************************************************
 *  Funtion Name: join_strings                                              *
 ***************************************************************************/
@@ -38,13 +39,13 @@ void join_strings(const INT8 * str1,const INT8 *str2)
 ***************************************************************************/
 UINT32 strlen_mod(const char * ptr)
 {
-	int i;                          /* Local variable used as index */
-	UINT32 characters=0;            /* Local variable used to count number of characters */
-	for (i=0;ptr[i]!='\0';i++)      /* For Loop */
-	{
-		characters++;               /* Incrementing local variable to count charaters in string */
-	}
-	return characters;              /* Returning number of characters present in string */
+    int i;                          /* Local variable used as index */
+    UINT32 characters=0;            /* Local variable used to count number of characters */
+    for (i=0;ptr[i]!='\0';i++)      /* For Loop */
+    {
+        characters++;               /* Incrementing local variable to count charaters in string */
+    }
+    return characters;              /* Returning number of characters present in string */
 }
 
 /***************************************************************************
@@ -52,12 +53,12 @@ UINT32 strlen_mod(const char * ptr)
 ***************************************************************************/
 void strcpy_mod(char * str1,char * str2)
 {
-	UINT32 i;                        /* Local variable used as counter */
-	for (i=0;str2[i]!='\0';i++)      /* For loop */
-	{
-		str1[i] = str2[i];           /* Copying string 2 in string 1 */
-	}
-	str1[i] = '\0';                  /* Appending null character in newly copied string i.e. string 1 */               
+    UINT32 i;                        /* Local variable used as counter */
+    for (i=0;str2[i]!='\0';i++)      /* For loop */
+    {
+        str1[i] = str2[i];           /* Copying string 2 in string 1 */
+    }
+    str1[i] = '\0';                  /* Appending null character in newly copied string i.e. string 1 */               
 }
 /***************************************************************************
 *  Funtion Name: strcmp_mod                                                *
@@ -92,165 +93,166 @@ INT32 strcmp_mod(const char * str1, const char * str2)
 ***************************************************************************/
 void functionality(UINT32 message)
 {
-    UINT32 in_message=0;
-    char temp_reply[200];
-#ifdef DEBUG_START
-    debug(extracted_message);
-#endif
-    if (strcmp_mod(extracted_message,"Bulb ON\0") == 0)
+    UINT32 in_message=0;                                         /* Local variable to determine whether message received is from functionalities GGVTS can perform */
+    char temp_reply[200];                                        /* Local buffer to store a string temporary */
+#ifdef DEBUG_START                                               /* For debug purpose */
+    debug(extracted_message);                                    /* For debug purpose */
+#endif                                                           /* For debug purpose */
+    if (strcmp_mod(extracted_message,"Bulb ON\0") == 0)          /* Check if message os Bulb ON */
     {
-        if (IGNORE == OFF)
+        if (IGNORE == OFF)                                       /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
-            IO0SET = IO0SET | 0x00000010;
-            delay(0.1);
-            memset(extracted_message,0,50);
-            in_message=0;
+            IO0SET = IO0SET | 0x00000010;                        /* Switching ON bulb */
+            delay(0.1);                                          /* Delay of 0.1 seconds */
+            memset(extracted_message,0,50);                      /* Clearing buffer used to extract message */
+            in_message=0;                                        /* Telling GGVTS that dont perform in_message functionality */
         }
         else
         {
-            in_message = 1;
+            in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
         }
     }
-    else if(strcmp_mod(extracted_message,"Bulb OFF\0") == 0)
+    else if(strcmp_mod(extracted_message,"Bulb OFF\0") == 0)     /* Check if message os Bulb OFF */
     {
-        if (IGNORE == OFF)
+        if (IGNORE == OFF)                                       /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
-            IO0CLR = 0x00000010;
-            delay(1);
-            in_message=0;
+            IO0CLR = 0x00000010;                                 /* Switching OFF bulb */
+            delay(0.1);                                          /* Delay of 0.1 seconds */
+            memset(extracted_message,0,50);                      /* Clearing buffer used to extract message */
+            in_message=0;                                        /* Telling GGVTS that dont perform in_message functionality */
         }
         else
         {
-            in_message = 1;
+            in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
         }
     }
-    else if(strcmp_mod(extracted_message,"LCTN\0") == 0)
+    else if(strcmp_mod(extracted_message,"LCTN\0") == 0)         /* Check if message os LCTN */
     {
-        if (IGNORE == OFF)
+        if (IGNORE == OFF)                                       /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
-            send_location();
-            delay(1);
-            in_message=0;
+            send_location();                                     /* Function call to send location */
+            delay(0.1);                                          /* Delay of 0.1 seconds */
+            in_message=0;                                        /* Telling GGVTS that dont perform in_message functionality */
         }
         else
         {
-            in_message = 1;
+            in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
         }
     }
-    else if(strcmp_mod(extracted_message,"LCTN FREQ 1\0") == 0)
+    else if(strcmp_mod(extracted_message,"LCTN FREQ 1\0") == 0)  /* Check if message os LCTN FREQ 1*/
     {
-        if (IGNORE == OFF)
+        if (IGNORE == OFF)                                       /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
-            set_location_frequency(1);
-            delay(1);
-            in_message=0;
+            set_location_frequency(1);                           /* Function call to set frequency of location messages as 1 minute */
+            delay(0.1);                                          /* Delay of 0.1 seconds */
+            in_message=0;                                        /* Telling GGVTS that dont perform in_message functionality */
         }
         else
         {
-            in_message = 1;
+            in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
         }
     }
-    else if(strcmp_mod(extracted_message,"LCTN FREQ 3\0") == 0)
+    else if(strcmp_mod(extracted_message,"LCTN FREQ 3\0") == 0)  /* Check if message os LCTN FREQ 3*/
     {
-        if (IGNORE == OFF)
+        if (IGNORE == OFF)                                       /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
-            set_location_frequency(3);
-            delay(1);
-            in_message=0;
+            set_location_frequency(3);                           /* Function call to set frequency of location messages as 3 minute */
+            delay(0.1);                                          /* Delay of 0.1 seconds */
+            in_message=0;                                        /* Telling GGVTS that dont perform in_message functionality */
         }
         else
         {
-            in_message = 1;
+            in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
         }
     }
-    else if(strcmp_mod(extracted_message,"LCTN FREQ 5\0") == 0)
+    else if(strcmp_mod(extracted_message,"LCTN FREQ 5\0") == 0)  /* Check if message os LCTN FREQ 5*/
     {
-        if (IGNORE == OFF)
+        if (IGNORE == OFF)                                       /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
-            set_location_frequency(5);
-            delay(1);
-            in_message=0;
+            set_location_frequency(5);                           /* Function call to set frequency of location messages as 5 minute */
+            delay(0.1);                                          /* Delay of 0.1 seconds */
+            in_message=0;                                        /* Telling GGVTS that dont perform in_message functionality */
         }
         else
         {
-            in_message = 1;
+            in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
         }
     }
-    else if(strcmp_mod(extracted_message,"LCTN FREQ 7\0") == 0)
+    else if(strcmp_mod(extracted_message,"LCTN FREQ 7\0") == 0)  /* Check if message os LCTN FREQ 7 */
     {
-        if (IGNORE == OFF)
+        if (IGNORE == OFF)                                       /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
-            set_location_frequency(7);
-            delay(1);
-            in_message=0;
+            set_location_frequency(7);                           /* Function call to set frequency of location messages as 7 minute */
+            delay(0.1);                                          /* Delay of 0.1 seconds */
+            in_message=0;                                        /* Telling GGVTS that dont perform in_message functionality */
         }
         else
         {
-            in_message = 1;
+            in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
         }
     }
-    else if(strcmp_mod(extracted_message,"LCTN FREQ 10\0") == 0)
+    else if(strcmp_mod(extracted_message,"LCTN FREQ 10\0") == 0)  /* Check if message os LCTN FREQ 10 */
     {
-        if (IGNORE == OFF)
+        if (IGNORE == OFF)                                       /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
-            set_location_frequency(10);
-            delay(1);
-            in_message=0;
+            set_location_frequency(10);                          /* Function call to set frequency of location messages as 10 minute */
+            delay(0.1);                                          /* Delay of 0.1 seconds */
+            in_message=0;                                        /* Telling GGVTS that dont perform in_message functionality */
         }
         else
         {
-            in_message = 1;
+            in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
         }
     }
-    else if(strcmp_mod(extracted_message,"LCTN FREQ 0\0") == 0)
+    else if(strcmp_mod(extracted_message,"LCTN FREQ 0\0") == 0)   /* Check if message os LCTN FREQ 0 */
     {
-        if (IGNORE == OFF)
+        if (IGNORE == OFF)                                       /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
-            SEND_LOCATION = OFF;
-            T1TCR = 0x02;        //Stop Timer
-            delay(1);
-            response_back(USER_NUMBER,"LCTN_FREQ stopped!!!");
-            in_message=0;
+            SEND_LOCATION = OFF;                                 /* Telling GGVTS to stop sending location */
+            T1TCR = 0x02;        //Stop Timer                    /* Turmimg OFF timer which will generate interrupt to send location */
+            delay(0.1);                                          /* Delay of 0.1 seconds */
+            response_back(USER_NUMBER,"LCTN_FREQ stopped!!!");   /* Informing user that no more loaction messages will be snt by GGVTS */
+            in_message=0;                                        /* Telling GGVTS that dont perform in_message functionality */
         }
         else
         {
-            in_message = 1;
+            in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
         }
     }
     else
     {
-        if (IGNORE == OFF)
+        if (IGNORE == OFF)                                       /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
-            response_back(USER_NUMBER,"Unrecognised Command, Try Again!!!");
-            delay(0.1);
-            memset(extracted_message,0,50);
-            in_message=0;
+            response_back(USER_NUMBER,"Unrecognised Command, Try Again!!!"); /* Informing user that message is unrecognised */
+            delay(0.1);                                                      /* Delay of 0.1 seconds */
+            memset(extracted_message,0,50);                                  /* Emptying buffer which is used to extract message */
+            in_message=0;                                                    /* Telling GGVTS not to perform in_message functionality */
         }
     }
-    if (IGNORE == ON && in_message == 1)
+    if (IGNORE == ON && in_message == 1)                         /* If message is not from user and it is one of the functionality GGVTS can perform */
     {
-        join_strings("Security Violation Alert!!!","\n");
-        join_strings(extracted_number,extracted_message);
-        strcpy_mod(temp_reply,joined_string);
-        delay(0.1);
-        memset(joined_string,0,200);
-        response_back(USER_NUMBER,temp_reply);
-        IGNORE = OFF;
-        delay(0.1);
+        join_strings("Security Violation Alert!!!","\n");        /* Joining strings */
+        join_strings(extracted_number,extracted_message);        /* Joining strings */
+        strcpy_mod(temp_reply,joined_string);                    /* Copying joined_message in temporary buffer */
+        delay(0.1);                                              /* Delay of 0.1 seconds */
+        memset(joined_string,0,200);                             /* Emptying buffer used to join strings */
+        response_back(USER_NUMBER,temp_reply);                   /* Infroming user about security violations */
+        IGNORE = OFF;                                            /* Making message ignore off for further use */
+        delay(0.1);                                              /* Delay of 0.1 seconds */
     }
-    else if(IGNORE == ON && in_message == 0)
+    else if(IGNORE == ON && in_message == 0)                     /* If message is not from user and it is from the functionalities GGVTS can perform */
     {
-        join_strings(extracted_number,extracted_message);
-        strcpy_mod(temp_reply,joined_string);
-        delay(0.1);
-        memset(joined_string,0,200);
-        response_back(USER_NUMBER,temp_reply);
-        IGNORE = OFF;
-        delay(0.1);
+        join_strings(extracted_number,extracted_message);        /* Joining strings */
+        strcpy_mod(temp_reply,joined_string);                    /* Copying joined_message in temporary buffer */
+        delay(0.1);                                              /* Delay of 0.1 seconds */
+        memset(joined_string,0,200);                             /* Emptying buffer used to join strings */
+        response_back(USER_NUMBER,temp_reply);                   /* Infroming user about new message */
+        IGNORE = OFF;                                            /* Making message ignore off for further use */
+        delay(0.1);                                              /* Delay of 0.1 seconds */
     }
-    memset(temp_reply,0,200);
-    memset(extracted_message,0,50);
-    memset(extracted_number,0,14);
+    memset(temp_reply,0,200);                                    /* Emptying temporary buffer */
+    memset(extracted_message,0,50);                              /* Emptying buffer used to extract message */
+    memset(extracted_number,0,14);                               /* Emptying buffer used to extract number */
 }
 
 /***************************************************************************
@@ -258,81 +260,81 @@ void functionality(UINT32 message)
 ***************************************************************************/
 void wait_for_message()
 {
-    UINT32 user_info_stored = ON;
-    if (user_info_stored)
+    UINT32 user_info_stored = ON;                                      /* Local variable, used to determine whether user infor is stored or not */
+    INT32 message=0;                                                   /* Local variable to count number of messages already read */
+    if (user_info_stored)                                              /* If user infor is not stored, this block will execute */
     {
-        response_back(USER_NUMBER,"User Name and Number please!!!");
+        response_back(USER_NUMBER,"User Name and Number please!!!");   /* Message to owner for user details */
     }
-    int message=0;
-    buffer_counter = 0;
-    memset(response_temp,0,200);
-    while(ON)
+    buffer_counter = 0;                                                /* Making characyer counter for main buffer as 0 */
+    memset(response_temp,0,200);                                       /* Emptying main buffer */
+    while(ON)                                                          /* Infinite Loop */
     {
-        delay(0.1);
-        if (!ERROR && user_info_stored == OFF)
+        delay(0.1);                                                    /* Delay of 0.1 seconds */
+        if (!ERROR && user_info_stored == OFF)                         /* If there is no error and user information is stored successfull, this block will execute */
         {
-            if(REC == OFF)
+            if(REC == OFF)                                             /* to be removed in future */
             {
-                message=0;
-                delay(0.1);
-                while(new_message > 0)
+                message=0;                                             /* Making read message number as 0 */
+                delay(0.1);                                            /* delay of 0.1 seconds */
+                while(new_message > 0)                                 /* Loop back untill there is no new message */
                 {
-                    message++;
-                    delay(0.1);
-                    memset(response_temp,0,200);
-                    buffer_counter = 0;
-                    if (!CHECKING)
+                    message++;                                         /* Incrementing read message number */
+                    delay(0.1);                                        /* delay of 0.1 seconds */
+                    buffer_counter = 0;                                /* Making characyer counter for main buffer as 0 */
+                    memset(response_temp,0,200);                       /* Emptying main buffer */
+                    if (!CHECKING)                                     /* to be removed in future */
                     {
-                        read_message(message);
-                        check_authentication(extracted_number);
-                        functionality(message);
-                        delete_message(message);
+                        read_message(message);                         /* Function call to read message */
+                        check_authentication(extracted_number);        /* Function call to check authentication of message */
+                        functionality(message);                        /* Function call to perform required functionality */
+                        delete_message(message);                       /* Function call to delete message whose functionality is over */
                     }
-#ifdef DEBUG_START
-    debug(alpha[new_message]);
-    debug(alpha[message]);
-#endif
+#ifdef DEBUG_START                                                     /* for debug purpose */
+    debug(alpha[new_message]);                                         /* for debug purpose */
+    debug(alpha[message]);                                             /* for debug purpose */
+#endif                                                                 /* for debug purpose */
                 }
-                if (SEND_LOCATION == ON)
+                if (SEND_LOCATION == ON)                               /* Check if location has to be sent now due to interrupt */
                 {
-                    send_location();
-                    SEND_LOCATION = OFF;
+                    send_location();                                   /* Function call to send location */
+                    SEND_LOCATION = OFF;                               /* Stopping processor from sending location continously */
                     T1TCR = 0x01;        //Start Timer
                 }
             }
             else
             {
-#ifdef DEBUG_START
-    debug(response_temp);
-#endif
-                continue;
+#ifdef DEBUG_START                                                     /* Debug prposre */
+    debug(response_temp);                                              /* Debug purpose */
+#endif                                                                 /* Debug purpose */
+                continue;                                              /* Continue if user info is not stored */
             }
         }
-        else if(!ERROR && user_info_stored)
+        else if(!ERROR && user_info_stored)                            /* If there is no error and user info is not stored */
         {
-            if(REC == OFF)
+            if(REC == OFF)                                             /* To be removed in future */
             {
-                message=0;
-				while(new_message > 0)
+                message=0;                                             /* Making read messages number as 0 */
+                while(new_message > 0)                                 /* Loop until there is no unread message */
                 {
-                    message++;
-                    delay(0.5);
-#ifdef DEBUG_START
-    debug(response_temp);
-#endif
-                    read_message(message);
-                    user_info_stored = extract_user_info();
-                    delete_message(message);
-                    break;
+                    message++;                                         /* Incrementing number of read messages */
+                    delay(0.5);                                        /* Delay of 0.5 seconds */
+#ifdef DEBUG_START                                                     /* For debug purpose */
+    debug(response_temp);                                              /* For debug purpose */
+#endif                                                                 /* For debug purpose */
+                    read_message(message);                             /* Function call to read new message */
+                    user_info_stored = extract_user_info();            /* Function call to extract user info */
+                    delete_message(message);                           /* function call to delete message */
+                    break;                                             /* Exit loop when user info is extracted */
                 }
             }
         }
         else
         {
-#ifdef DEBUG_START
-	debug(alpha[new_message]);
-#endif
-            continue;
+#ifdef DEBUG_START                                                     /* For debug purpose */
+    debug(alpha[new_message]);                                         /* For debug purpose */
+#endif                                                                 /* For debug purpose */
+            continue;                                                  /* Continue if user info is not stored */
         }
     }
 }
@@ -366,10 +368,10 @@ UINT32 extract_user_info(void)
             USER_NUMBER[j] = extracted_message[i++];  /* Storing extracted number in USER_NUMBER buffer */
         }
     }
-#ifdef DEBUG_START                 /* For debug purpose */
-    debug(USER_NUMBER);            /* For debug purpose */
-    debug(alpha[OFF]);             /* for debug purpose */
-#endif                             /* For debug purpose */
+#ifdef DEBUG_START                           /* For debug purpose */
+    debug(USER_NUMBER);                      /* For debug purpose */
+    debug(alpha[OFF]);                       /* for debug purpose */
+#endif                                       /* For debug purpose */
     join_strings("Greetings!!!",USER_NAME);  /* Joining gtrrting message for user */  
     strcpy_mod(temp,joined_string);          /* Copying joined_string buffer in temporary buffer */
     memset(joined_string,0,200);             /* Emptying joined_string buffer for further use */
