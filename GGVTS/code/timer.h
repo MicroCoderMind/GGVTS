@@ -67,7 +67,11 @@ __irq void timer_isr(void);
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-  extern void timer_init(void);
+  extern void timer_0_init(void);
+	
+	  extern void timer_1_init(void);
+	
+	extern void delete_message_timer(void);
   
 /***************************************************************************
 *  Funtion Name: pll_init                                                  *

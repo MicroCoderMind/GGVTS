@@ -13,9 +13,8 @@ const INT8 * MAP_LINK[1] = {"maps.google.com/maps/place/"};
 INT8 response_temp_diag[50];
 UINT32 buffer_counter_diag=0;
 INT8 USER_NAME[20];
-INT8 USER_NUMBER[14] ={"+919915990657"};
+INT8 USER_NUMBER[14] ={"+919566243293"};
 UINT8 IGNORE = OFF;
-UINT8 BUSY = OFF;
 UINT8 SEND_LOCATION = OFF;
 char extracted_message[50];
 char extracted_number[14];
@@ -38,6 +37,11 @@ UINT32 Ignore_Char;
 UINT32 new_mes=0,comp=1;
 volatile UINT32 new_message=0;
 UINT32 message_counter_temp=0;
+char LOCATION = OFF;
+char TIMER = OFF;
+UINT8 READ_MESSAGE = 0;
+INT32 message = 0;
+char DELETE_MESSAGES = OFF;
 
 int main(void)
 {
@@ -49,7 +53,8 @@ int main(void)
 	}
 	IO0DIR=0X0000FFFC;
 	pll_init();
-	timer_init();
+	timer_0_init();
+	timer_1_init();
 	uart_init();
   	uart_init_debug();
   	interrupt_init();

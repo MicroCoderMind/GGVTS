@@ -42,6 +42,8 @@
 		extern UINT32 Ignore_Char;
 	//extern UINT32 user_info_stored;
 	extern char joined_string[200];
+  extern char LOCATION;
+	  extern char TIMER;
     extern char extracted_message[50];
 		 extern char extracted_number[14];
 		 extern void init_module(void);
@@ -49,6 +51,8 @@
 			extern volatile UINT32 new_message;
 			extern UINT32 message_counter_temp;
 		extern UINT32 RESET;
-		extern UINT8 BUSY;
+		extern UINT8 READ_MESSAGE;
+		extern char DELETE_MESSAGES;
+		extern INT32 message;                                                   /* Local variable to count number of messages already read */
 #endif
 /********************************End of File*******************************/

@@ -13,13 +13,12 @@
 *  Below are the header files required to build project                    *
 ***************************************************************************/
 #include "common.h"
-//#define DEBUG_START
+#define DEBUG_START
 /***************************************************************************
 *  Funtion Name: gsm_init                                                  *
 ***************************************************************************/
 void gsm_init()
 {
-	BUSY = ON;
 	if (!ERROR)
 	{
 	    unsigned int k;
@@ -36,7 +35,6 @@ void gsm_init()
 	    		response_back(USER_NUMBER,"Initialization Unsuccessfull!! Trying Again...");
 							buffer_counter = 0;
 	  	        memset(response_temp,0,200);
-					BUSY = OFF;
 	    		return;
 	    	}
 	    }
@@ -45,7 +43,6 @@ void gsm_init()
 	{
 		//response_back(USER_NUMBER,"Initialising System!!! Please Wait...");
 	}
-	BUSY = OFF;
 }
 
 /***************************************************************************
@@ -54,18 +51,16 @@ void gsm_init()
 void gsm_transmit(const INT8 * str1)
 {
 	unsigned int k;
-	BUSY = ON;
 	for (k=0;k<strlen_mod(str1);k++)
 	{
 	    IO0SET = 0x00000008;
 	    U0THR = str1[k];
-	    delay(0.08);
+	    delay(0.02);
 	}
 #ifdef DEBUG_START
   	debug(response_temp);
 #endif
 	IO0CLR = 0x00000008;
-	BUSY = OFF;
 }
 
 /***************************************************************************
@@ -134,6 +129,7 @@ void read_message(UINT32 message)
 		delay(1);
 	  memset(joined_string,0,200);
 		new_message--;
+	  READ_MESSAGE++;
 		extract_message();
 		buffer_counter = 0;
 	  memset(response_temp,0,200);

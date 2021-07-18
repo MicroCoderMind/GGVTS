@@ -26,7 +26,6 @@ const INT8 * cold_start[1] = {"AT+CGPSRST=0\r"};
 ***************************************************************************/
 void gps_init(void)
 {
-	BUSY = ON;
 	if (!ERROR)
 	{
 	  gsm_transmit(GPS_INIT[0]);
@@ -47,7 +46,6 @@ void gps_init(void)
 		//check_gps_status();
 	}
 }
-	BUSY = OFF;
 }
 
 /***************************************************************************
@@ -236,7 +234,6 @@ void extract_location(void)
 
 void send_location(void)
 {
-	  BUSY = ON;
 		char temp_reply[200];
 	  delay(0.1);
 		get_gps_location();
@@ -245,6 +242,5 @@ void send_location(void)
 	  delay(0.4);
 	  memset(joined_string,0,200);
 	  response_back(USER_NUMBER,temp_reply);
-	  BUSY = OFF;
 }
 /********************************End of File*******************************/

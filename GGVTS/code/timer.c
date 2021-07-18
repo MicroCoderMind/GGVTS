@@ -24,7 +24,19 @@ __irq void timer_isr(void)
 #ifdef DEBUG_START                      /* Debug Purpose */
     debug("Timer Interrupt Start\n");   /* Debug purpose */
 #endif                                  /* Debug purpose */
+	if (LOCATION == ON)
+	{
     SEND_LOCATION = ON;                 /* Global variable to enable SEND_FREQ functionality */
+	}
+	if (TIMER == ON)
+	{
+       DELETE_MESSAGES = ON;
+	}
+	if (TIMER == OFF)
+	{
+		DELETE_MESSAGES = OFF;
+		//Do not delete messages as there are messages in buffer.
+	}
 #ifdef DEBUG_START                      /* Debug purpose */
     debug("Timer Interrupt End\n");     /* Debug purpose */
 #endif                                  /* Debug purpose */
@@ -36,7 +48,22 @@ __irq void timer_isr(void)
 ***************************************************************************/
 void set_location_frequency(UINT32 freq)
 {
+	  LOCATION = ON;
     T1PR = 11999 * freq * 60; 	/* To make timer run for desired time, freq can have values 1,3,5,7,10 */
+#ifdef DEBUG_START              /* Debug purpose */
+    debug("Timer Start");       /* Debug purpose */
+#endif                          /* Debug purpose */
+    T1TCR = 0x01;               /* Start Timer */
+    return;                     /* Return statement */
+}
+
+/***************************************************************************
+*  Funtion Name: set_location_frequency                                    *
+***************************************************************************/
+void delete_message_timer(void)
+{
+	  TIMER = ON;
+    T1PR = 11999 * 5; 	/* To make timer run for desired time, freq can have values 1,3,5,7,10 */
 #ifdef DEBUG_START              /* Debug purpose */
     debug("Timer Start");       /* Debug purpose */
 #endif                          /* Debug purpose */
@@ -56,23 +83,31 @@ void delay(float seconds)
 }
 
 /***************************************************************************
-*  Funtion Name: timer_init                                                *
+*  Funtion Name: timer_0_init                                                *
 ***************************************************************************/
-void timer_init(void)
+void timer_0_init(void)
 {
-	BUSY = ON;
     if (!ERROR)
     {
         T0TCR = 0x02;	     /* Reset Timer */
         T0CTCR = 0x00;       /* Set Timer 0 into Timer Mode */
         T0MCR = 0x06;	     /* Tell processor to reset timer after 1 sec */
         T0MR0 = 1000;        /* Value to make delay of 1sec */
+    }
+}
+
+/***************************************************************************
+*  Funtion Name: timer_1_init                                                *
+***************************************************************************/
+void timer_1_init(void)
+{
+    if (!ERROR)
+    {
         T1TCR = 0x02;	     /* Reset Timer */
         T1CTCR = 0x00;       /* Set Timer 1 into Timer Mode */
         T1MCR = 0x07;	     /* Tell processor to reset timer after 1 sec and enable timer 1 interrupt */
         T1MR0 = 1000;        /* Value to make delay of 1sec */
     }
-		BUSY = OFF;
 }
 
 /***************************************************************************
@@ -80,7 +115,6 @@ void timer_init(void)
 ***************************************************************************/
 void pll_init(void)
 {
-	BUSY = ON;
 	if (!ERROR)
 	{
 	  PLL0CON = 0x01;
@@ -93,5 +127,4 @@ void pll_init(void)
 	  PLL0FEED = 0x55;
 	  VPBDIV = 0x01;
 	}
-	BUSY = OFF;
 }

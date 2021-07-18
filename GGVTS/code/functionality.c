@@ -98,7 +98,7 @@ void functionality(UINT32 message)
 #ifdef DEBUG_START                                               /* For debug purpose */
     debug(extracted_message);                                    /* For debug purpose */
 #endif                                                           /* For debug purpose */
-    if (strcmp_mod(extracted_message,"Bulb ON\0") == 0)          /* Check if message os Bulb ON */
+    if (strcmp_mod(extracted_message,"Bulb on\0") == 0)          /* Check if message os Bulb ON */
     {
         if (IGNORE == OFF)                                       /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
@@ -112,7 +112,7 @@ void functionality(UINT32 message)
             in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
         }
     }
-    else if(strcmp_mod(extracted_message,"Bulb OFF\0") == 0)     /* Check if message os Bulb OFF */
+    else if(strcmp_mod(extracted_message,"Bulb off\0") == 0)     /* Check if message os Bulb OFF */
     {
         if (IGNORE == OFF)                                       /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
@@ -126,7 +126,7 @@ void functionality(UINT32 message)
             in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
         }
     }
-    else if(strcmp_mod(extracted_message,"LCTN\0") == 0)         /* Check if message os LCTN */
+    else if(strcmp_mod(extracted_message,"Lctn\0") == 0)         /* Check if message os LCTN */
     {
         if (IGNORE == OFF && location_fixed == ON)               /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
@@ -246,6 +246,7 @@ void functionality(UINT32 message)
         {
             in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
         }
+				LOCATION = OFF;
     }
     else
     {
@@ -289,7 +290,6 @@ void functionality(UINT32 message)
 void wait_for_message()
 {
     UINT32 user_info_stored = ON;                                      /* Local variable, used to determine whether user infor is stored or not */
-    INT32 message=0;                                                   /* Local variable to count number of messages already read */
     if (user_info_stored)                                              /* If user infor is not stored, this block will execute */
     {
 			  if (new_message > 0)
@@ -297,6 +297,7 @@ void wait_for_message()
 					response_back(USER_NUMBER,"Initialization in Progress, Please wait!!!");   /* Message to owner for user details */
 					gsm_transmit("AT+CMGD=1,4\r");
 					new_message = 0;
+					READ_MESSAGE = 0;
 				}
         response_back(USER_NUMBER,"User Name and Number please!!!");   /* Message to owner for user details */
     }
@@ -307,12 +308,11 @@ void wait_for_message()
         delay(0.1);                                                    /* Delay of 0.1 seconds */
         if (!ERROR && user_info_stored == OFF)                         /* If there is no error and user information is stored successfull, this block will execute */
         {
-            if(REC == OFF && BUSY == OFF)                                             /* to be removed in future */
+            if(REC == OFF)                                             /* to be removed in future */
             {
                 delay(0.1);                                            /* delay of 0.1 seconds */
                 while(new_message > 0)                                 /* Loop back untill there is no new message */
                 {
-									BUSY = ON;
                     message++;                                         /* Incrementing read message number */
                     delay(0.1);                                        /* delay of 0.1 seconds */
                     buffer_counter = 0;                                /* Making characyer counter for main buffer as 0 */
@@ -325,43 +325,47 @@ void wait_for_message()
                     }
 #ifdef DEBUG_START                                                     /* for debug purpose */
     debug(alpha[new_message]);                                         /* for debug purpose */
-    debug(alpha[message]);                                             /* for debug purpose */
+    debug(alpha[message]); 
+		debug(alpha[message_counter_temp]); 										/* for debug purpose */
 #endif                                                                 /* for debug purpose */
                 }
-								BUSY = OFF;
                 if (SEND_LOCATION == ON)                               /* Check if location has to be sent now due to interrupt */
                 {
-									  BUSY = ON;
                     send_location();                                   /* Function call to send location */
                     SEND_LOCATION = OFF;                               /* Stopping processor from sending location continously */
                     T1TCR = 0x01;        //Start Timer
-									  BUSY = OFF;
                 }
+								if (DELETE_MESSAGES == ON)
+								{
+											gsm_transmit("AT+CMGD=1,4\r");
+		                  READ_MESSAGE = 0;
+		                  message_counter_temp = 0;
+		                  message = 0;
+		                  TIMER = OFF;
+									    DELETE_MESSAGES = OFF;
+								}
             }
             else
             {
-#ifdef DEBUG_START                                                     /* Debug prposre */
-    debug(response_temp);                                              /* Debug purpose */
-#endif                                                                 /* Debug purpose */
-						if (new_message > 0)
-						{							
-				    delay(5);
-						if (new_message == message_counter_temp)
-						{
-							delete_message(message);                       /* Function call to delete message whose functionality is over */
-					    message = 0;
-				    }
-						}
+ 
                 continue;                                              /* Continue if user info is not stored */
 					}
+										#ifdef DEBUG_START                                                     /* for debug purpose */
+    debug(alpha[new_message]);                                         /* for debug purpose */
+    debug(alpha[message]); 
+		debug(alpha[message_counter_temp]); 										/* for debug purpose */
+#endif
+						if (READ_MESSAGE == message_counter_temp && TIMER == OFF && READ_MESSAGE > 0)
+						{							
+				        delete_message_timer();
+						}
         }
         else if(!ERROR && user_info_stored)                            /* If there is no error and user info is not stored */
         {
-            if(REC == OFF && BUSY == OFF)                                             /* To be removed in future */
+            if(REC == OFF)                                             /* To be removed in future */
             {
                 while(new_message > 0)                                 /* Loop until there is no unread message */
                 {
-									BUSY = ON;
                     message++;                                         /* Incrementing number of read messages */
                     delay(0.5);                                        /* Delay of 0.5 seconds */
 #ifdef DEBUG_START                                                     /* For debug purpose */
@@ -369,11 +373,9 @@ void wait_for_message()
 #endif                                                                 /* For debug purpose */
                     read_message(message);                             /* Function call to read new message */
                     user_info_stored = extract_user_info();            /* Function call to extract user info */
-									  BUSY = OFF;
                     break;                                             /* Exit loop when user info is extracted */
                 }
             }
-						BUSY = OFF;
         }
         else
         {
@@ -382,6 +384,7 @@ void wait_for_message()
 #endif                                                                 /* For debug purpose */
             continue;                                                  /* Continue if user info is not stored */
         }
+ 
     }
 }
 
