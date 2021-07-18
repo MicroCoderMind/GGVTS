@@ -3,7 +3,6 @@
 
 void check_authentication(const INT8 * str1)
 {
-
 	delay(0.05);
 	buffer_counter = 0;
 	memset(response_temp,0,200);

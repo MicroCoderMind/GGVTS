@@ -45,7 +45,10 @@
     extern char extracted_message[50];
 		 extern char extracted_number[14];
 		 extern void init_module(void);
-		extern UINT32 new_mes,comp,new_message;
+		extern UINT32 new_mes,comp;
+			extern volatile UINT32 new_message;
+			extern UINT32 message_counter_temp;
 		extern UINT32 RESET;
+		extern UINT8 BUSY;
 #endif
 /********************************End of File*******************************/

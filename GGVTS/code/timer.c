@@ -60,6 +60,7 @@ void delay(float seconds)
 ***************************************************************************/
 void timer_init(void)
 {
+	BUSY = ON;
     if (!ERROR)
     {
         T0TCR = 0x02;	     /* Reset Timer */
@@ -71,6 +72,7 @@ void timer_init(void)
         T1MCR = 0x07;	     /* Tell processor to reset timer after 1 sec and enable timer 1 interrupt */
         T1MR0 = 1000;        /* Value to make delay of 1sec */
     }
+		BUSY = OFF;
 }
 
 /***************************************************************************
@@ -78,6 +80,7 @@ void timer_init(void)
 ***************************************************************************/
 void pll_init(void)
 {
+	BUSY = ON;
 	if (!ERROR)
 	{
 	  PLL0CON = 0x01;
@@ -90,4 +93,5 @@ void pll_init(void)
 	  PLL0FEED = 0x55;
 	  VPBDIV = 0x01;
 	}
+	BUSY = OFF;
 }

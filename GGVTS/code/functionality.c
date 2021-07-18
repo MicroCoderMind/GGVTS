@@ -14,7 +14,7 @@
 *  Below are the header files required to build project                    *
 ***************************************************************************/
 #include"common.h"
-#undef DEBUG_START
+//#define DEBUG_START
 
 /***************************************************************************
 *  Funtion Name: join_strings                                              *
@@ -128,12 +128,16 @@ void functionality(UINT32 message)
     }
     else if(strcmp_mod(extracted_message,"LCTN\0") == 0)         /* Check if message os LCTN */
     {
-        if (IGNORE == OFF)                                       /* Check if this message needds to be ignored?, Means it is received from other than user */
+        if (IGNORE == OFF && location_fixed == ON)               /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
             send_location();                                     /* Function call to send location */
             delay(0.1);                                          /* Delay of 0.1 seconds */
             in_message=0;                                        /* Telling GGVTS that dont perform in_message functionality */
         }
+				else if (location_fixed == OFF)
+				{
+					  response_back(USER_NUMBER,"GPS is not functioning right now, Hard Reset Required!!!");  /* Informing user about GPS functionality not working */
+				}
         else
         {
             in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
@@ -141,12 +145,16 @@ void functionality(UINT32 message)
     }
     else if(strcmp_mod(extracted_message,"LCTN FREQ 1\0") == 0)  /* Check if message os LCTN FREQ 1*/
     {
-        if (IGNORE == OFF)                                       /* Check if this message needds to be ignored?, Means it is received from other than user */
+        if (IGNORE == OFF && location_fixed == ON)               /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
             set_location_frequency(1);                           /* Function call to set frequency of location messages as 1 minute */
             delay(0.1);                                          /* Delay of 0.1 seconds */
             in_message=0;                                        /* Telling GGVTS that dont perform in_message functionality */
         }
+				else if (location_fixed == OFF)
+				{
+					  response_back(USER_NUMBER,"GPS is not functioning right now, Hard Reset Required!!!");  /* Informing user about GPS functionality not working */
+				}
         else
         {
             in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
@@ -154,12 +162,16 @@ void functionality(UINT32 message)
     }
     else if(strcmp_mod(extracted_message,"LCTN FREQ 3\0") == 0)  /* Check if message os LCTN FREQ 3*/
     {
-        if (IGNORE == OFF)                                       /* Check if this message needds to be ignored?, Means it is received from other than user */
+        if (IGNORE == OFF && location_fixed == ON)               /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
             set_location_frequency(3);                           /* Function call to set frequency of location messages as 3 minute */
             delay(0.1);                                          /* Delay of 0.1 seconds */
             in_message=0;                                        /* Telling GGVTS that dont perform in_message functionality */
         }
+				else if (location_fixed == OFF)
+				{
+					  response_back(USER_NUMBER,"GPS is not functioning right now, Hard Reset Required!!!");  /* Informing user about GPS functionality not working */
+				}
         else
         {
             in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
@@ -167,12 +179,16 @@ void functionality(UINT32 message)
     }
     else if(strcmp_mod(extracted_message,"LCTN FREQ 5\0") == 0)  /* Check if message os LCTN FREQ 5*/
     {
-        if (IGNORE == OFF)                                       /* Check if this message needds to be ignored?, Means it is received from other than user */
+        if (IGNORE == OFF && location_fixed == ON)               /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
             set_location_frequency(5);                           /* Function call to set frequency of location messages as 5 minute */
             delay(0.1);                                          /* Delay of 0.1 seconds */
             in_message=0;                                        /* Telling GGVTS that dont perform in_message functionality */
         }
+				else if (location_fixed == OFF)
+				{
+					  response_back(USER_NUMBER,"GPS is not functioning right now, Hard Reset Required!!!");  /* Informing user about GPS functionality not working */
+				}
         else
         {
             in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
@@ -180,33 +196,41 @@ void functionality(UINT32 message)
     }
     else if(strcmp_mod(extracted_message,"LCTN FREQ 7\0") == 0)  /* Check if message os LCTN FREQ 7 */
     {
-        if (IGNORE == OFF)                                       /* Check if this message needds to be ignored?, Means it is received from other than user */
+        if (IGNORE == OFF && location_fixed == ON)               /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
             set_location_frequency(7);                           /* Function call to set frequency of location messages as 7 minute */
             delay(0.1);                                          /* Delay of 0.1 seconds */
             in_message=0;                                        /* Telling GGVTS that dont perform in_message functionality */
         }
+				else if (location_fixed == OFF)
+				{
+					  response_back(USER_NUMBER,"GPS is not functioning right now, Hard Reset Required!!!");  /* Informing user about GPS functionality not working */
+				}
         else
         {
             in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
         }
     }
-    else if(strcmp_mod(extracted_message,"LCTN FREQ 10\0") == 0)  /* Check if message os LCTN FREQ 10 */
+    else if(strcmp_mod(extracted_message,"LCTN FREQ 10\0") == 0) /* Check if message os LCTN FREQ 10 */
     {
-        if (IGNORE == OFF)                                       /* Check if this message needds to be ignored?, Means it is received from other than user */
+        if (IGNORE == OFF && location_fixed == ON)               /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
             set_location_frequency(10);                          /* Function call to set frequency of location messages as 10 minute */
             delay(0.1);                                          /* Delay of 0.1 seconds */
             in_message=0;                                        /* Telling GGVTS that dont perform in_message functionality */
         }
+				else if (location_fixed == OFF)
+				{
+					  response_back(USER_NUMBER,"GPS is not functioning right now, Hard Reset Required!!!");  /* Informing user about GPS functionality not working */
+				}
         else
         {
             in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
         }
     }
-    else if(strcmp_mod(extracted_message,"LCTN FREQ 0\0") == 0)   /* Check if message os LCTN FREQ 0 */
+    else if(strcmp_mod(extracted_message,"LCTN FREQ 0\0") == 0)  /* Check if message os LCTN FREQ 0 */
     {
-        if (IGNORE == OFF)                                       /* Check if this message needds to be ignored?, Means it is received from other than user */
+        if (IGNORE == OFF && location_fixed == ON)               /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
             SEND_LOCATION = OFF;                                 /* Telling GGVTS to stop sending location */
             T1TCR = 0x02;        //Stop Timer                    /* Turmimg OFF timer which will generate interrupt to send location */
@@ -214,6 +238,10 @@ void functionality(UINT32 message)
             response_back(USER_NUMBER,"LCTN_FREQ stopped!!!");   /* Informing user that no more loaction messages will be snt by GGVTS */
             in_message=0;                                        /* Telling GGVTS that dont perform in_message functionality */
         }
+				else if (location_fixed == OFF)
+				{
+					  response_back(USER_NUMBER,"GPS is not functioning right now, Hard Reset Required!!!");  /* Informing user about GPS functionality not working */
+				}
         else
         {
             in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
@@ -264,6 +292,12 @@ void wait_for_message()
     INT32 message=0;                                                   /* Local variable to count number of messages already read */
     if (user_info_stored)                                              /* If user infor is not stored, this block will execute */
     {
+			  if (new_message > 0)
+				{
+					response_back(USER_NUMBER,"Initialization in Progress, Please wait!!!");   /* Message to owner for user details */
+					gsm_transmit("AT+CMGD=1,4\r");
+					new_message = 0;
+				}
         response_back(USER_NUMBER,"User Name and Number please!!!");   /* Message to owner for user details */
     }
     buffer_counter = 0;                                                /* Making characyer counter for main buffer as 0 */
@@ -273,12 +307,12 @@ void wait_for_message()
         delay(0.1);                                                    /* Delay of 0.1 seconds */
         if (!ERROR && user_info_stored == OFF)                         /* If there is no error and user information is stored successfull, this block will execute */
         {
-            if(REC == OFF)                                             /* to be removed in future */
+            if(REC == OFF && BUSY == OFF)                                             /* to be removed in future */
             {
-                message=0;                                             /* Making read message number as 0 */
                 delay(0.1);                                            /* delay of 0.1 seconds */
                 while(new_message > 0)                                 /* Loop back untill there is no new message */
                 {
+									BUSY = ON;
                     message++;                                         /* Incrementing read message number */
                     delay(0.1);                                        /* delay of 0.1 seconds */
                     buffer_counter = 0;                                /* Making characyer counter for main buffer as 0 */
@@ -288,18 +322,20 @@ void wait_for_message()
                         read_message(message);                         /* Function call to read message */
                         check_authentication(extracted_number);        /* Function call to check authentication of message */
                         functionality(message);                        /* Function call to perform required functionality */
-                        delete_message(message);                       /* Function call to delete message whose functionality is over */
                     }
 #ifdef DEBUG_START                                                     /* for debug purpose */
     debug(alpha[new_message]);                                         /* for debug purpose */
     debug(alpha[message]);                                             /* for debug purpose */
 #endif                                                                 /* for debug purpose */
                 }
+								BUSY = OFF;
                 if (SEND_LOCATION == ON)                               /* Check if location has to be sent now due to interrupt */
                 {
+									  BUSY = ON;
                     send_location();                                   /* Function call to send location */
                     SEND_LOCATION = OFF;                               /* Stopping processor from sending location continously */
                     T1TCR = 0x01;        //Start Timer
+									  BUSY = OFF;
                 }
             }
             else
@@ -307,16 +343,25 @@ void wait_for_message()
 #ifdef DEBUG_START                                                     /* Debug prposre */
     debug(response_temp);                                              /* Debug purpose */
 #endif                                                                 /* Debug purpose */
+						if (new_message > 0)
+						{							
+				    delay(5);
+						if (new_message == message_counter_temp)
+						{
+							delete_message(message);                       /* Function call to delete message whose functionality is over */
+					    message = 0;
+				    }
+						}
                 continue;                                              /* Continue if user info is not stored */
-            }
+					}
         }
         else if(!ERROR && user_info_stored)                            /* If there is no error and user info is not stored */
         {
-            if(REC == OFF)                                             /* To be removed in future */
+            if(REC == OFF && BUSY == OFF)                                             /* To be removed in future */
             {
-                message=0;                                             /* Making read messages number as 0 */
                 while(new_message > 0)                                 /* Loop until there is no unread message */
                 {
+									BUSY = ON;
                     message++;                                         /* Incrementing number of read messages */
                     delay(0.5);                                        /* Delay of 0.5 seconds */
 #ifdef DEBUG_START                                                     /* For debug purpose */
@@ -324,10 +369,11 @@ void wait_for_message()
 #endif                                                                 /* For debug purpose */
                     read_message(message);                             /* Function call to read new message */
                     user_info_stored = extract_user_info();            /* Function call to extract user info */
-                    delete_message(message);                           /* function call to delete message */
+									  BUSY = OFF;
                     break;                                             /* Exit loop when user info is extracted */
                 }
             }
+						BUSY = OFF;
         }
         else
         {
@@ -372,7 +418,7 @@ UINT32 extract_user_info(void)
     debug(USER_NUMBER);                      /* For debug purpose */
     debug(alpha[OFF]);                       /* for debug purpose */
 #endif                                       /* For debug purpose */
-    join_strings("Greetings!!!",USER_NAME);  /* Joining gtrrting message for user */  
+    join_strings("Greetings!!! Mr. ",USER_NAME);  /* Joining gtrrting message for user */  
     strcpy_mod(temp,joined_string);          /* Copying joined_string buffer in temporary buffer */
     memset(joined_string,0,200);             /* Emptying joined_string buffer for further use */
     response_back(USER_NUMBER,temp);         /* Sending greeting message to user */
@@ -384,28 +430,28 @@ UINT32 extract_user_info(void)
 /***************************************************************************
 *  Funtion Name: reset_module                                              *
 ***************************************************************************/
-/*    To be implement in future
-void reset_module(void)
-{
-    memset(response_temp,0,200);     /* Making main buffer empty */
-    buffer_counter = 0;              /* Starting character counter of buffer from 0 */
-    delay(0.1);                      /* delay of 0.1 seconds */
-#ifdef DEBUG_START                   /* For debug purpose */
-    debug("RESET");                  /* For debug purpose */
-#endif                               /* For debug purpose */
-    gsm_transmit("AT+CFUN=0\r");     /* Transmitting command of Airplane mode ON to GGVTS */
-    if(!check_response_command())    /* Checking whether transmission of command happened successfully, if yes this block will execute */
-    {
-        memset(response_temp,0,200); /* Making main buffer empty */
-        buffer_counter = 0;          /* Starting character counter of main buffer from zero */
-        gsm_transmit("AT+CFUN=1\r"); /* Transmitting command of Airplane mode OFF to GGVTS */
-        check_response_command();    /* Checking whether transmission of command happened successfully or not */
-        RESET = ON;                  /* To be implement in future */
-    }
-    memset(response_temp,0,200);     /* Making main buffer empty */
-    buffer_counter = 0;              /* Starting character counter of main buffer from 0 */
-}
-*/
+///*    To be implement in future
+//void reset_module(void)
+//{
+//    memset(response_temp,0,200);     /* Making main buffer empty */
+//    buffer_counter = 0;              /* Starting character counter of buffer from 0 */
+//    delay(0.1);                      /* delay of 0.1 seconds */
+//#ifdef DEBUG_START                   /* For debug purpose */
+//    debug("RESET");                  /* For debug purpose */
+//#endif                               /* For debug purpose */
+//    gsm_transmit("AT+CFUN=0\r");     /* Transmitting command of Airplane mode ON to GGVTS */
+//    if(!check_response_command())    /* Checking whether transmission of command happened successfully, if yes this block will execute */
+//    {
+//        memset(response_temp,0,200); /* Making main buffer empty */
+//        buffer_counter = 0;          /* Starting character counter of main buffer from zero */
+//        gsm_transmit("AT+CFUN=1\r"); /* Transmitting command of Airplane mode OFF to GGVTS */
+//        check_response_command();    /* Checking whether transmission of command happened successfully or not */
+//        RESET = ON;                  /* To be implement in future */
+//    }
+//    memset(response_temp,0,200);     /* Making main buffer empty */
+//    buffer_counter = 0;              /* Starting character counter of main buffer from 0 */
+//}
+//*/
 
 /***************************************************************************
 *  Funtion Name: strstr_mod                                                *

@@ -8,12 +8,13 @@ __irq void uart_isr(void)
 	{
 		REC = ON;
 		temp = U0RBR;
-		if((temp == '+' || temp == 'C' || temp == 'M' || temp == 'T' || temp == 'I' || temp == ':' || temp == ' ' || temp == '"' || temp == 'S' || temp == 'M' || temp == ',')  && ((comp-new_mes)==1))
+		if((temp == '+' || temp == 'C' || temp == 'M' || temp == 'T' || temp == 'I')  && ((comp-new_mes)==1))
 		{
 			new_mes++;
-			if(new_mes == 11)
+			if(new_mes == 5)
 			{
 				new_message++;
+				message_counter_temp = new_message;
 				new_mes = 0;
 			  comp=0;
 				buffer_counter -= 13;
@@ -38,6 +39,7 @@ __irq void uart_isr(void)
 
 void uart_init(void)
 {
+	BUSY = ON;
 	if (!ERROR)
 	{
 		PINSEL0 = PINSEL0 | 0x00050005;	/* Enable UART0 Rx0 and Tx0 pins of UART0 */
@@ -48,10 +50,12 @@ void uart_init(void)
 		U0TER = 0x80;   	
 		U0IER = 0x00000003;	            /* Enable THRE and RBR interrupt */
 	}
+	BUSY = OFF;
 }
 
 void interrupt_init(void)
 {
+	BUSY = ON;
 	if (!ERROR)
 	{
 		VICVectAddr0 = (unsigned) uart_isr;	/* UART0 ISR Address */
@@ -63,4 +67,5 @@ void interrupt_init(void)
 		VICIntEnable = 0x000000E0;	/* Enable UART0, UART1 and Timer1 interrupt*/
 		VICIntSelect = 0x00000000;	/* UART0 configured as IRQ */
 	}
+	BUSY = OFF;
 }
