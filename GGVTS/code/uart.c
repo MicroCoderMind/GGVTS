@@ -8,12 +8,14 @@ __irq void uart_isr(void)
 	{
 		REC = ON;
 		temp = U0RBR;
-		if((temp == '+' || temp == 'C' || temp == 'M' || temp == 'T' || temp == 'I' || temp == ':' || temp == ' ' || temp == '"' || temp == 'S' || temp == 'M' || temp == ',')  && ((comp-new_mes)==1))
+		if((temp == '+' || temp == 'C' || temp == 'M' || temp == 'T' || temp == 'I')  && ((comp-new_mes)==1))
 		{
 			new_mes++;
-			if(new_mes == 11)
+			if(new_mes == 5)
 			{
 				new_message++;
+				TIMER = OFF;
+				message_counter_temp++;
 				new_mes = 0;
 			  comp=0;
 				buffer_counter -= 13;

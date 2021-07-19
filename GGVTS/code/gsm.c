@@ -13,7 +13,7 @@
 *  Below are the header files required to build project                    *
 ***************************************************************************/
 #include "common.h"
-
+#define DEBUG_START
 /***************************************************************************
 *  Funtion Name: gsm_init                                                  *
 ***************************************************************************/
@@ -55,7 +55,7 @@ void gsm_transmit(const INT8 * str1)
 	{
 	    IO0SET = 0x00000008;
 	    U0THR = str1[k];
-	    delay(0.08);
+	    delay(0.02);
 	}
 #ifdef DEBUG_START
   	debug(response_temp);
@@ -85,13 +85,13 @@ void extract_message(void)
 			continue;
 		}
 	}
-		extracted_message[j-1] = '\0';
+	extracted_message[j-1] = '\0';
 	j=0;
-	delay(0.05);
-		#ifdef DEBUG_START
+	delay(0.2);
+#ifdef DEBUG_START
 	debug(extracted_message);
 #endif
-		#ifdef DEBUG_START
+#ifdef DEBUG_START
 	debug("\n");
 #endif
 	for (i=0;i<strlen_mod(response_temp);i++)
@@ -109,11 +109,11 @@ void extract_message(void)
 			continue;
 		}
 	}
-		extracted_number[j] = '\0';
+	extracted_number[j] = '\0';
 #ifdef DEBUG_START
 	debug(extracted_number);
 #endif
-	delay(0.05);
+	delay(0.2);
 }
 
 /***************************************************************************
@@ -126,9 +126,10 @@ void read_message(UINT32 message)
 	  join_strings(GSM_READ_MSG[0],alpha[message]);
 	  join_strings("","\r");
 		gsm_transmit(joined_string);
-		delay(0.05);
+		delay(1);
 	  memset(joined_string,0,200);
 		new_message--;
+	  READ_MESSAGE++;
 		extract_message();
 		buffer_counter = 0;
 	  memset(response_temp,0,200);
@@ -141,13 +142,13 @@ void delete_message(UINT32 message)
 {
 	buffer_counter = 0;
 	memset(response_temp,0,200);
-	delay(0.4);
+	delay(0.5);
 	join_strings(GSM_DELETE_MSG[0],alpha[message]);
-	join_strings("","\r");
+	join_strings(",2","\r");
 	gsm_transmit(joined_string);
-	delay(1);
 	memset(joined_string,0,200);
 	buffer_counter = 0;
 	memset(response_temp,0,200);
+	delay(0.5);
 }
 /******************************End of File*********************************/
