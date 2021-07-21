@@ -6,67 +6,12 @@
 *                                                                          *
 *--------------------------------------------------------------------------*
 *  Comments:	                                                             *
-*                                                                          *
 ***************************************************************************/
+
 #ifndef __FUNCTIONALITY__
 #define __FUNCTIONALITY__
 
 void reset_module(void);
-
-UINT32 strstr_mod(const char *, const char *);
-	
-/***************************************************************************
-*  Funtion Name: strlen_mod                                                *
-*--------------------------------------------------------------------------*
-*  Description: This function counts the number of charcters in input      *
-*               string excluding NULL character.                           *
-*--------------------------------------------------------------------------*
-*  Input Parameters: string for which characters to be counted             *
-*  Output Parameters: (Unsigned int)Numbers of charaqcters in string       * 
-                      excluding NULL character.                            *
-*--------------------------------------------------------------------------*
-*  Comments: To use this function, input string must have NULL character   *
-*            as last character, this fun cion has same functionality as    *
-*            strlen library function                                       *
-*            for example:                                                  *
-*            if str1 = "Hello" then output from thi function will be 5     *
-***************************************************************************/
-	extern UINT32 strlen_mod(const char * ptr);
-	
-/***************************************************************************
-*  Funtion Name: strcpy_mod                                               *
-*--------------------------------------------------------------------------*
-*  Description: This function counts the number of charcters in input      *
-*               string excluding NULL character.                           *
-*--------------------------------------------------------------------------*
-*  Input Parameters: string for which characters to be counted             *
-*  Output Parameters: (Unsigned int)Numbers of charaqcters in string       * 
-                      excluding NULL character.                            *
-*--------------------------------------------------------------------------*
-*  Comments: To use this function, input string must have NULL character   *
-*            as last character, this fun cion has same functionality as    *
-*            strlen library function                                       *
-*            for example:                                                  *
-*            if str1 = "Hello" then output from thi function will be 5     *
-***************************************************************************/
- extern void strcpy_mod(char *,char *);
-	
-/***************************************************************************
-*  Funtion Name: strcmp_mod                                                *
-*--------------------------------------------------------------------------*
-*  Description: This function compares twominput strings                   *
-*               string excluding NULL character.                           *
-*--------------------------------------------------------------------------*
-*  Input Parameters: Two strings which needs to be compared                *
-*  Output Parameters: return 0 if matched, -1 otherwise                    *
-*--------------------------------------------------------------------------*
-*  Comments: To use this function, input string must have NULL character   *
-*            as last character, this fun cion has same functionality as    *
-*            strlen library function                                       *
-*            for example:                                                  *
-*            if str1 = "Hello" then output from thi function will be 5     *
-***************************************************************************/
-	extern INT32 strcmp_mod(const char *,const char *);
 	
 /***************************************************************************
 *  Funtion Name: wait_for_message                                          *
@@ -100,22 +45,6 @@ UINT32 strstr_mod(const char *, const char *);
 *               it to a web link)                                          *
 ***************************************************************************/
 	extern void functionality(UINT32);
-	
-/***************************************************************************
-*  Funtion Name: join_strings                                              *
-*--------------------------------------------------------------------------*
-*  Description: This function takes two strings as input and store them in *
-                global array after joining.                                *
-*--------------------------------------------------------------------------*
-*  Input Parameters: two strings(str1 and str2)                            *
-*  Output Parameters: None                                                 *
-*--------------------------------------------------------------------------*
-*  Comments: Format will be joined_string = str1 followed by str2          *
-*            for example:                                                  *
-*            if str1 = "Hello" and str2 = "Rohan" then                     *
-*            joined_string will be "Hello Rohan"                           *
-***************************************************************************/	
-	extern void join_strings(const INT8 *,const INT8 *);
 
 /***************************************************************************
 *  Funtion Name: extract_user_name                                         *

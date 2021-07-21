@@ -36,10 +36,10 @@ UINT32 CHECKING = OFF;
 UINT32 Ignore_Char;
 UINT32 new_mes=0,comp=1;
 volatile UINT32 new_message=0;
-UINT32 message_counter_temp=0;
+UINT32 Received_Message_Count=0;
 char LOCATION = OFF;
 char TIMER = OFF;
-UINT8 READ_MESSAGE = 0;
+UINT8 Read_Message_Count = 0;
 INT32 message = 0;
 char DELETE_MESSAGES = OFF;
 
