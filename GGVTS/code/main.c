@@ -13,7 +13,7 @@ const INT8 * MAP_LINK[1] = {"maps.google.com/maps/place/"};
 INT8 response_temp_diag[50];
 UINT32 buffer_counter_diag=0;
 INT8 USER_NAME[20];
-INT8 USER_NUMBER[14] ={"+919566243293"};
+INT8 USER_NUMBER[14] ={"+919915990657"};
 UINT8 IGNORE = OFF;
 UINT8 SEND_LOCATION = OFF;
 char extracted_message[50];

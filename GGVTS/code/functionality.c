@@ -325,7 +325,7 @@ UINT32 extract_user_info(void)
 #endif                                          /* For debug purpose */
     if(extracted_message[i+1]!='+')             /* Checking if number sent by owner contains country code? */
     {
-        response_back(USER_NUMBER,"Invalid Format!!! Try again!! Pro Tip: Add Country code!!"); /* If country code is not mentioned user will be informed of that */
+        response_back(*OWNER_NUMBER,"Invalid Format!!! Try again!! Pro Tip: Add Country code!!"); /* If country code is not mentioned user will be informed of that */
         memset(extracted_message,0,50);         /* Clearing buffer which is used to extract message */
         memset(extracted_number,0,14);          /* Clearing buffer which is used to extract user number */
         return ON;                              /* Informing GGVTS that valid user name and number is not received yet */
@@ -336,6 +336,17 @@ UINT32 extract_user_info(void)
         {
             USER_NUMBER[j] = extracted_message[i++];  /* Storing extracted number in USER_NUMBER buffer */
         }
+				if (strlen_mod(USER_NUMBER) != 13)
+				{
+					response_back(*OWNER_NUMBER,"Invalid Number!!! Try again!! Pro Tip: Check Phone Number!!"); /* If country code is not mentioned user will be informed of that */
+          memset(extracted_message,0,50);         /* Clearing buffer which is used to extract message */
+          memset(extracted_number,0,14);          /* Clearing buffer which is used to extract user number */
+					return ON;
+				}
+				else
+				{
+					//Do Nothing
+				}
     }
 #ifdef DEBUG_START                           /* For debug purpose */
     debug(USER_NUMBER);                      /* For debug purpose */
