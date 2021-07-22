@@ -23,6 +23,7 @@
 	  #include"response.h"	        /* This file contains declaration of functions and variables used to respond to user */
 	  #include"debug.h"	            /* This file contains declaration of functions used to debug the program */
 	  #include"message_handler.h"   /* This file contains declaration of functions used to authenticate user information */
+		#include"Strings_Mod_Functionality.h"  /* This file contains declaration of functions used to operate on strings */
 
 #endif
 

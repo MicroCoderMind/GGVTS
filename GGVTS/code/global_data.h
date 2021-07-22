@@ -49,9 +49,9 @@
 		 extern void init_module(void);
 		extern UINT32 new_mes,comp;
 			extern volatile UINT32 new_message;
-			extern UINT32 message_counter_temp;
+			extern UINT32 Received_Message_Count;
 		extern UINT32 RESET;
-		extern UINT8 READ_MESSAGE;
+		extern UINT8 Read_Message_Count;
 		extern char DELETE_MESSAGES;
 		extern INT32 message;                                                   /* Local variable to count number of messages already read */
 #endif

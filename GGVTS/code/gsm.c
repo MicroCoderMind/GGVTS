@@ -13,7 +13,7 @@
 *  Below are the header files required to build project                    *
 ***************************************************************************/
 #include "common.h"
-#define DEBUG_START
+//#define DEBUG_START
 /***************************************************************************
 *  Funtion Name: gsm_init                                                  *
 ***************************************************************************/
@@ -129,7 +129,7 @@ void read_message(UINT32 message)
 		delay(1);
 	  memset(joined_string,0,200);
 		new_message--;
-	  READ_MESSAGE++;
+	  Read_Message_Count++;
 		extract_message();
 		buffer_counter = 0;
 	  memset(response_temp,0,200);

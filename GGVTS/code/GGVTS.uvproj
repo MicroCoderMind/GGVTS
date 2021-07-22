@@ -480,6 +480,16 @@
               <FileType>1</FileType>
               <FilePath>.\functionality.c</FilePath>
             </File>
+            <File>
+              <FileName>Strings_Mod_Functionality.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Strings_Mod_Functionality.c</FilePath>
+            </File>
+            <File>
+              <FileName>Strings_Mod_Functionality.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Strings_Mod_Functionality.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

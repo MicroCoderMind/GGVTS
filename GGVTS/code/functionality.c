@@ -17,78 +17,6 @@
 //#define DEBUG_START
 
 /***************************************************************************
-*  Funtion Name: join_strings                                              *
-***************************************************************************/
-void join_strings(const INT8 * str1,const INT8 *str2)
-{
-    UINT32 i=strlen_mod(joined_string),j;   /* Getting length of string which is in joined_string buffer */
-    for (j=0;j<strlen_mod(str1);j++)        /* For loop */
-    {                               
-        joined_string[i++] = str1[j];       /* Copying string 1 in joined_string buffer */
-    }
-    i=strlen_mod(joined_string);            /* Getting length of string which is in joined string_buffer */
-    for (j=0;j<strlen_mod(str2);j++)        /* for loop */
-    {                                
-        joined_string[i++] = str2[j];       /* Copying string 2 in joined_string buffer */
-    }
-    joined_string[i] = '\0';                /* Adding null charater to end of joined_string buffer */
-}
-
-/***************************************************************************
-*  Funtion Name: strlen_mod                                                *
-***************************************************************************/
-UINT32 strlen_mod(const char * ptr)
-{
-    int i;                          /* Local variable used as index */
-    UINT32 characters=0;            /* Local variable used to count number of characters */
-    for (i=0;ptr[i]!='\0';i++)      /* For Loop */
-    {
-        characters++;               /* Incrementing local variable to count charaters in string */
-    }
-    return characters;              /* Returning number of characters present in string */
-}
-
-/***************************************************************************
-*  Funtion Name: strcpy_mod                                                *
-***************************************************************************/
-void strcpy_mod(char * str1,char * str2)
-{
-    UINT32 i;                        /* Local variable used as counter */
-    for (i=0;str2[i]!='\0';i++)      /* For loop */
-    {
-        str1[i] = str2[i];           /* Copying string 2 in string 1 */
-    }
-    str1[i] = '\0';                  /* Appending null character in newly copied string i.e. string 1 */               
-}
-/***************************************************************************
-*  Funtion Name: strcmp_mod                                                *
-***************************************************************************/
-INT32 strcmp_mod(const char * str1, const char * str2)
-{
-    INT32 i,return_var=0;                       /* Local variable used as index and return value respectively */
-    if (strlen_mod(str1) == strlen_mod(str2))   /* Checking if both strings have same length */
-    {
-        for(i=0; i<strlen_mod(str1); i++)       /* For loop */
-        {
-            if (str1[i] == str2[i])             /* Checking if both strings contain same character at same index */
-            {
-                continue;                       /* Continue checking if both strings contain same character */
-            }
-            else                                /* If character is not same, this part will execute */
-            {
-                return_var = -1;                /* set return value to -1 if there is mismatch between string q and string 2 */
-                break;                          /* Stop checking further */
-            }
-        }
-    }
-    else                                        /* This part will execute if both strings are not same in length */
-    {
-        return_var = -1;                        /* Set return value as -1 if length of both strings is not same */
-    }
-    return return_var;                          /* Return return value */
-}
-
-/***************************************************************************
 *  Funtion Name: functionality                                             *
 ***************************************************************************/
 void functionality(UINT32 message)
@@ -137,6 +65,7 @@ void functionality(UINT32 message)
 				else if (location_fixed == OFF)
 				{
 					  response_back(USER_NUMBER,"GPS is not functioning right now, Hard Reset Required!!!");  /* Informing user about GPS functionality not working */
+					  in_message=0;
 				}
         else
         {
@@ -154,6 +83,7 @@ void functionality(UINT32 message)
 				else if (location_fixed == OFF)
 				{
 					  response_back(USER_NUMBER,"GPS is not functioning right now, Hard Reset Required!!!");  /* Informing user about GPS functionality not working */
+					  in_message = 0;
 				}
         else
         {
@@ -171,6 +101,7 @@ void functionality(UINT32 message)
 				else if (location_fixed == OFF)
 				{
 					  response_back(USER_NUMBER,"GPS is not functioning right now, Hard Reset Required!!!");  /* Informing user about GPS functionality not working */
+					  in_message = 0;
 				}
         else
         {
@@ -188,6 +119,7 @@ void functionality(UINT32 message)
 				else if (location_fixed == OFF)
 				{
 					  response_back(USER_NUMBER,"GPS is not functioning right now, Hard Reset Required!!!");  /* Informing user about GPS functionality not working */
+					  in_message = 0;
 				}
         else
         {
@@ -205,6 +137,7 @@ void functionality(UINT32 message)
 				else if (location_fixed == OFF)
 				{
 					  response_back(USER_NUMBER,"GPS is not functioning right now, Hard Reset Required!!!");  /* Informing user about GPS functionality not working */
+					  in_message = 0; 
 				}
         else
         {
@@ -222,6 +155,7 @@ void functionality(UINT32 message)
 				else if (location_fixed == OFF)
 				{
 					  response_back(USER_NUMBER,"GPS is not functioning right now, Hard Reset Required!!!");  /* Informing user about GPS functionality not working */
+					  in_message = 0;
 				}
         else
         {
@@ -241,6 +175,7 @@ void functionality(UINT32 message)
 				else if (location_fixed == OFF)
 				{
 					  response_back(USER_NUMBER,"GPS is not functioning right now, Hard Reset Required!!!");  /* Informing user about GPS functionality not working */
+					  in_message = 0;
 				}
         else
         {
@@ -297,7 +232,7 @@ void wait_for_message()
 					response_back(USER_NUMBER,"Initialization in Progress, Please wait!!!");   /* Message to owner for user details */
 					gsm_transmit("AT+CMGD=1,4\r");
 					new_message = 0;
-					READ_MESSAGE = 0;
+					Read_Message_Count = 0;
 				}
         response_back(USER_NUMBER,"User Name and Number please!!!");   /* Message to owner for user details */
     }
@@ -306,10 +241,8 @@ void wait_for_message()
     while(ON)                                                          /* Infinite Loop */
     {
         delay(0.1);                                                    /* Delay of 0.1 seconds */
-        if (!ERROR && user_info_stored == OFF)                         /* If there is no error and user information is stored successfull, this block will execute */
+        if (user_info_stored == OFF)                         /* If there is no error and user information is stored successfull, this block will execute */
         {
-            if(REC == OFF)                                             /* to be removed in future */
-            {
                 delay(0.1);                                            /* delay of 0.1 seconds */
                 while(new_message > 0)                                 /* Loop back untill there is no new message */
                 {
@@ -317,16 +250,13 @@ void wait_for_message()
                     delay(0.1);                                        /* delay of 0.1 seconds */
                     buffer_counter = 0;                                /* Making characyer counter for main buffer as 0 */
                     memset(response_temp,0,200);                       /* Emptying main buffer */
-                    if (!CHECKING)                                     /* to be removed in future */
-                    {
-                        read_message(message);                         /* Function call to read message */
-                        check_authentication(extracted_number);        /* Function call to check authentication of message */
-                        functionality(message);                        /* Function call to perform required functionality */
-                    }
+                    read_message(message);                         /* Function call to read message */
+                    check_authentication(extracted_number);        /* Function call to check authentication of message */
+                    functionality(message);                        /* Function call to perform required functionality */
 #ifdef DEBUG_START                                                     /* for debug purpose */
     debug(alpha[new_message]);                                         /* for debug purpose */
     debug(alpha[message]); 
-		debug(alpha[message_counter_temp]); 										/* for debug purpose */
+		debug(alpha[Received_Message_Count]); 										/* for debug purpose */
 #endif                                                                 /* for debug purpose */
                 }
                 if (SEND_LOCATION == ON)                               /* Check if location has to be sent now due to interrupt */
@@ -338,33 +268,25 @@ void wait_for_message()
 								if (DELETE_MESSAGES == ON)
 								{
 											gsm_transmit("AT+CMGD=1,4\r");
-		                  READ_MESSAGE = 0;
-		                  message_counter_temp = 0;
+		                  Read_Message_Count = 0;
+		                  Received_Message_Count = 0;
 		                  message = 0;
 		                  TIMER = OFF;
 									    DELETE_MESSAGES = OFF;
 								}
-            }
-            else
-            {
- 
-                continue;                                              /* Continue if user info is not stored */
-					}
-										#ifdef DEBUG_START                                                     /* for debug purpose */
+#ifdef DEBUG_START                                                     /* for debug purpose */
     debug(alpha[new_message]);                                         /* for debug purpose */
     debug(alpha[message]); 
-		debug(alpha[message_counter_temp]); 										/* for debug purpose */
+		debug(alpha[Received_Message_Count]); 										/* for debug purpose */
 #endif
-						if (READ_MESSAGE == message_counter_temp && TIMER == OFF && READ_MESSAGE > 0)
+						if (Read_Message_Count == Received_Message_Count && TIMER == OFF && Read_Message_Count > 0)
 						{							
 				        delete_message_timer();
 						}
         }
-        else if(!ERROR && user_info_stored)                            /* If there is no error and user info is not stored */
+        else if(user_info_stored)                            /* If there is no error and user info is not stored */
         {
-            if(REC == OFF)                                             /* To be removed in future */
-            {
-                while(new_message > 0)                                 /* Loop until there is no unread message */
+                if(new_message > 0)                                 /* Loop until there is no unread message */
                 {
                     message++;                                         /* Incrementing number of read messages */
                     delay(0.5);                                        /* Delay of 0.5 seconds */
@@ -372,10 +294,8 @@ void wait_for_message()
     debug(response_temp);                                              /* For debug purpose */
 #endif                                                                 /* For debug purpose */
                     read_message(message);                             /* Function call to read new message */
-                    user_info_stored = extract_user_info();            /* Function call to extract user info */
-                    break;                                             /* Exit loop when user info is extracted */
+                    user_info_stored = extract_user_info();            /* Function call to extract user info */                                             /* Exit loop when user info is extracted */
                 }
-            }
         }
         else
         {
@@ -405,7 +325,7 @@ UINT32 extract_user_info(void)
 #endif                                          /* For debug purpose */
     if(extracted_message[i+1]!='+')             /* Checking if number sent by owner contains country code? */
     {
-        response_back(USER_NUMBER,"Invalid Format!!! Try again!! Pro Tip: Add Country code!!"); /* If country code is not mentioned user will be informed of that */
+        response_back(*OWNER_NUMBER,"Invalid Format!!! Try again!! Pro Tip: Add Country code!!"); /* If country code is not mentioned user will be informed of that */
         memset(extracted_message,0,50);         /* Clearing buffer which is used to extract message */
         memset(extracted_number,0,14);          /* Clearing buffer which is used to extract user number */
         return ON;                              /* Informing GGVTS that valid user name and number is not received yet */
@@ -416,6 +336,17 @@ UINT32 extract_user_info(void)
         {
             USER_NUMBER[j] = extracted_message[i++];  /* Storing extracted number in USER_NUMBER buffer */
         }
+				if (strlen_mod(USER_NUMBER) != 13)
+				{
+					response_back(*OWNER_NUMBER,"Invalid Number!!! Try again!! Pro Tip: Check Phone Number!!"); /* If country code is not mentioned user will be informed of that */
+          memset(extracted_message,0,50);         /* Clearing buffer which is used to extract message */
+          memset(extracted_number,0,14);          /* Clearing buffer which is used to extract user number */
+					return ON;
+				}
+				else
+				{
+					//Do Nothing
+				}
     }
 #ifdef DEBUG_START                           /* For debug purpose */
     debug(USER_NUMBER);                      /* For debug purpose */
@@ -455,45 +386,5 @@ UINT32 extract_user_info(void)
 //    buffer_counter = 0;              /* Starting character counter of main buffer from 0 */
 //}
 //*/
-
-/***************************************************************************
-*  Funtion Name: strstr_mod                                                *
-***************************************************************************/
-UINT32 strstr_mod(const char *strmain, const char *strsub)
-{
-    INT8 i=0,l=0,temp=0,match=0,main_len=0,sub_len=0;  /* Local variables used in further calculations */
-    main_len = strlen_mod(strmain);                    /* storing length of main string */
-    sub_len = strlen_mod(strsub);                      /* Storing length of sub string */
-    for (i=0;i<main_len;i++)                           /* For loop */
-    {
-        if(strmain[i] == strsub[0])                    /* Checking whether first character of substring is present in main string */
-        {
-            temp = i;                                  /* If first character is present, storing index of main striing temporarily to use further */
-            for (l=0;l<sub_len;l++,i++)                /* For loop */
-            {
-                if (strmain[i] == strsub[l])           /* Checking whether further characters of sub string are present in main string */
-                {
-                    match++;                           /* Incrementing count if character of sub string are present in main string */
-                    continue;                          /* Continue if characters are present */
-                }
-                else                                   /* This block will exev=cute if further characters of sub string is not present in main string */
-                {
-                    i=temp;                            /* Storing back index of main string */
-                    break;                             /* Break if further charaters are not oresent in main string */
-                }
-            }
-            if (match == sub_len)                      /* If for loop is executed for length of main string and characters oof sub string are present, this block will execute */
-            {
-                return 0;                              /* Return 0 if sub string is present in main string */
-            }
-            else                                       /* If for loop is executed for length of main string and sub string is not present in main string, this block will execute */
-            {
-                match = 0;                             /* Setting matched character counter to 0 for further calculations */
-                continue;                              /* Continue execution */
-            }
-        }
-    }
-    return 1;                                          /* Return non zero value if sub string is not present in main string */
-}
 
 /********************************End of File*******************************/

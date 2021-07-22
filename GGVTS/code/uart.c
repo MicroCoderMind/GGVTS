@@ -15,7 +15,7 @@ __irq void uart_isr(void)
 			{
 				new_message++;
 				TIMER = OFF;
-				message_counter_temp++;
+				Received_Message_Count++;
 				new_mes = 0;
 			  comp=0;
 				buffer_counter -= 13;

@@ -63,7 +63,7 @@ void set_location_frequency(UINT32 freq)
 void delete_message_timer(void)
 {
 	  TIMER = ON;
-    T1PR = 11999 * 5; 	/* To make timer run for desired time, freq can have values 1,3,5,7,10 */
+    T1PR = 11999 * 0.2; 	/* To make timer run for desired time, freq can have values 1,3,5,7,10 */
 #ifdef DEBUG_START              /* Debug purpose */
     debug("Timer Start");       /* Debug purpose */
 #endif                          /* Debug purpose */
