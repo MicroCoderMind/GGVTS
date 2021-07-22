@@ -12,6 +12,7 @@
 #define __GLOBAL__ 1
 #define OFF 0
 #define ON 1
+#define NA 5
 #define TRUE 1
 #define FALSE 0
 //#define DEBUG_START
@@ -51,6 +52,9 @@
 			extern volatile UINT32 new_message;
 			extern UINT32 Received_Message_Count;
 		extern UINT32 RESET;
+		extern UINT8 DIAGNOSE;
+		extern INT8 diagnose_data;
+	  extern INT8 diagnoseDataSent;
 		extern UINT8 Read_Message_Count;
 		extern char DELETE_MESSAGES;
 		extern INT32 message;                                                   /* Local variable to count number of messages already read */

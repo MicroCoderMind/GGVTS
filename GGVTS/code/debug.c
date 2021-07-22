@@ -21,8 +21,29 @@
 __irq void uart_isr_debug(void)
 {
     UINT32 iir_value;       /* Local variable to clear interrupt */
+	  char temp;
     iir_value = U1IIR;      /* Cleaaring interrupt */
-	  U1IIR = iir_value;      /* Clearing UART 1 Interrupt */
+	  if( iir_value & 0x00000004 )
+	  {
+		  temp = U1RBR;
+		  if(temp == '~')
+		  {
+				DIAGNOSE = ON;
+		  }
+			else if(temp == '_')
+			{
+				DIAGNOSE = NA;
+			}
+		}
+	  else
+	  {
+		  iir_value = U1IIR;
+	  }
+		if (DIAGNOSE == ON)
+		{
+			diagnose_data = temp;
+			diagnoseDataSent = OFF;
+		}
     VICVectAddr = 0x00;     /* Informing processor that interrupt ends here */
 }
 

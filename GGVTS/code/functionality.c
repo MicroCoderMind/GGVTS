@@ -224,7 +224,7 @@ void functionality(UINT32 message)
 ***************************************************************************/
 void wait_for_message()
 {
-    UINT32 user_info_stored = ON;                                      /* Local variable, used to determine whether user infor is stored or not */
+    UINT32 user_info_stored = ON,message = OFF;                                      /* Local variable, used to determine whether user infor is stored or not */
     if (user_info_stored)                                              /* If user infor is not stored, this block will execute */
     {
 			  if (new_message > 0)
@@ -241,7 +241,7 @@ void wait_for_message()
     while(ON)                                                          /* Infinite Loop */
     {
         delay(0.1);                                                    /* Delay of 0.1 seconds */
-        if (user_info_stored == OFF)                         /* If there is no error and user information is stored successfull, this block will execute */
+        if (user_info_stored == OFF && DIAGNOSE == OFF)                         /* If there is no error and user information is stored successfull, this block will execute */
         {
                 delay(0.1);                                            /* delay of 0.1 seconds */
                 while(new_message > 0)                                 /* Loop back untill there is no new message */
@@ -284,7 +284,7 @@ void wait_for_message()
 				        delete_message_timer();
 						}
         }
-        else if(user_info_stored)                            /* If there is no error and user info is not stored */
+        else if(user_info_stored && DIAGNOSE == OFF)                            /* If there is no error and user info is not stored */
         {
                 if(new_message > 0)                                 /* Loop until there is no unread message */
                 {
@@ -297,6 +297,47 @@ void wait_for_message()
                     user_info_stored = extract_user_info();            /* Function call to extract user info */                                             /* Exit loop when user info is extracted */
                 }
         }
+				else if(DIAGNOSE == ON)
+				{
+					if (message == OFF)
+					{
+					  debug("Diagnose mode entered!!!\n");
+						message = ON;
+						memset(response_temp,0,200);
+						buffer_counter = 0;
+					}
+					else
+					{
+						if (diagnoseDataSent == OFF)
+						{
+						    U0THR = diagnose_data;
+	              delay(0.02);
+							  if (diagnose_data == 0x0D)
+								{
+									delay(1);
+									debug(response_temp);
+									memset(response_temp,0,200);
+									buffer_counter = 0;
+								}									
+							  diagnoseDataSent = ON;
+						}
+						else
+						{
+							//Do Nothing
+						}
+					}
+				}
+				else if(DIAGNOSE == NA)
+				{
+					if (message == ON)
+					{
+					  debug("Diagnose mode exit!!!\n");
+					  message = OFF;
+						DIAGNOSE = OFF;
+						memset(response_temp,0,200);
+						buffer_counter = 0;
+					}
+				}
         else
         {
 #ifdef DEBUG_START                                                     /* For debug purpose */
