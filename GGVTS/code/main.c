@@ -42,6 +42,9 @@ char TIMER = OFF;
 UINT8 Read_Message_Count = 0;
 INT32 message = 0;
 char DELETE_MESSAGES = OFF;
+UINT8 DIAGNOSE = OFF;
+INT8 diagnose_data;
+INT8 diagnoseDataSent;
 
 int main(void)
 {
