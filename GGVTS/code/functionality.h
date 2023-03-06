@@ -11,7 +11,19 @@
 #ifndef __FUNCTIONALITY__
 #define __FUNCTIONALITY__
 
-void reset_module(void);
+/***************************************************************************
+*  Funtion Name: reset_module                                              *
+*--------------------------------------------------------------------------*
+*  Description: This function is written to reset GSM/GPS module.          *
+*               In this function Airplane mode will be switched on         *
+* 							and then switched off                                      *
+*--------------------------------------------------------------------------*
+*  Input Parameters: None                                                  *
+*  Output Parameters: None                                                 *
+*--------------------------------------------------------------------------*
+*  Comments:                                                               *
+***************************************************************************/
+void reset_module(UINT8);
 	
 /***************************************************************************
 *  Funtion Name: wait_for_message                                          *

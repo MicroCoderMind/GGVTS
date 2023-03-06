@@ -5,7 +5,7 @@
 *               timers.                                                    *
 *                                                                          *
 *--------------------------------------------------------------------------*
-*  Comments:	                                                           *
+*  Comments:	                                                             *
 *                                                                          *
 ***************************************************************************/
 
@@ -13,12 +13,15 @@
 *  Below are the header files required to build this file                  *
 ***************************************************************************/
 #include "common.h"
-#undef DEBUG_START
+//#define DEBUG_START
 
 /***************************************************************************
-*  Funtion Name: timer_isr                                                 *
+*  Funtion Name: timer1_isr                                                *
+*  Function prototype: __irq void timer1_isr(void)                         *
+*  Function return type: void                                              *
+*  Function description: This function contains interrupt routine of timer1*
 ***************************************************************************/
-__irq void timer_isr(void)
+__irq void timer1_isr(void)
 {
     T1IR = 0x01;                        /* Clear timer interrupt */
 #ifdef DEBUG_START                      /* Debug Purpose */
@@ -28,15 +31,6 @@ __irq void timer_isr(void)
 	{
     SEND_LOCATION = ON;                 /* Global variable to enable SEND_FREQ functionality */
 	}
-	if (TIMER == ON)
-	{
-       DELETE_MESSAGES = ON;
-	}
-	if (TIMER == OFF)
-	{
-		DELETE_MESSAGES = OFF;
-		//Do not delete messages as there are messages in buffer.
-	}
 #ifdef DEBUG_START                      /* Debug purpose */
     debug("Timer Interrupt End\n");     /* Debug purpose */
 #endif                                  /* Debug purpose */
@@ -44,7 +38,41 @@ __irq void timer_isr(void)
 }
 
 /***************************************************************************
+*  Funtion Name: timer0_isr                                                *
+*  Function prototype: __irq void timer0_isr(void)                         *
+*  Function return type: void                                              *
+*  Function description: This function contains interrupt routine of timer0*
+***************************************************************************/
+
+__irq void timer0_isr(void)
+{
+	  T0TCR = 0x02;	     /* Reset Timer */
+    T0IR = 0x01;                        /* Clear timer interrupt */
+#ifdef DEBUG_START                      /* Debug Purpose */
+    debug("Timer Interrupt Start\n");   /* Debug purpose */
+#endif  
+	if (TIMER0 == ON)
+	{
+       DELETE_MESSAGES = ON;
+	}	/* Debug purpose */
+	if (TIMER0 == OFF)
+	{
+		DELETE_MESSAGES = OFF;
+		//Do not delete messages as there are messages in buffer.
+	}
+#ifdef DEBUG_START                      /* Debug purpose */
+    debug("Timer Interrupt End\n");     /* Debug purpose */
+#endif                                  /* Debug purpose */
+	  TIMER0_OVER = OFF;
+    VICVectAddr = 0x00;                 /* This line tells processor that interrupt ends here */
+}
+
+/***************************************************************************
 *  Funtion Name: set_location_frequency                                    *
+*  Function prototype: void set_location_frequency(UINT32 freq)            *                                                   
+*  Function return type: void                                              *
+*  Function description: This function used to set timer frequency for     *
+*  desired time delay.                                                     *
 ***************************************************************************/
 void set_location_frequency(UINT32 freq)
 {
@@ -58,12 +86,16 @@ void set_location_frequency(UINT32 freq)
 }
 
 /***************************************************************************
-*  Funtion Name: set_location_frequency                                    *
+*  Funtion Name: delete_message_timer                                      *
+*  Function prototype: void delete_message_timer(void)                     *
+*  Function return type: void                                              *
+*  Function description: This function starts timer 0 to delete message    *
+*                         present in buffer.                               *
 ***************************************************************************/
 void delete_message_timer(void)
 {
-	  TIMER = ON;
-    T1PR = 11999 * 0.2; 	/* To make timer run for desired time, freq can have values 1,3,5,7,10 */
+	  TIMER0 = ON;
+    T0PR = 11999 * 0.125; 	/* To make timer run for desired time, freq can have values 1,3,5,7,10 */
 #ifdef DEBUG_START              /* Debug purpose */
     debug("Timer Start");       /* Debug purpose */
 #endif                          /* Debug purpose */
@@ -73,17 +105,24 @@ void delete_message_timer(void)
 
 /***************************************************************************
 *  Funtion Name: delay                                                     *
+*  Function prototype:  void delay(float)                                  *
+*  Function return type: void                                              *
+*  Function description: This is delay function.                           *
 ***************************************************************************/
 void delay(float seconds)
 {
+	  TIMER0_OVER = ON;
     T0PR = (UINT32)(11999 * seconds); 	   /* Value to make delay of desired time. */
-    T0TCR = 0x01;                          /* Start Timer */
-    while(T0TCR);                          /* Wait until timer reset (1 sec delay generated) */
-    T0TCR = 0x02;                          /* Stop Timer */
+    T0TCR = 0x01;    	/* Start Timer */
+	  while(TIMER0_OVER);
+	  return;
 }
 
 /***************************************************************************
-*  Funtion Name: timer_0_init                                                *
+*  Funtion Name: timer_0_init                                              *
+*  Function prototype: void timer_0_init(void)                             *
+*  Function return type: void                                              *
+*  Function description: This function will intialize timer0               *
 ***************************************************************************/
 void timer_0_init(void)
 {
@@ -91,13 +130,16 @@ void timer_0_init(void)
     {
         T0TCR = 0x02;	     /* Reset Timer */
         T0CTCR = 0x00;       /* Set Timer 0 into Timer Mode */
-        T0MCR = 0x06;	     /* Tell processor to reset timer after 1 sec */
+        T0MCR = 0x07;	     /* Tell processor to reset timer after 1 sec */
         T0MR0 = 1000;        /* Value to make delay of 1sec */
     }
 }
 
 /***************************************************************************
-*  Funtion Name: timer_1_init                                                *
+*  Funtion Name: timer_1_init                                              *
+*  Function prototype: void timer_1_init(void)                             *
+*  Function return type: void                                              *
+*  Function description: This function will intialize timer1.              *
 ***************************************************************************/
 void timer_1_init(void)
 {
@@ -112,6 +154,10 @@ void timer_1_init(void)
 
 /***************************************************************************
 *  Funtion Name: pll_init                                                  *
+*  Function prototype:  void pll_init(void)                                *
+*  Function return type: void                                              *
+*  Function description: This function will intialize PLL for desired      *  
+*  clock frequency for timer.                                              *
 ***************************************************************************/
 void pll_init(void)
 {

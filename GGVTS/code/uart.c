@@ -1,4 +1,12 @@
 #include "common.h"
+
+/***************************************************************************
+*  Funtion Name: uart_isr                                                  *
+*  Function prototype:  void uart_isr(void)                                *
+*  Function return type: void                                              *
+*  Function description: This function contains the interrupt reoutine of  *  
+*                        UART0.                                            *
+***************************************************************************/
 __irq void uart_isr(void)
 {
 	UINT32 iir_value;
@@ -38,6 +46,13 @@ __irq void uart_isr(void)
 	VICVectAddr = 0x00;
 }
 
+
+/***************************************************************************
+*  Funtion Name: uart_init                                                 *
+*  Function prototype:  void uart_init(void)                               *
+*  Function return type: void                                              *
+*  Function description: This function will intialize the UART0            *
+***************************************************************************/
 void uart_init(void)
 {
 	if (!ERROR)
@@ -52,17 +67,26 @@ void uart_init(void)
 	}
 }
 
+/***************************************************************************
+*  Funtion Name: interrupt_init                                            *
+*  Function prototype:  void interrupt_init(void)                          *
+*  Function return type: void                                              *
+*  Function description: This function will intialize interrupt for all    *
+*                        the functionalities like Timer, UART etc          *
+***************************************************************************/
 void interrupt_init(void)
 {
 	if (!ERROR)
 	{
 		VICVectAddr0 = (unsigned) uart_isr;	/* UART0 ISR Address */
-		VICVectAddr2 = (unsigned) timer_isr;	/* UART0 ISR Address */
+		VICVectAddr2 = (unsigned) timer1_isr;	/* Timer1 ISR Address */
 		VICVectAddr1 = (unsigned) uart_isr_debug;	/* UART0 ISR Address need to remove this line after finishing*/
+		VICVectAddr3 = (unsigned) timer0_isr;	/* UART0 ISR Address need to remove this line after finishing*/
 		VICVectCntl0 = 0x00000026;	/* Enable UART0 IRQ slot */
 		VICVectCntl1 = 0x00000027;	/* Enable UART1 IRQ slot need to remove this line after finishing*/
 		VICVectCntl2 = 0x00000025;	/* Enable TImer 1 Interrupt*/
-		VICIntEnable = 0x000000E0;	/* Enable UART0, UART1 and Timer1 interrupt*/
+		VICVectCntl3 = 0x00000024;	/* Enable TImer 0 Interrupt*/
+		VICIntEnable = 0x000000F0;	/* Enable UART0, UART1, Timer0 and Timer1 interrupt*/
 		VICIntSelect = 0x00000000;	/* UART0 configured as IRQ */
 	}
 }

@@ -5,6 +5,9 @@
 
 /***************************************************************************
 *  Funtion Name: join_strings                                              *
+*  Function prototype:  void join_strings(const INT8 *,const INT8 *)       *
+*  Function return type: void                                              *
+*  Function description: This function will join two strings.              *
 ***************************************************************************/
 void join_strings(const INT8 * str1,const INT8 *str2)
 {
@@ -23,6 +26,9 @@ void join_strings(const INT8 * str1,const INT8 *str2)
 
 /***************************************************************************
 *  Funtion Name: strlen_mod                                                *
+*  Function prototype:  UINT32 strlen_mod(const char *)                    *
+*  Function return type: UINT32                                            *
+*  Function description: This function will count the length of string     *
 ***************************************************************************/
 UINT32 strlen_mod(const char * ptr)
 {
@@ -37,6 +43,9 @@ UINT32 strlen_mod(const char * ptr)
 
 /***************************************************************************
 *  Funtion Name: strcpy_mod                                                *
+*  Function prototype:  void strcpy_mod(char * ,char *)                    *
+*  Function return type: void                                              *
+*  Function description: This function will copy str2 into str1            *
 ***************************************************************************/
 void strcpy_mod(char * str1,char * str2)
 {
@@ -50,6 +59,9 @@ void strcpy_mod(char * str1,char * str2)
 
 /***************************************************************************
 *  Funtion Name: strcmp_mod                                                *
+*  Function prototype:  INT32 strcmp_mod(void)                             *
+*  Function return type: INT32                                             *
+*  Function description: This function will compare two strings            *
 ***************************************************************************/
 INT32 strcmp_mod(const char * str1, const char * str2)
 {
@@ -78,6 +90,10 @@ INT32 strcmp_mod(const char * str1, const char * str2)
 
 /***************************************************************************
 *  Funtion Name: strstr_mod                                                *
+*  Function prototype:  UINT32 strstr_mod(void)                            *
+*  Function return type: UINT32                                            *
+*  Function description: This function will check exitance of sub string   *
+*                        into main string                                  *
 ***************************************************************************/
 UINT32 strstr_mod(const char *strmain, const char *strsub)
 {
@@ -114,4 +130,17 @@ UINT32 strstr_mod(const char *strmain, const char *strsub)
         }
     }
     return 1;                                          /* Return non zero value if sub string is not present in main string */
+}
+
+/***************************************************************************
+*  Funtion Name: clear_buffer                                              *
+*  Function prototype:  void clear_buffer(void)                            *
+*  Function return type: void                                              *
+*  Function description: This function will clear the main buffer          *
+***************************************************************************/
+void clear_buffer(void)
+{
+	buffer_counter = 0;
+	memset(response_temp,'\0',200);
+	delay(0.5);
 }

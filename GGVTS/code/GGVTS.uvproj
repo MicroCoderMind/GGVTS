@@ -461,19 +461,9 @@
               <FilePath>.\response.c</FilePath>
             </File>
             <File>
-              <FileName>response.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\response.h</FilePath>
-            </File>
-            <File>
               <FileName>message_handler.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\message_handler.c</FilePath>
-            </File>
-            <File>
-              <FileName>message_handler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\message_handler.h</FilePath>
             </File>
             <File>
               <FileName>functionality.c</FileName>
@@ -484,11 +474,6 @@
               <FileName>Strings_Mod_Functionality.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Strings_Mod_Functionality.c</FilePath>
-            </File>
-            <File>
-              <FileName>Strings_Mod_Functionality.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Strings_Mod_Functionality.h</FilePath>
             </File>
           </Files>
         </Group>

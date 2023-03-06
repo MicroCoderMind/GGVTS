@@ -14,6 +14,7 @@
 *  Below are the header files required to build project                    *
 ***************************************************************************/
 #include "common.h"
+#define DEBUG_START
 UINT8 COLD_START_DONE = 0;
 UINT8 WARM_START_DONE = 0;
 UINT8 WARM_START = 0;
@@ -21,68 +22,54 @@ UINT8 check_location = 0;
 UINT8 location_fixed = 0;
 const INT8 * warm_start[1] = {"AT+CGPSRST=2\r"};
 const INT8 * cold_start[1] = {"AT+CGPSRST=0\r"};
+
 /***************************************************************************
 *  Funtion Name: gps_init                                                  *
+*  Function prototype: void gps_init(void)                                 *
+*  Function return type: void                                              *
+*  Function description: This function will perform gps initialization by  *
+*  sending specfic commands from master device. also it will detect whether*
+*  commands are proceeding or not by getting response.                     *
 ***************************************************************************/
 void gps_init(void)
 {
 	if (!ERROR)
 	{
-	  gsm_transmit(GPS_INIT[0]);
-    if (!check_response_command())
-	  {
-	  		  buffer_counter = 0;
-	  	    memset(response_temp,0,200);
-		      ERROR = 0;
+		while(CmdSentCount < 5)
+		{
+	    gsm_transmit(GPS_INIT[0]);
+			CmdSentCount++;
+      if (!check_response_command())
+	    {
+	    	clear_buffer();     /* Clear the main buffer */
+		    CmdSentCount = 0;
+		  	break;
+	    }
+	    else
+	    {
+		    //response_back(USER_NUMBER,"Initialization Unsuccessfull!! Trying Again...");
+		  	clear_buffer();       /* Clears the main buffer */
+		  	delay(0.5);
+	    }
+			if (CmdSentCount >= 5)
+		  {
+		  	reset_module(OFF);
+				CmdSentCount = 0;
+		  }
 	  }
-	else
-	{
-		//response_back(USER_NUMBER,"Initialization Unsuccessfull!! Trying Again...");
-				buffer_counter = 0;
-	  	  memset(response_temp,0,200);
 	}
 	if (ERROR == 0)
 	{
-		//check_gps_status();
+	   check_gps_status();
 	}
-}
-}
-
-/***************************************************************************
-*  Funtion Name: get_gps_location                                          *
-***************************************************************************/
-void get_gps_location(void)
-{
-	if (!ERROR && location_fixed == 1)
-	{
-	  gsm_transmit(GPS_LOCATION[0]);
-	  if (!check_response_command())
-	  {			
-	   	memset(extracted_location,0,50);
-		  delay(0.1);
-		  extract_location();
-	  }
-	}
-	else if (ERROR != 0)
-	{
-		ERROR++;
-		//response_back(USER_NUMBER,"Initialization Unsuccessfull!! Trying Again...");
-		buffer_counter = 0;
-	  memset(response_temp,0,200);
-	}
-	else
-	{
-		response_back(USER_NUMBER,"GPS not supported currently, Please Perform Hard Reset!!!");
-	}
-	IO0CLR = 0x00000008;
-	#ifdef DEBUG_START
-		debug(response_temp);
-	#endif
-	return;
 }
 
 /***************************************************************************
 *  Funtion Name: check_gps_status                                          *
+*  Function prototype: void check_gps_status(void)                         *
+*  Function return type: void                                              *
+*  Function description: This function will check status of GPS, whether   *
+*  it is ready to communicate.                                             *
 ***************************************************************************/
 void check_gps_status(void)
 {
@@ -91,18 +78,30 @@ void check_gps_status(void)
     {
         //response_back(USER_NUMBER,"Collecting Location Info!!! Please Wait...");
         while(1)
-		    {							
-		    	  memset(extracted_location,0,50);
-		        gsm_transmit(GPS_STATUS[0]);
-		    	  if(check_response_command())
-		    	  {
-		    		    memset(extracted_location,0,50);
-		    		    memset(response_temp,0,200);
-	              buffer_counter = 0;
-		    		    //response_back(USER_NUMBER,"Initialization Unsuccessfull!! Trying Again...");
-		    		    ERROR = 0;
-		    		    continue;
-		    	  }
+		    {		
+
+							while(CmdSentCount < 5)
+		          {
+	              memset(extracted_location,0,50);
+		            gsm_transmit(GPS_STATUS[0]);
+		            CmdSentCount++;
+                if (!check_response_command())
+	              {
+		              CmdSentCount = 0;
+		            	break;
+	              }
+	              else
+	              {
+		              //response_back(USER_NUMBER,"Initialization Unsuccessfull!! Trying Again...");
+		            	clear_buffer();       /* Clears the main buffer */
+		            	delay(0.5);
+	              }
+								if (CmdSentCount >= 5)
+		            {
+		            	reset_module(OFF);
+									CmdSentCount = 0;
+		            }
+		         }					
 	          for (j=0,i=0;i<strlen_mod(response_temp);i++)
 		        {
 		      	    if (response_temp[i] == ':')
@@ -129,30 +128,27 @@ void check_gps_status(void)
 		        }
 		    	  extracted_location[j] = '\0';
 #ifdef DEBUG_START
-    debug(extracted_location);
+				debug(extracted_location);
 #endif
 		    	  if (strcmp(extracted_location,"Location 3D Fix\0")==0)
 		    	  {
-		    		    response_back(USER_NUMBER,"System is Healthy and Working...Location is 3D");
+		    		    //response_back(USER_NUMBER,"System is Healthy and Working...Location is 3D");
 		    		    memset(extracted_location,0,50);
-		    		    memset(response_temp,0,200);
-	              buffer_counter = 0;
+		    		    clear_buffer();       /* Clears the main buffer */
 						    check_location = 0;
 						    location_fixed = 1;
 		    		    break;
 		    	  }
 		    	  else if(strcmp(extracted_location,"Location 2D Fix\0")==0)
 		    	  {
-		    	  	  response_back(USER_NUMBER,"System is Healthy and Working...Location is 2D");
+		    	  	  //response_back(USER_NUMBER,"System is Healthy and Working...Location is 2D");
 		    	  	  memset(extracted_location,0,50);
-		    	  	  memset(response_temp,0,200);
-	              buffer_counter = 0;
+		    	  	  clear_buffer();       /* Clears the main buffer */
 					  	  check_location = 0;
 					      location_fixed = 1;
 		    	  	  break;
 		    	  }
-		    	  memset(response_temp,0,200);
-	          buffer_counter = 0;
+		    	  clear_buffer();       /* Clears the main buffer */
 					  check_location++;
 		    	  delay(5);
 					  if (check_location < 25)
@@ -168,15 +164,36 @@ void check_gps_status(void)
 						    }
 						    else if(WARM_START_DONE == 0 || WARM_START_DONE == 1)
 						    {
-						    	response_back(USER_NUMBER,"Location not fixed, Performing Warm Start!!!");
-						    	gsm_transmit(warm_start[0]);
-						    	WARM_START_DONE++;
-						    	check_location = 0;
+						    	  response_back(USER_NUMBER,"Location not fixed, Performing Warm Start!!!");
+									  while(CmdSentCount < 5)
+		                {
+		                  gsm_transmit(warm_start[0]);
+			                CmdSentCount++;
+                      if (!check_response_command())
+	                    {
+	  	                    clear_buffer();     /* Clear the main buffer */
+			                    CmdSentCount = 0;
+					          	    WARM_START_DONE++;
+			                    break;
+	                    }
+	                    else
+	                    {
+		                      //response_back(USER_NUMBER,"Initialization Unsuccessfull!! Trying Again...");
+			                   clear_buffer();       /* Clears the main buffer */
+			                   delay(0.5);
+	                    }
+					          	if (CmdSentCount >= 5)
+		                  {
+		                  	reset_module(OFF);
+					            	CmdSentCount = 0;
+		                  }
+		                }
+						    	  check_location = 0;
 						    }
 						    else
 						    {
-						    	  COLD_START_DONE++;
-									  if (COLD_START_DONE == 3)
+						        COLD_START_DONE++;
+								    if (COLD_START_DONE == 3)
 		                {
 		                    response_back(USER_NUMBER,"GPS not responding!!! Hard reset required!!!");
 		                    COLD_START_DONE = 0;
@@ -185,10 +202,31 @@ void check_gps_status(void)
 		                    location_fixed = 0;
 		                    break;
 		                }	
-									  response_back(USER_NUMBER,"Location not fixed, Performing Cold Start!!!");
-						        gsm_transmit(cold_start[0]);
-						    	  WARM_START_DONE = 0;
-						    	  check_location = 0;
+								    response_back(USER_NUMBER,"Location not fixed, Performing Cold Start!!!");
+					          while(CmdSentCount < 5)
+		                {
+		                  gsm_transmit(cold_start[0]);
+			                CmdSentCount++;
+                      if (!check_response_command())
+	                    {
+	  	                    clear_buffer();     /* Clear the main buffer */
+			                    CmdSentCount = 0;
+					          	    WARM_START_DONE = 0;
+			                    break;
+	                    }
+	                    else
+	                    {
+		                      //response_back(USER_NUMBER,"Initialization Unsuccessfull!! Trying Again...");
+			                    clear_buffer();       /* Clears the main buffer */
+			                    delay(0.5);
+	                    }
+					          	if (CmdSentCount >= 5)
+		                  {
+		                  	reset_module(OFF);
+					            	CmdSentCount = 0;
+		                  }
+		                }
+						        check_location = 0;
 						    }
 					  }
 	      }
@@ -197,6 +235,10 @@ void check_gps_status(void)
 
 /***************************************************************************
 *  Funtion Name: extract_location                                          *
+*  Function prototype: void extract_location(void)                         *
+*  Function return type: void                                              *
+*  Function description: This function will extract location sent by gps   *
+*  gps_get_location function.                                              *
 ***************************************************************************/
 void extract_location(void)
 {
@@ -225,18 +267,70 @@ void extract_location(void)
 		  	}
 		  }
 		  extracted_location[j] = '\0';
-	#ifdef DEBUG_START
+#ifdef DEBUG_START
 		debug(extracted_location);
-	#endif
-		  memset(response_temp,0,200);
-		  buffer_counter = 0;
+#endif
+		  clear_buffer();       /* Clears the main buffer */
+}
+
+/***************************************************************************
+*  Funtion Name: get_gps_location                                          *
+*  Function prototype: void get_gps_location(void)                         *
+*  Function return type: void                                              *
+*  Function description: This function will send command to GPS to get     *
+*                         current location                                 *
+***************************************************************************/
+void get_gps_location(void)
+{
+	if (!ERROR && location_fixed == 1)
+	{
+		while(CmdSentCount < 5)
+		{
+		   gsm_transmit(GPS_LOCATION[0]);
+		   CmdSentCount++;
+       if (!check_response_command())
+	     {
+		       CmdSentCount = 0;
+		       extract_location();
+		       break;
+	     }
+	     else
+	     {
+		        //response_back(USER_NUMBER,"Initialization Unsuccessfull!! Trying Again...");
+		       clear_buffer();       /* Clears the main buffer */
+		       delay(0.5);
+	     }
+		}
+		if (CmdSentCount >= 5)
+		{
+		    ERROR++;
+		}
+	}
+	else
+	{
+		response_back(USER_NUMBER,"GPS not supported currently, Please Perform Hard Reset!!!");
+	}
+	if (ERROR > 0)
+	{
+		ERROR = 0;
+		reset_module(OFF);
+	}
+#ifdef DEBUG_START
+		debug(response_temp);
+#endif
+	return;
 }
 
 /***************************************************************************
 *  Funtion Name: send_location                                             *
+*  Function prototype: void send_location(void)                            *
+*  Function return type: void                                              *
+*  Function description: This function will get location from gps function *
+*  and extracted location will be send to user.                            *
 ***************************************************************************/
 void send_location(void)
 {
+	debug("reached");
 		char temp_reply[200];
 	  delay(0.1);
 		get_gps_location();

@@ -6,7 +6,7 @@
 *               for eg. join strings, counting string length etc.          *
 *                                                                          *
 *--------------------------------------------------------------------------*
-*  Comments:	                                                           *
+*  Comments:	                                                             *
 *                                                                          *
 ***************************************************************************/
 
@@ -16,8 +16,14 @@
 #include"common.h"
 //#define DEBUG_START
 
+static UINT32 user_info_stored = ON;      //Global parameter used in this file only
+
 /***************************************************************************
 *  Funtion Name: functionality                                             *
+*  Function prototype:  void functionality(UINT32)                         *
+*  Function return type: void                                              *
+*  Function description: This function contains all the functionalites     *
+*                        which GSM/GPS can perform.                        *
 ***************************************************************************/
 void functionality(UINT32 message)
 {
@@ -72,7 +78,7 @@ void functionality(UINT32 message)
             in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
         }
     }
-    else if(strcmp_mod(extracted_message,"LCTN FREQ 1\0") == 0)  /* Check if message os LCTN FREQ 1*/
+    else if(strcmp_mod(extracted_message,"Lctn freq 1\0") == 0)  /* Check if message os LCTN FREQ 1*/
     {
         if (IGNORE == OFF && location_fixed == ON)               /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
@@ -90,7 +96,7 @@ void functionality(UINT32 message)
             in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
         }
     }
-    else if(strcmp_mod(extracted_message,"LCTN FREQ 3\0") == 0)  /* Check if message os LCTN FREQ 3*/
+    else if(strcmp_mod(extracted_message,"Lctn freq 3\0") == 0)  /* Check if message os LCTN FREQ 3*/
     {
         if (IGNORE == OFF && location_fixed == ON)               /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
@@ -108,7 +114,7 @@ void functionality(UINT32 message)
             in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
         }
     }
-    else if(strcmp_mod(extracted_message,"LCTN FREQ 5\0") == 0)  /* Check if message os LCTN FREQ 5*/
+    else if(strcmp_mod(extracted_message,"Lctn freq 5\0") == 0)  /* Check if message os LCTN FREQ 5*/
     {
         if (IGNORE == OFF && location_fixed == ON)               /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
@@ -126,7 +132,7 @@ void functionality(UINT32 message)
             in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
         }
     }
-    else if(strcmp_mod(extracted_message,"LCTN FREQ 7\0") == 0)  /* Check if message os LCTN FREQ 7 */
+    else if(strcmp_mod(extracted_message,"Lctn freq 7\0") == 0)  /* Check if message os LCTN FREQ 7 */
     {
         if (IGNORE == OFF && location_fixed == ON)               /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
@@ -144,7 +150,7 @@ void functionality(UINT32 message)
             in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
         }
     }
-    else if(strcmp_mod(extracted_message,"LCTN FREQ 10\0") == 0) /* Check if message os LCTN FREQ 10 */
+    else if(strcmp_mod(extracted_message,"Lctn freq 10\0") == 0) /* Check if message os LCTN FREQ 10 */
     {
         if (IGNORE == OFF && location_fixed == ON)               /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
@@ -162,7 +168,7 @@ void functionality(UINT32 message)
             in_message = 1;                                      /* Telling GGVTS that perform in_message functionality */
         }
     }
-    else if(strcmp_mod(extracted_message,"LCTN FREQ 0\0") == 0)  /* Check if message os LCTN FREQ 0 */
+    else if(strcmp_mod(extracted_message,"Lctn freq 0\0") == 0)  /* Check if message os LCTN FREQ 0 */
     {
         if (IGNORE == OFF && location_fixed == ON)               /* Check if this message needds to be ignored?, Means it is received from other than user */
         {
@@ -221,23 +227,47 @@ void functionality(UINT32 message)
 
 /***************************************************************************
 *  Funtion Name: wait_for_message                                          *
+*  Function prototype:  void wait_for_message(void)                        *
+*  Function return type: void                                              *
+*  Function description: This is the function where processor waits for    *
+*                        new message.                                      *
 ***************************************************************************/
 void wait_for_message()
 {
-    UINT32 user_info_stored = ON,message = OFF;                                      /* Local variable, used to determine whether user infor is stored or not */
+    UINT32 message = OFF;                                      /* Local variable, used to determine whether user infor is stored or not */
     if (user_info_stored)                                              /* If user infor is not stored, this block will execute */
     {
 			  if (new_message > 0)
 				{
 					response_back(USER_NUMBER,"Initialization in Progress, Please wait!!!");   /* Message to owner for user details */
-					gsm_transmit("AT+CMGD=1,4\r");
+					while(CmdSentCount < 5)
+		      {
+	          gsm_transmit("AT+CMGD=1,4\r");
+		      	CmdSentCount++;
+            if (!check_response_command())
+	          {
+	        		clear_buffer();     /* Clear the main buffer */
+		      	  CmdSentCount = 0;
+		      		break;
+	          }
+	          else
+	          {
+		          //response_back(USER_NUMBER,"Initialization Unsuccessfull!! Trying Again...");
+		      		clear_buffer();       /* Clears the main buffer */
+		      		delay(0.5);
+	          }
+						if (CmdSentCount >= 5)
+		        {
+		        	reset_module(OFF);
+					  	CmdSentCount = 0;
+		        }
+		      }
 					new_message = 0;
 					Read_Message_Count = 0;
 				}
-        response_back(USER_NUMBER,"User Name and Number please!!!");   /* Message to owner for user details */
+        response_back(USER_NUMBER,"Greetings Mr. Arora, User Name and Number please!!!");   /* Message to owner for user details */
     }
-    buffer_counter = 0;                                                /* Making characyer counter for main buffer as 0 */
-    memset(response_temp,0,200);                                       /* Emptying main buffer */
+    clear_buffer();     /* Clear the main buffer */
     while(ON)                                                          /* Infinite Loop */
     {
         delay(0.1);                                                    /* Delay of 0.1 seconds */
@@ -248,8 +278,7 @@ void wait_for_message()
                 {
                     message++;                                         /* Incrementing read message number */
                     delay(0.1);                                        /* delay of 0.1 seconds */
-                    buffer_counter = 0;                                /* Making characyer counter for main buffer as 0 */
-                    memset(response_temp,0,200);                       /* Emptying main buffer */
+                    clear_buffer();     /* Clear the main buffer */
                     read_message(message);                         /* Function call to read message */
                     check_authentication(extracted_number);        /* Function call to check authentication of message */
                     functionality(message);                        /* Function call to perform required functionality */
@@ -267,24 +296,45 @@ void wait_for_message()
                 }
 								if (DELETE_MESSAGES == ON)
 								{
-											gsm_transmit("AT+CMGD=1,4\r");
+											
+											while(CmdSentCount < 5)
+		                  {
+	                      gsm_transmit("AT+CMGD=1,4\r");
+		                  	CmdSentCount++;
+                        if (!check_response_command())
+	                      {
+	                    		clear_buffer();     /* Clear the main buffer */
+		                  	  CmdSentCount = 0;
+		                  		break;
+	                      }
+	                      else
+	                      {
+		                      //response_back(USER_NUMBER,"Initialization Unsuccessfull!! Trying Again...");
+		                  		clear_buffer();       /* Clears the main buffer */
+		                  		delay(0.5);
+	                      }
+												if (CmdSentCount >= 5)
+		                    {
+		                    	reset_module(OFF);
+											  	CmdSentCount = 0;
+		                    }
+		                  }
 		                  Read_Message_Count = 0;
 		                  Received_Message_Count = 0;
 		                  message = 0;
-		                  TIMER = OFF;
+		                  TIMER0 = OFF;
 									    DELETE_MESSAGES = OFF;
 								}
 #ifdef DEBUG_START                                                     /* for debug purpose */
     debug(alpha[new_message]);                                         /* for debug purpose */
-    debug(alpha[message]); 
 		debug(alpha[Received_Message_Count]); 										/* for debug purpose */
 #endif
-						if (Read_Message_Count == Received_Message_Count && TIMER == OFF && Read_Message_Count > 0)
+						if (Read_Message_Count == Received_Message_Count && TIMER0 == OFF && Read_Message_Count > 0)
 						{							
 				        delete_message_timer();
 						}
         }
-        else if(user_info_stored && DIAGNOSE == OFF)                            /* If there is no error and user info is not stored */
+        else if(user_info_stored == ON && DIAGNOSE == OFF)                            /* If there is no error and user info is not stored */
         {
                 if(new_message > 0)                                 /* Loop until there is no unread message */
                 {
@@ -294,17 +344,47 @@ void wait_for_message()
     debug(response_temp);                                              /* For debug purpose */
 #endif                                                                 /* For debug purpose */
                     read_message(message);                             /* Function call to read new message */
-                    user_info_stored = extract_user_info();            /* Function call to extract user info */                                             /* Exit loop when user info is extracted */
+                    user_info_stored = extract_user_info();            /* Function call to extract user info */ 									
+                    delete_message_timer();
                 }
+								if (DELETE_MESSAGES == ON)
+								{
+											while(CmdSentCount < 5)
+		                  {
+	                      gsm_transmit("AT+CMGD=1,4\r");
+		                  	CmdSentCount++;
+                        if (!check_response_command())
+	                      {
+	                    		clear_buffer();     /* Clear the main buffer */
+		                  	  CmdSentCount = 0;
+		                  		break;
+	                      }
+	                      else
+	                      {
+		                      //response_back(USER_NUMBER,"Initialization Unsuccessfull!! Trying Again...");
+		                  		clear_buffer();       /* Clears the main buffer */
+		                  		delay(0.5);
+	                      }
+												if (CmdSentCount >= 5)
+		                    {
+		                    	reset_module(OFF);
+											  	CmdSentCount = 0;
+		                    }
+		                  }
+		                  Read_Message_Count = 0;
+		                  Received_Message_Count = 0;
+		                  message = 0;
+		                  TIMER0 = OFF;
+									    DELETE_MESSAGES = OFF;
+								}
         }
 				else if(DIAGNOSE == ON)
 				{
 					if (message == OFF)
 					{
-					  debug("Diagnose mode entered!!!\n");
+			      debug("Diagnose mode entered!!!\n");
 						message = ON;
-						memset(response_temp,0,200);
-						buffer_counter = 0;
+						clear_buffer();     /* Clear the main buffer */
 					}
 					else
 					{
@@ -316,8 +396,7 @@ void wait_for_message()
 								{
 									delay(1);
 									debug(response_temp);
-									memset(response_temp,0,200);
-									buffer_counter = 0;
+									clear_buffer();     /* Clear the main buffer */
 								}									
 							  diagnoseDataSent = ON;
 						}
@@ -334,8 +413,7 @@ void wait_for_message()
 					  debug("Diagnose mode exit!!!\n");
 					  message = OFF;
 						DIAGNOSE = OFF;
-						memset(response_temp,0,200);
-						buffer_counter = 0;
+						clear_buffer();     /* Clear the main buffer */
 					}
 				}
         else
@@ -351,81 +429,147 @@ void wait_for_message()
 
 /***************************************************************************
 *  Funtion Name: extract_user_info                                         *
+*  Function prototype:  UINT32 extract_user_info(void)                     *
+*  Function return type: UINT32                                            *
+*  Function description: This function will extract user info              *
 ***************************************************************************/
 UINT32 extract_user_info(void)
 {
-    UINT32 i,j;                   /* Local variables used as index */
+	debug(extracted_message);
+
+    UINT32 i,j,len;                   /* Local variables used as index */
     char temp[200];               /* Local buffer for temporary use */
-    for (i=0;extracted_message[i] != ' ';i++)   /* For loop */
+	  len = strlen_mod(extracted_message);
+	  memset(USER_NUMBER,'\0',14);
+	if (len > 13 && !(strstr_mod(extracted_message," ")))
+	{
+    for (i=0;i<len ;i++)   /* For loop */
     {
+			if (extracted_message[i] == ' ')
+			{
+				break;
+			}
+			else
+			{
         USER_NAME[i]=extracted_message[i];      /* Storing name of user in USER_NAME buffer */
+			}
     }
     USER_NAME[i]='\0';                          /* Appending null character in USER_NAME buffer */
 #ifdef DEBUG_START                              /* For debug purpose */
     debug(USER_NAME);                           /* For debug purpose */
 #endif                                          /* For debug purpose */
-    if(extracted_message[i+1]!='+')             /* Checking if number sent by owner contains country code? */
+		
+		 for (j=0,i++;(len-i) > 0;j++)
+     {
+         USER_NUMBER[j] = extracted_message[i++];  /* Storing extracted number in USER_NUMBER buffer */
+     }
+#ifdef DEBUG_START                           /* For debug purpose */
+    debug(USER_NUMBER);                      /* For debug purpose */
+#endif  
+		if(USER_NUMBER[0]!='+')             /* Checking if number sent by owner contains country code? */
     {
         response_back(*OWNER_NUMBER,"Invalid Format!!! Try again!! Pro Tip: Add Country code!!"); /* If country code is not mentioned user will be informed of that */
         memset(extracted_message,0,50);         /* Clearing buffer which is used to extract message */
         memset(extracted_number,0,14);          /* Clearing buffer which is used to extract user number */
         return ON;                              /* Informing GGVTS that valid user name and number is not received yet */
     }
-    else                                        /* If number sent by owner this part will execute */
-    {
-        for (j=0,i++;j<14;j++)
-        {
-            USER_NUMBER[j] = extracted_message[i++];  /* Storing extracted number in USER_NUMBER buffer */
-        }
-				if (strlen_mod(USER_NUMBER) != 13)
-				{
+		 if (strlen_mod(USER_NUMBER) != 13)
+		 {
 					response_back(*OWNER_NUMBER,"Invalid Number!!! Try again!! Pro Tip: Check Phone Number!!"); /* If country code is not mentioned user will be informed of that */
           memset(extracted_message,0,50);         /* Clearing buffer which is used to extract message */
           memset(extracted_number,0,14);          /* Clearing buffer which is used to extract user number */
 					return ON;
-				}
-				else
-				{
-					//Do Nothing
-				}
-    }
-#ifdef DEBUG_START                           /* For debug purpose */
-    debug(USER_NUMBER);                      /* For debug purpose */
-    debug(alpha[OFF]);                       /* for debug purpose */
-#endif                                       /* For debug purpose */
+		 }
+                                     /* For debug purpose */
     join_strings("Greetings!!! Mr. ",USER_NAME);  /* Joining gtrrting message for user */  
     strcpy_mod(temp,joined_string);          /* Copying joined_string buffer in temporary buffer */
     memset(joined_string,0,200);             /* Emptying joined_string buffer for further use */
     response_back(USER_NUMBER,temp);         /* Sending greeting message to user */
     memset(extracted_message,0,50);          /* Emptying extracted_message buffer for further use */
     memset(extracted_number,0,14);           /* Emptying extracted number buffer for further use */
-    return OFF;                              /* Informing processor that valid user name and number is received */
+    return OFF;		/* Informing processor that valid user name and number is received */
+	}
+	else
+  {
+		    response_back(*OWNER_NUMBER,"Invalid Name/Number, Try Again!!!"); /* If country code is not mentioned user will be informed of that */
+        memset(extracted_message,0,50);         /* Clearing buffer which is used to extract message */
+        memset(extracted_number,0,14);          /* Clearing buffer which is used to extract user number */
+        return ON;                              /* Informing GGVTS that valid user name and number is not received yet */
+	}
 }
 
 /***************************************************************************
 *  Funtion Name: reset_module                                              *
+*  Function prototype:  void reset_module(UINT8)                           *
+*  Function return type: void                                              *
+*  Function description: This function will reset module if some error     *
+*                        occurs in sending command or message              *
 ***************************************************************************/
-///*    To be implement in future
-//void reset_module(void)
-//{
-//    memset(response_temp,0,200);     /* Making main buffer empty */
-//    buffer_counter = 0;              /* Starting character counter of buffer from 0 */
-//    delay(0.1);                      /* delay of 0.1 seconds */
-//#ifdef DEBUG_START                   /* For debug purpose */
-//    debug("RESET");                  /* For debug purpose */
-//#endif                               /* For debug purpose */
-//    gsm_transmit("AT+CFUN=0\r");     /* Transmitting command of Airplane mode ON to GGVTS */
-//    if(!check_response_command())    /* Checking whether transmission of command happened successfully, if yes this block will execute */
-//    {
-//        memset(response_temp,0,200); /* Making main buffer empty */
-//        buffer_counter = 0;          /* Starting character counter of main buffer from zero */
-//        gsm_transmit("AT+CFUN=1\r"); /* Transmitting command of Airplane mode OFF to GGVTS */
-//        check_response_command();    /* Checking whether transmission of command happened successfully or not */
-//        RESET = ON;                  /* To be implement in future */
-//    }
-//    memset(response_temp,0,200);     /* Making main buffer empty */
-//    buffer_counter = 0;              /* Starting character counter of main buffer from 0 */
-//}
-//*/
+void reset_module(UINT8 bypass_attempts)
+{
+	UINT8 CmdSentCount_local = 0;
+    clear_buffer();                  /* Clears the main buffer */
+    delay(0.1);                      /* delay of 0.1 seconds */
+#ifdef DEBUG_START                   /* For debug purpose */
+	debug("Attempts: ");
+	debug(alpha[ATTEMPTS]);
+	debug("\n");
+#endif                               /* For debug purpose */
+	if  (ATTEMPTS > 1 || bypass_attempts == ON)
+	{
+		if (ATTEMPTS > 2)
+		{
+		   IO0SET = IO0SET | ERROR_INDICATOR;
+			 gsm_transmit("AT+CPOWD=1\r");        /* Transmitting command of Switch OFF to GSM/GPS module */
+			 ATTEMPTS = 0;
+			 ERROR = 0;
+			 while(1);                            /* Wait here until manual reset is not done */
+	  }
+	  while (CmdSentCount_local < 5)
+		{
+      gsm_transmit("AT+CFUN=0\r");     /* Transmitting command of Airplane mode ON to GGVTS */
+	    CmdSentCount_local++;
+      if(!check_response_command())    /* Checking whether transmission of command happened successfully, if yes this block will execute */
+      {
+          clear_buffer();              /* Clears the main buffer */
+		  	  CmdSentCount_local = 0;
+		  	  delay(5);                    /* Delay of 5 Seconds */
+				  break;                       /* Exit from loop as command is already sent successfully */
+      }
+		}
+		while (CmdSentCount_local < 5)
+		{
+      gsm_transmit("AT+CFUN=1\r"); /* Transmitting command of Airplane mode OFF to GGVTS */
+	    CmdSentCount_local++;
+      if(!check_response_command())    /* Checking whether transmission of command happened successfully, if yes this block will execute */
+      {
+          clear_buffer();              /* Clears the main buffer */
+		  	  CmdSentCount_local = 0;
+		  	  delay(5);                    /* Delay of 5 Seconds */
+				  ATTEMPTS++;
+				  gsm_init();                  /* Initialize GSM again after module reset */
+ 	        gps_init();                  /* Initialize GPS again after module reset */
+				  ERROR = 0;
+				  if (user_info_stored == OFF)
+					{
+				      response_back(USER_NUMBER,"Module Reset Complete!!!!!");
+					}
+				    else
+					{
+				      response_back(OWNER_NUMBER[0],"Module Reset Complete!!!!!");
+					}
+				  break;                       /* Exit from loop as command is already sent successfully */
+      }
+		}
+	}
+	else
+	{
+		ATTEMPTS++;
+		ERROR = 0;
+		gsm_init();                  /* Initialize GSM again after module reset */
+ 	  gps_init();                  /* Initialize GPS again after module reset */
+	}
+  clear_buffer();                  /* Clears the main buffer */
+}
 
 /********************************End of File*******************************/

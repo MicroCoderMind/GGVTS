@@ -12,7 +12,21 @@
 #define __TIMER__
 
 /***************************************************************************
-*  Funtion Name: timer_isr                                                 *
+*  Funtion Name: timer0_isr                                                *
+*--------------------------------------------------------------------------*
+*  Description: This function will be called when timer 0 runs for time    *
+*               desired by user for delay purpose and to delete messages   *
+*--------------------------------------------------------------------------*
+*  Input Parameters: none                                                  *
+*  Output Parameters: None                                                 *
+*--------------------------------------------------------------------------*
+*  Comments:                                                               *
+*                                                                          *
+***************************************************************************/
+__irq void timer0_isr(void);
+
+/***************************************************************************
+*  Funtion Name: timer1_isr                                                 *
 *--------------------------------------------------------------------------*
 *  Description: This function will be called when timer 1 runs for time    *
 *               desired by user and this will set global parameter which   *
@@ -25,7 +39,7 @@
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-__irq void timer_isr(void);
+__irq void timer1_isr(void);
     
 /***************************************************************************
 *  Funtion Name: delay                                                     *

@@ -17,6 +17,11 @@
 
 /***************************************************************************
 *  Funtion Name: uart_isr_debug                                            *
+*  Funtion Prototype: void uart_isr_debug(void)                            *
+*  Funtion return type: void                                               *  
+*  Funtion description: This isr start/stop debugging functionality when   *
+*  there is need to diagnose the system after some kind of serious issues  *
+*  arised.                                                                 *
 ***************************************************************************/
 __irq void uart_isr_debug(void)
 {
@@ -49,6 +54,9 @@ __irq void uart_isr_debug(void)
 
 /***************************************************************************
 *  Funtion Name: uart_init_debug                                           *
+*  Function prototype: void uart_init_debug(void)                          *
+*  Function return type: void                                              *
+*  Function description: This function intialize uarts for debugging.      *
 ***************************************************************************/
 void uart_init_debug(void)
 {
@@ -62,6 +70,10 @@ void uart_init_debug(void)
 
 /***************************************************************************
 *  Funtion Name: debug                                                     *
+*  Function prototype: void debug(const char * str1)                       *
+*  Function return type: void                                              *
+*  Function description: This function will transmitt debugged information *
+*  through uart1 for debugging purpose in diagnose mode.                   *
 ***************************************************************************/
 void debug(const char * str1)
 {

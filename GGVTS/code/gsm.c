@@ -13,29 +13,42 @@
 *  Below are the header files required to build project                    *
 ***************************************************************************/
 #include "common.h"
-//#define DEBUG_START
+#define DEBUG_START
 /***************************************************************************
 *  Funtion Name: gsm_init                                                  *
+*  Function prototype: void gsm_init()                                     *
+*	 Function return type: void                                              *
+*  Function description: This function will intialize gsm module           *
+*  and also check whether gsm intialized or not                            *
 ***************************************************************************/
 void gsm_init()
 {
 	if (!ERROR)
 	{
-	    unsigned int k;
+	    int k;
 	    for (k=0;k<3;k++)
 	    {
 	      gsm_transmit(GSM_INIT[k]);
+				CmdSentCount++;
 	    	if (!check_response_command())
 	    	{
-	    				buffer_counter = 0;
-	  	        memset(response_temp,0,200);
+					    clear_buffer();
+					    CmdSentCount = 0;
 	    	}
 	    	else
 	    	{
-	    		response_back(USER_NUMBER,"Initialization Unsuccessfull!! Trying Again...");
-							buffer_counter = 0;
-	  	        memset(response_temp,0,200);
-	    		return;
+	    		//response_back(USER_NUMBER,"Initialization Unsuccessfull!! Trying Again...");
+					clear_buffer();     /* Clear the main buffer */
+					if (CmdSentCount < 5)
+					{
+						k--;
+					}
+					else
+					{
+						ERROR++;
+						CmdSentCount = 0;
+						reset_module(OFF);
+					}
 	    	}
 	    }
     }
@@ -47,6 +60,10 @@ void gsm_init()
 
 /***************************************************************************
 *  Funtion Name: gsm_transmit                                              *
+*  Function prototype: void gsm_transmit(const INT8 * str1)                *
+*  Function return type: void                                              *
+*  Function description: This function will transmitt commands to GSM      *
+*  through UART0.                                                          *
 ***************************************************************************/
 void gsm_transmit(const INT8 * str1)
 {
@@ -60,11 +77,14 @@ void gsm_transmit(const INT8 * str1)
 #ifdef DEBUG_START
   	debug(response_temp);
 #endif
-	IO0CLR = 0x00000008;
 }
 
 /***************************************************************************
-*  Funtion Name: extract_message                                           *
+*  Function Name: extract_message                                          *
+*  Function prototype: void extract_message(void)                          *
+*  Function return type: void                                              *
+*  Function description: This function will extract received message from  *
+*  GSM. as well as number of user also.                                    *
 ***************************************************************************/
 void extract_message(void)
 {
@@ -118,11 +138,13 @@ void extract_message(void)
 
 /***************************************************************************
 *  Funtion Name: read_message                                              *
+*  Function prototype: void read_message(UINT32 message)                   *
+*  Function return type: void                                              *
+*  Function description: This function will read message after extracting. *
 ***************************************************************************/
 void read_message(UINT32 message)
 {
-	  memset(response_temp,0,200);
-	  buffer_counter = 0;
+	  clear_buffer();     /* Clear the main buffer */
 	  join_strings(GSM_READ_MSG[0],alpha[message]);
 	  join_strings("","\r");
 		gsm_transmit(joined_string);
@@ -131,24 +153,24 @@ void read_message(UINT32 message)
 		new_message--;
 	  Read_Message_Count++;
 		extract_message();
-		buffer_counter = 0;
-	  memset(response_temp,0,200);
+		clear_buffer();     /* Clear the main buffer */
 }
 
 /***************************************************************************
-*  Funtion Name: delete_message                                            *
+*  Function Name: delete_message                                           *
+*  Function prototype: void delete_message(UINT32 message)                 *
+*  Function return type: void                                              *
+*  Function description: This function will delete the messages            *
 ***************************************************************************/
 void delete_message(UINT32 message)
 {
-	buffer_counter = 0;
-	memset(response_temp,0,200);
+	clear_buffer();     /* Clear the main buffer */
 	delay(0.5);
 	join_strings(GSM_DELETE_MSG[0],alpha[message]);
 	join_strings(",2","\r");
 	gsm_transmit(joined_string);
 	memset(joined_string,0,200);
-	buffer_counter = 0;
-	memset(response_temp,0,200);
+	clear_buffer();     /* Clear the main buffer */
 	delay(0.5);
 }
 /******************************End of File*********************************/
