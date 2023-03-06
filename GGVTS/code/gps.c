@@ -232,6 +232,9 @@ void extract_location(void)
 		  buffer_counter = 0;
 }
 
+/***************************************************************************
+*  Funtion Name: send_location                                             *
+***************************************************************************/
 void send_location(void)
 {
 		char temp_reply[200];
