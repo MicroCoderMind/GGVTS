@@ -1,15 +1,16 @@
 /***************************************************************************
-*  File Name: Strings_Mod_Functionality.h                                              *
+*  File Name: Strings_Mod_functionality.h                                  *
 *--------------------------------------------------------------------------*
 *  Description: This file contains all the prototypes of functions used    *
 *               for operations needs to be performed on strings            *
+*  Author: Arora Motor Works											   *
 *                                                                          *
 *--------------------------------------------------------------------------*
-*  Comments:	                                                             *
+*  Comments:	                                                           *
 ***************************************************************************/
 
-#ifndef __STRINGS_MOD_FUNCTIONALITY__
-#define __STRINGS_MOD_FUNCTIONALITY__
+#ifndef __STRINGS_MOD_Functionality__
+#define __STRINGS_MOD_Functionality__
 
 /***************************************************************************
 *  Funtion Name: join_strings                                              *
@@ -25,7 +26,7 @@
 *            if str1 = "Hello" and str2 = "Rohan" then                     *
 *            joined_string will be "Hello Rohan"                           *
 ***************************************************************************/	
-	extern void join_strings(const INT8 *,const INT8 *);
+extern void join_strings(const int8_t *,const int8_t *);
 	
 /***************************************************************************
 *  Funtion Name: strcmp_mod                                                *
@@ -42,7 +43,7 @@
 *            for example:                                                  *
 *            if str1 = "Hello" then output from thi function will be 5     *
 ***************************************************************************/
-	extern INT32 strcmp_mod(const char *,const char *);
+extern int32_t strcmp_mod(const int8_t *,const int8_t *);
 	
 /***************************************************************************
 *  Funtion Name: strcpy_mod                                               *
@@ -60,7 +61,7 @@
 *            for example:                                                  *
 *            if str1 = "Hello" then output from thi function will be 5     *
 ***************************************************************************/
- extern void strcpy_mod(char *,char *);
+ extern void strcpy_mod(int8_t *,int8_t *);
  
 /***************************************************************************
 *  Funtion Name: strlen_mod                                                *
@@ -78,7 +79,7 @@
 *            for example:                                                  *
 *            if str1 = "Hello" then output from thi function will be 5     *
 ***************************************************************************/
-	extern UINT32 strlen_mod(const char * ptr);
+extern uint32_t strlen_mod(const int8_t * ptr);
 	
 /***************************************************************************
 *  Funtion Name: strstr_mod                                                *
@@ -93,6 +94,20 @@
 *--------------------------------------------------------------------------*
 *  Comments:                                                               *
 ***************************************************************************/
-	UINT32 strstr_mod(const char *, const char *);
+extern uint32_t strstr_mod(const int8_t *, const int8_t *);
+	
+/***************************************************************************
+*  Funtion Name: clear_buffer                                              *
+*--------------------------------------------------------------------------*
+*  Description: This function clears the main buffer "response_temp"       *
+*               and it will set buffer_counter to 0                        *
+*                                                                          *
+*--------------------------------------------------------------------------*
+*  Input Parameters: None                                                  *
+*  Output Parameters: None                                                 *
+*--------------------------------------------------------------------------*
+*  Comments:                                                               *
+***************************************************************************/
+extern void clear_buffer(void);
 	
 #endif

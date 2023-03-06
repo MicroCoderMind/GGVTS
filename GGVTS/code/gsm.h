@@ -23,7 +23,7 @@
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-	extern void gsm_init(void);
+extern void initialize_gsm(void);
 
 /***************************************************************************
 *  Funtion Name: gsm_transmit                                              *
@@ -37,7 +37,7 @@
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-	extern void gsm_transmit(const INT8 *);
+extern void gsm_transmit(const int8_t *);
 	
 /***************************************************************************
 *  Funtion Name: extract_message                                           *
@@ -50,22 +50,7 @@
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-	extern void extract_message(void);
-	
-/***************************************************************************
-*  Funtion Name: delete_message                                            *
-*--------------------------------------------------------------------------*
-*  Description: This function will send command to delete all messages     *
-*               present in selected memory of GSM module.                  *
-*--------------------------------------------------------------------------*
-*  Input Parameters: None                                                  *
-*  Output Parameters: None                                                 *
-*--------------------------------------------------------------------------*
-*  Comments: Memory can be module itself or SIM, in this project SIM       *
-*            memory is used. Message is always deleted after reading       *
-*                                                                          *
-***************************************************************************/
-	extern void delete_message(UINT32);
+extern void extract_message(void);
 	
 /***************************************************************************
 *  Funtion Name: read_message                                              *
@@ -79,6 +64,7 @@
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-	extern void read_message(UINT32);
+extern void read_message(uint32_t);
+
 #endif
 /********************************End of File*******************************/

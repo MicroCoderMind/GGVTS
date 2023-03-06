@@ -1,23 +1,42 @@
-#include "common.h"
-#undef DEBUG_START
+/***************************************************************************
+*  File Name: message_handler.c				                               *
+*--------------------------------------------------------------------------*
+*  Description: This file contains all the function definitions used to    *
+*				handle a message										   *
+*  Author: Arora Motor Works                                               *
+*                                                                          *
+*--------------------------------------------------------------------------*
+*  Comments:	                                                           *
+*                                                                          *
+***************************************************************************/
 
-void check_authentication(const INT8 * str1)
+/***************************************************************************
+*  Below are the header files required to build project                    *
+***************************************************************************/
+#include "common.h"
+
+/***************************************************************************
+*  Funtion Name: check_authentication                                      *
+*  Function prototype:  void check_authentication(const int8_t *)            *
+*  Function return type: void                                              *
+*  Function description: This function will check if message receives      *
+*                        from USER/OWNER                                   *
+***************************************************************************/
+void check_authentication(const int8_t * str1)
 {
 	delay(0.05);
-	buffer_counter = 0;
-	memset(response_temp,0,200);
+    clear_buffer();        /* Clears the main buffer */
 	if (strcmp(str1,USER_NUMBER))
 	{
 		IGNORE = ON;
 	}
 	else
-  {
-		 #ifdef DEBUG_START
-			 debug("Access Granted!!");
-	   #endif
+    {
+#ifdef DEBUG_START
+	debug("Access Granted!!");					/* For debug purpose */
+#endif
 		IGNORE = OFF;
 	}
 	delay(0.1);
-	buffer_counter = 0;
-	memset(response_temp,0,200);
+	clear_buffer();        /* Clears the main buffer */
 }
