@@ -2,7 +2,8 @@
 *  File Name: uart.h                                                       *
 *--------------------------------------------------------------------------*
 *  Description: This file contains all the declarations for functions and  *
-*               global parameters used for UART functionality              *
+*               global parameters used for UART functionality.             *
+*  Author: Arora Motor Works                                               *
 *                                                                          *
 *--------------------------------------------------------------------------*
 *  Comments:                                                               *
@@ -12,7 +13,7 @@
 #define __UART__
 
 /***************************************************************************
-*  Funtion Name: uart_isr                                                  *
+*  Funtion Name: isr_uart                                                  *
 *--------------------------------------------------------------------------*
 *  Description: This function contains ISR for interrupts related to UART. *
 *--------------------------------------------------------------------------*
@@ -23,10 +24,10 @@
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-  extern __irq void uart_isr(void);
+extern __irq void isr_uart(void);
   
 /***************************************************************************
-*  Funtion Name: uart_init                                                 *
+*  Funtion Name: init_uart                                                 *
 *--------------------------------------------------------------------------*
 *  Description: This function contains initialization of all the global    *
 *               registers required for UART functionality.                 *
@@ -38,10 +39,10 @@
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-  extern void uart_init(void);
+extern void init_uart(void);
 
 /***************************************************************************
-*  Funtion Name: interrupt_init                                                 *
+*  Funtion Name: interrupt_init                                            *
 *--------------------------------------------------------------------------*
 *  Description: This function contains initialization of all the global    *
 *               registers required for all the interrupts functionality.   *
@@ -53,7 +54,7 @@
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-  extern void interrupt_init(void);
+extern void interrupt_init(void);
 	
 #endif
 /********************************End of File*******************************/

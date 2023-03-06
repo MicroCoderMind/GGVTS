@@ -5,20 +5,25 @@
 *               global parameters used for GPS functionality.              *
 *                                                                          *
 *--------------------------------------------------------------------------*
-*  Comments:	                                                             *
+*  Comments:	                                                           *
 *                                                                          *
 ***************************************************************************/
 #ifndef __GPS__
 #define __GPS__
-	extern const INT8 * GPS_INIT[1];
-	extern const INT8 * GPS_LOCATION[1];
-	extern const INT8 * GPS_STATUS[1];
-	extern char extracted_location[50];
-	extern UINT8 COLD_START_DONE;
-	extern UINT8 WARM_START_DONE;
-	extern UINT8 WARM_START;
-	extern UINT8 check_location;
-	extern UINT8 location_fixed;
+
+/***************************************************************************
+*  Below are the global variable(s) used in this file                      *
+***************************************************************************/
+extern const int8_t * GPS_INIT[1];
+extern const int8_t * GPS_LOCATION[1];
+extern const int8_t * GPS_STATUS[1];
+extern char extracted_location[50];
+extern uint8_t glbColdStartDone;
+extern uint8_t glbWarmStartDone;
+extern uint8_t glbWarmStartVar;
+extern uint8_t glbCheckLocation;
+extern uint8_t glbLocationFixed;
+
 /***************************************************************************
 *  Funtion Name: get_gps_location                                          *
 *--------------------------------------------------------------------------*
@@ -31,10 +36,24 @@
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-	extern void get_gps_location(void);
-	extern void send_location(void);
+extern void get_gps_location(void);
+
 /***************************************************************************
-*  Funtion Name: gps_init                                                  *
+*  Funtion Name: send_location                                             *
+*--------------------------------------------------------------------------*
+*  Description: This function will send the extracted current location     *
+*               to USER/OWNER                                              *
+*--------------------------------------------------------------------------*
+*  Input Parameters: None                                                  *
+*  Output Parameters: None                                                 *
+*--------------------------------------------------------------------------*
+*  Comments:                                                               *
+*                                                                          *
+***************************************************************************/
+extern void send_location(void);
+
+/***************************************************************************
+*  Funtion Name: initialize_gps                                            *
 *--------------------------------------------------------------------------*
 *  Description: This function will initialize GPS with appropriate         *
 *               commands after checking any errors.                        *
@@ -45,7 +64,7 @@
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-	extern void gps_init(void);
+extern void initialize_gps(void);
 	
 /***************************************************************************
 *  Funtion Name: extract_location                                          *
@@ -60,7 +79,7 @@
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-	extern void extract_location(void);
+extern void extract_location(void);
 
 /***************************************************************************
 *  Funtion Name: check_gps_status                                          *
@@ -75,7 +94,7 @@
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-	extern void check_gps_status(void);
+extern void check_gps_status(void);
 
 #endif
 /********************************End of File*******************************/

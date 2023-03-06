@@ -1,17 +1,29 @@
 /***************************************************************************
+*  File Name: Strings_Mod_functionality.c                                  *
+*--------------------------------------------------------------------------*
+*  Description: This file contains all the function definitions used for   *
+*               string related functionality.                              *
+*  Author: Arora Motor Works                                               *
+*                                                                          *
+*--------------------------------------------------------------------------*
+*  Comments:	                                                             *
+*                                                                          *
+***************************************************************************/
+
+/***************************************************************************
 *  Below are the header files required to build project                    *
 ***************************************************************************/
 #include"common.h"
 
 /***************************************************************************
 *  Funtion Name: join_strings                                              *
-*  Function prototype:  void join_strings(const INT8 *,const INT8 *)       *
+*  Function prototype:  void join_strings(const int8_t *,const int8_t *)       *
 *  Function return type: void                                              *
 *  Function description: This function will join two strings.              *
 ***************************************************************************/
-void join_strings(const INT8 * str1,const INT8 *str2)
+void join_strings(const int8_t * str1,const int8_t *str2)
 {
-    UINT32 i=strlen_mod(joined_string),j;   /* Getting length of string which is in joined_string buffer */
+    uint32_t i=strlen_mod(joined_string),j;   /* Getting length of string which is in joined_string buffer */
     for (j=0;j<strlen_mod(str1);j++)        /* For loop */
     {                               
         joined_string[i++] = str1[j];       /* Copying string 1 in joined_string buffer */
@@ -26,14 +38,14 @@ void join_strings(const INT8 * str1,const INT8 *str2)
 
 /***************************************************************************
 *  Funtion Name: strlen_mod                                                *
-*  Function prototype:  UINT32 strlen_mod(const char *)                    *
-*  Function return type: UINT32                                            *
+*  Function prototype:  uint32_t strlen_mod(const char *)                    *
+*  Function return type: uint32_t                                            *
 *  Function description: This function will count the length of string     *
 ***************************************************************************/
-UINT32 strlen_mod(const char * ptr)
+uint32_t strlen_mod(const char * ptr)
 {
     int i;                          /* Local variable used as index */
-    UINT32 characters=0;            /* Local variable used to count number of characters */
+    uint32_t characters=0;            /* Local variable used to count number of characters */
     for (i=0;ptr[i]!='\0';i++)      /* For Loop */
     {
         characters++;               /* Incrementing local variable to count charaters in string */
@@ -49,7 +61,7 @@ UINT32 strlen_mod(const char * ptr)
 ***************************************************************************/
 void strcpy_mod(char * str1,char * str2)
 {
-    UINT32 i;                        /* Local variable used as counter */
+    uint32_t i;                        /* Local variable used as counter */
     for (i=0;str2[i]!='\0';i++)      /* For loop */
     {
         str1[i] = str2[i];           /* Copying string 2 in string 1 */
@@ -59,13 +71,14 @@ void strcpy_mod(char * str1,char * str2)
 
 /***************************************************************************
 *  Funtion Name: strcmp_mod                                                *
-*  Function prototype:  INT32 strcmp_mod(void)                             *
-*  Function return type: INT32                                             *
+*  Function prototype:  int32_t strcmp_mod(void)                             *
+*  Function return type: int32_t                                             *
 *  Function description: This function will compare two strings            *
 ***************************************************************************/
-INT32 strcmp_mod(const char * str1, const char * str2)
+int32_t strcmp_mod(const char * str1, const char * str2)
 {
-    INT32 i,return_var=0;                       /* Local variable used as index and return value respectively */
+    uint32_t i;                                   /* Local variable used as index */
+	  int32_t return_var=0;                         /* Local variable used as return value respectively */
     if (strlen_mod(str1) == strlen_mod(str2))   /* Checking if both strings have same length */
     {
         for(i=0; i<strlen_mod(str1); i++)       /* For loop */
@@ -90,14 +103,14 @@ INT32 strcmp_mod(const char * str1, const char * str2)
 
 /***************************************************************************
 *  Funtion Name: strstr_mod                                                *
-*  Function prototype:  UINT32 strstr_mod(void)                            *
-*  Function return type: UINT32                                            *
+*  Function prototype:  uint32_t strstr_mod(void)                            *
+*  Function return type: uint32_t                                            *
 *  Function description: This function will check exitance of sub string   *
 *                        into main string                                  *
 ***************************************************************************/
-UINT32 strstr_mod(const char *strmain, const char *strsub)
+uint32_t strstr_mod(const char *strmain, const char *strsub)
 {
-    INT8 i=0,l=0,temp=0,match=0,main_len=0,sub_len=0;  /* Local variables used in further calculations */
+    int8_t i=0,l=0,temp=0,match=0,main_len=0,sub_len=0;  /* Local variables used in further calculations */
     main_len = strlen_mod(strmain);                    /* storing length of main string */
     sub_len = strlen_mod(strsub);                      /* Storing length of sub string */
     for (i=0;i<main_len;i++)                           /* For loop */

@@ -5,25 +5,25 @@
 *               for functionality performed on strings.                    *
 *                                                                          *
 *--------------------------------------------------------------------------*
-*  Comments:	                                                             *
+*  Comments:	                                                           *
 ***************************************************************************/
 
-#ifndef __FUNCTIONALITY__
-#define __FUNCTIONALITY__
+#ifndef __functionality__
+#define __functionality__
 
 /***************************************************************************
 *  Funtion Name: reset_module                                              *
 *--------------------------------------------------------------------------*
 *  Description: This function is written to reset GSM/GPS module.          *
 *               In this function Airplane mode will be switched on         *
-* 							and then switched off                                      *
+* 							and then switched off                          *
 *--------------------------------------------------------------------------*
 *  Input Parameters: None                                                  *
 *  Output Parameters: None                                                 *
 *--------------------------------------------------------------------------*
 *  Comments:                                                               *
 ***************************************************************************/
-void reset_module(UINT8);
+extern void reset_module(UINT8);
 	
 /***************************************************************************
 *  Funtion Name: wait_for_message                                          *
@@ -36,14 +36,13 @@ void reset_module(UINT8);
 *--------------------------------------------------------------------------*
 *  Comments:                                                               *
 ***************************************************************************/
-	extern void wait_for_message(void);
+extern void wait_for_message(void);
 	
 /***************************************************************************
-*  Funtion Name: functionality                                             *
+*  Funtion Name: perform_functionality                                     *
 *--------------------------------------------------------------------------*
 *  Description: This function definition contains the main functionality   *
-*               related to user input. Functionality inside end user's     *
-*               message will be performed here.                            *
+*               related to user input.                                     *
 *--------------------------------------------------------------------------*
 *  Input Parameters: None                                                  *
 *  Output Parameters: None                                                 *
@@ -56,7 +55,7 @@ void reset_module(UINT8);
 *               extracted and sent to user via sms after converting        *
 *               it to a web link)                                          *
 ***************************************************************************/
-	extern void functionality(UINT32);
+extern void perform_functionality(void);
 
 /***************************************************************************
 *  Funtion Name: extract_user_name                                         *
@@ -68,6 +67,7 @@ void reset_module(UINT8);
 *--------------------------------------------------------------------------*
 *  Comments:                                                               *
 ***************************************************************************/	
-  UINT32 extract_user_info(void);
+extern uint32_t extract_user_info(void);
+
 #endif
 /********************************End of File*******************************/

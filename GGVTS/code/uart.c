@@ -1,17 +1,32 @@
+/***************************************************************************
+*  File Name: uart.c                                                       *
+*--------------------------------------------------------------------------*
+*  Description: This file contains definitions of all functions            *
+*               which are required for UART related functionality.         *
+*  Author: Arora Motor Works									                      		   *
+*                                                                          *
+*--------------------------------------------------------------------------*
+*  Comments:	                                                             *
+*                                                                          *
+***************************************************************************/
+
+/***************************************************************************
+*  Below are required header files					                               *
+***************************************************************************/
 #include "common.h"
 
 /***************************************************************************
-*  Funtion Name: uart_isr                                                  *
-*  Function prototype:  void uart_isr(void)                                *
+*  Funtion Name: isr_uart                                                  *
+*  Function prototype:  void isr_uart(void)                                *
 *  Function return type: void                                              *
 *  Function description: This function contains the interrupt reoutine of  *  
 *                        UART0.                                            *
 ***************************************************************************/
-__irq void uart_isr(void)
+__irq void isr_uart(void)
 {
-	UINT32 iir_value;
+	uint32_t iir_value;
 	char temp;
-  iir_value = U0IIR;
+  	iir_value = U0IIR;
 	if( iir_value & 0x00000004 )
 	{
 		REC = ON;
@@ -25,7 +40,7 @@ __irq void uart_isr(void)
 				TIMER = OFF;
 				Received_Message_Count++;
 				new_mes = 0;
-			  comp=0;
+			  	comp=0;
 				buffer_counter -= 13;
 			}
 		}
@@ -48,12 +63,12 @@ __irq void uart_isr(void)
 
 
 /***************************************************************************
-*  Funtion Name: uart_init                                                 *
-*  Function prototype:  void uart_init(void)                               *
+*  Funtion Name: init_uart                                                 *
+*  Function prototype:  void init_uart(void)                               *
 *  Function return type: void                                              *
 *  Function description: This function will intialize the UART0            *
 ***************************************************************************/
-void uart_init(void)
+void init_uart(void)
 {
 	if (!ERROR)
 	{
@@ -78,9 +93,9 @@ void interrupt_init(void)
 {
 	if (!ERROR)
 	{
-		VICVectAddr0 = (unsigned) uart_isr;	/* UART0 ISR Address */
+		VICVectAddr0 = (unsigned) isr_uart;	/* UART0 ISR Address */
 		VICVectAddr2 = (unsigned) timer1_isr;	/* Timer1 ISR Address */
-		VICVectAddr1 = (unsigned) uart_isr_debug;	/* UART0 ISR Address need to remove this line after finishing*/
+		VICVectAddr1 = (unsigned) isr_uart_diagnose;	/* UART0 ISR Address need to remove this line after finishing*/
 		VICVectAddr3 = (unsigned) timer0_isr;	/* UART0 ISR Address need to remove this line after finishing*/
 		VICVectCntl0 = 0x00000026;	/* Enable UART0 IRQ slot */
 		VICVectCntl1 = 0x00000027;	/* Enable UART1 IRQ slot need to remove this line after finishing*/
@@ -89,4 +104,5 @@ void interrupt_init(void)
 		VICIntEnable = 0x000000F0;	/* Enable UART0, UART1, Timer0 and Timer1 interrupt*/
 		VICIntSelect = 0x00000000;	/* UART0 configured as IRQ */
 	}
+	return;
 }

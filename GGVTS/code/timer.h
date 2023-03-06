@@ -3,7 +3,7 @@
 *--------------------------------------------------------------------------*
 *  Description: This file contains all the declarations for functions and  *
 *               global parameters used for Timer functionality.            *
-*                                                                          *
+*  Author: Arora Motor Works                                               *
 *--------------------------------------------------------------------------*
 *  Comments:                                                               *
 *                                                                          *
@@ -23,10 +23,10 @@
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-__irq void timer0_isr(void);
+extern __irq void timer0_isr(void);
 
 /***************************************************************************
-*  Funtion Name: timer1_isr                                                 *
+*  Funtion Name: timer1_isr                                                *
 *--------------------------------------------------------------------------*
 *  Description: This function will be called when timer 1 runs for time    *
 *               desired by user and this will set global parameter which   *
@@ -39,7 +39,7 @@ __irq void timer0_isr(void);
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-__irq void timer1_isr(void);
+extern __irq void timer1_isr(void);
     
 /***************************************************************************
 *  Funtion Name: delay                                                     *
@@ -54,7 +54,7 @@ __irq void timer1_isr(void);
 *            and input is 2 generated delay will be of 2 seconds           * 
 *                                                                          *
 ***************************************************************************/
-  extern void delay(float);
+extern void delay(float);
   
 /***************************************************************************
 *  Funtion Name: sel_location_frequency                                    *
@@ -67,12 +67,12 @@ __irq void timer1_isr(void);
 *  Comments: User can set timer for 1,3,5,7,10 minutes and after this much *
 *            time location will be sent to user continously.               *
 ***************************************************************************/
-  extern void set_location_frequency(UINT32);
+extern void set_location_frequency(uint32_t);
   
 /***************************************************************************
-*  Funtion Name: timer_init                                                *
+*  Funtion Name: timer_0_init                                              *
 *--------------------------------------------------------------------------*
-*  Description: This function will initialize all the timer related global *
+*  Description: This function will initialize timer 0 related global       *
 *               registers.                                                 *
 *--------------------------------------------------------------------------*
 *  Input Parameters: None                                                  *
@@ -81,11 +81,34 @@ __irq void timer1_isr(void);
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-  extern void timer_0_init(void);
-	
-	  extern void timer_1_init(void);
-	
-	extern void delete_message_timer(void);
+extern void timer_0_init(void);
+
+/***************************************************************************
+*  Funtion Name: timer_1_init                                              *
+*--------------------------------------------------------------------------*
+*  Description: This function will initialize timer 1 related global       *
+*               registers.                                                 *
+*--------------------------------------------------------------------------*
+*  Input Parameters: None                                                  *
+*  Output Parameters: None                                                 *
+*--------------------------------------------------------------------------*
+*  Comments:                                                               *
+*                                                                          *
+***************************************************************************/
+extern void timer_1_init(void);
+
+/***************************************************************************
+*  Funtion Name: delete_message_timer                                      *
+*--------------------------------------------------------------------------*
+*  Description: This function will start a timer to delete all the messages*
+*--------------------------------------------------------------------------*
+*  Input Parameters: None                                                  *
+*  Output Parameters: None                                                 *
+*--------------------------------------------------------------------------*
+*  Comments:                                                               *
+*                                                                          *
+***************************************************************************/
+extern void delete_message_timer(void);
   
 /***************************************************************************
 *  Funtion Name: pll_init                                                  *
@@ -99,11 +122,7 @@ __irq void timer1_isr(void);
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-  extern void pll_init(void);
-	
-	void module_reset_timer(UINT32 start_stop);
-	
-	
+extern void pll_init(void);
     
 #endif
 /********************************End of File*******************************/

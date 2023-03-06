@@ -3,7 +3,7 @@
 *--------------------------------------------------------------------------*
 *  Description: This file contains all the function declarations used for  *
 *               debugging purpose.                                         *
-*                                                                          *
+*  Author: Arora Motor Works                                               *
 *--------------------------------------------------------------------------*
 *  Comments:	                                                           *
 *                                                                          *
@@ -11,8 +11,9 @@
   
 #ifndef __DEBUG__
 #define __DEBUG__
+
 /***************************************************************************
-*  Funtion Name: uart_isr_debug                                            *
+*  Funtion Name: isr_uart_diagnose                                         *
 *--------------------------------------------------------------------------*
 *  Description: This function contains ISR for the interrupt happened for  *
 *               UART1. UART1 is only used to tarnsfer data to terminal     *
@@ -21,24 +22,11 @@
 *  Input Parameters: None                                                  *
 *  Output Parameters: None                                                 *
 *--------------------------------------------------------------------------*
-*  Comments:	                                                           *
+*  Comments:	                                                       *
 *                                                                          *
 ***************************************************************************/
-  __irq void uart_isr_debug(void);
+extern __irq void isr_uart_diagnose(void);
 
-/***************************************************************************
-*  Funtion Name: uart_init_debug                                           *
-*--------------------------------------------------------------------------*
-*  Description: This function contains initialization of all the registers *
-*               required for UART1 functionality.                          *
-*--------------------------------------------------------------------------*
-*  Input Parameters: None                                                  *
-*  Output Parameters: None                                                 *
-*--------------------------------------------------------------------------*
-*  Comments:	                                                           *
-*                                                                          *
-***************************************************************************/
-  extern void uart_init_debug(void);
 
 /***************************************************************************
 *  Funtion Name: debug                                                     *
@@ -53,7 +41,21 @@
 *  Comments:	                                                           *
 *                                                                          *
 ***************************************************************************/
-  extern void debug(const char *);
+extern void debug(const char *);
+
+/***************************************************************************
+*  Funtion Name: init_uart_diagnose                                        *
+*--------------------------------------------------------------------------*
+*  Description: This function contains initialization of all the registers *
+*               required for UART1 functionality.                          *
+*--------------------------------------------------------------------------*
+*  Input Parameters: None                                                  *
+*  Output Parameters: None                                                 *
+*--------------------------------------------------------------------------*
+*  Comments:                                                               *
+*                                                                          *
+***************************************************************************/
+extern void init_uart_diagnose(void);
 
 #endif
 /******************************End of File*********************************/

@@ -3,89 +3,88 @@
 *--------------------------------------------------------------------------*
 *  Description: This file contains all the function definitions used for   *
 *               debugging purpose.                                         *
-*                                                                          *
+*  Author: Arora Motor Works                                               *
 *--------------------------------------------------------------------------*
 *  Comments:	                                                           *
 *                                                                          *
 ***************************************************************************/
 
 /***************************************************************************
-*  Below are the header files required to build this file                  *
+*  Required Header Files         						                   *
 ***************************************************************************/
 #include "common.h"
-//#ifdef DEBUG_START
-
 /***************************************************************************
-*  Funtion Name: uart_isr_debug                                            *
-*  Funtion Prototype: void uart_isr_debug(void)                            *
+*  Funtion Name: isr_uart_diagnose                                         *
+*  Funtion Prototype: void isr_uart_diagnose(void)                         *
 *  Funtion return type: void                                               *  
 *  Funtion description: This isr start/stop debugging functionality when   *
 *  there is need to diagnose the system after some kind of serious issues  *
 *  arised.                                                                 *
 ***************************************************************************/
-__irq void uart_isr_debug(void)
+__irq void isr_uart_diagnose(void)
 {
-    UINT32 iir_value;       /* Local variable to clear interrupt */
-	  char temp;
-    iir_value = U1IIR;      /* Cleaaring interrupt */
-	  if( iir_value & 0x00000004 )
-	  {
-		  temp = U1RBR;
-		  if(temp == '~')
-		  {
-				DIAGNOSE = ON;
-		  }
-			else if(temp == '_')
-			{
-				DIAGNOSE = NA;
-			}
-		}
-	  else
-	  {
-		  iir_value = U1IIR;
-	  }
-		if (DIAGNOSE == ON)
-		{
-			diagnose_data = temp;
-			diagnoseDataSent = OFF;
-		}
+    uint32_t lcIirValue;       /* Local variable to clear interrupt */
+	char temp = 0;          /* Local variable intialize */
+    lcIirValue = U1IIR;      /* Cleaaring interrupt */
+	if( lcIirValue & 0x00000004 )
+	{
+	    temp = U1RBR;
+	    if(temp == '~')
+	    {
+	    	DIAGNOSE = ON;             /* Diagnose Mode ON */
+	    }
+	    else if(temp == '_')
+	    {
+	    	DIAGNOSE = NA;             /* Diagnose Mode Not Applicable */
+	    }
+	}
+	else
+	{
+		lcIirValue = U1IIR;
+	}
+	if (DIAGNOSE == ON)
+	{
+		diagnose_data = temp;
+		diagnoseDataSent = OFF;
+	}
     VICVectAddr = 0x00;     /* Informing processor that interrupt ends here */
 }
 
 /***************************************************************************
-*  Funtion Name: uart_init_debug                                           *
-*  Function prototype: void uart_init_debug(void)                          *
-*  Function return type: void                                              *
-*  Function description: This function intialize uarts for debugging.      *
-***************************************************************************/
-void uart_init_debug(void)
-{
-  U1LCR = 0x83;	   /* DLAB = 1, 1 stop bit, 8-bit character length */
-	U1DLM = 0x00;	   /* For baud rate of 9600 with Pclk = 12MHz */
-	U1DLL = 0x4E;	   /* We get these values of U0DLL and U0DLM from formula */
-	U1LCR = 0x03;      /* DLAB = 0 */
-	U1TER = 0x80;      /* To enable transmission */   
-	U1IER = 0x00000003;/* Enable THRE and RBR interrupt */
-}
-
-/***************************************************************************
 *  Funtion Name: debug                                                     *
-*  Function prototype: void debug(const char * str1)                       *
+*  Function prototype: void debug(const char * dbgdata)                    *
 *  Function return type: void                                              *
 *  Function description: This function will transmitt debugged information *
 *  through uart1 for debugging purpose in diagnose mode.                   *
 ***************************************************************************/
-void debug(const char * str1)
+void debug(const char * dbgdata)
 {
-    UINT32 k=0;                         /* Local variable used as counter */
-	delay(0.2);                         /* Delay of 0.2 seconds */
-	for (k=0;k<strlen_mod(str1);k++)    /* For loop */
+    uint32_t lcCounter=0;                                        /* Local variable used as Counter */
+	delay(0.2);                                              /* Delay of 0.2 seconds */
+	for (lcCounter=0;lcCounter<strlen_mod(dbgdata);lcCounter++)    /* Loop */
 	{
-	    U1THR = str1[k];                /* Writing data in transmit buffer */
-	    delay(0.01);                    /* delay of 0.01 seconds */
+	    U1THR = dbgdata[lcCounter];                            /* Writing data in transmit buffer */
+	    delay(0.01);                                         /* delay of 0.01 seconds */
 	}
-	REC = OFF;                          /* Flag used for debug purpose */
+	REC = OFF;                                               /* Flag used for debug purpose */
 }
-//#endif
+
+/***************************************************************************
+*  Funtion Name: init_uart_diagnose                                        *
+*  Function prototype: void init_uart_diagnose(void)                       *
+*  Function return type: void                                              *
+*  Function description: This function intialize uarts for debugging.      *
+***************************************************************************/
+void init_uart_diagnose(void)
+{
+  U1LCR = 0x83;	                    /* DLAB = 1, 1 stop bit, 8-bit character length */
+	U1DLM = 0x00;	                    /* For baud rate of 9600 with Pclk = 12MHz */
+	U1DLL = 0x4E;	                    /* We get these values of U0DLL and U0DLM from formula */
+	U1LCR = 0x03;                       /* DLAB = 0 */
+	U1TER = 0x80;                       /* To enable transmission */   
+	U1IER = 0x00000003;                 /* Enable THRE and RBR interrupt */
+	
+	return;
+}
 
 /********************************End of File*******************************/

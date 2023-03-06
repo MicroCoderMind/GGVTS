@@ -3,6 +3,7 @@
 *--------------------------------------------------------------------------*
 *  Description: This file contains all the declarations for functions and  *
 *               global parameters used to response to user.                *
+*  Author: Arora Motor Works                                               *
 *                                                                          *
 *--------------------------------------------------------------------------*
 *  Comments:                                                               *
@@ -11,10 +12,13 @@
 #ifndef __RESPONSE__
 #define __RESPONSE__
 
-extern UINT8 ESCAPE;
+/***************************************************************************
+*  Below are the global variable(s) used in this file                      *
+***************************************************************************/
+extern uint8_t ESCAPE;
 
 /***************************************************************************
-*  Funtion Name: check_response                                            *
+*  Funtion Name: check_response_command                                    *
 *--------------------------------------------------------------------------*
 *  Description: This function will check for the response given by GSM/GPS *
 *  module after sending commnad.                                           *
@@ -27,11 +31,26 @@ extern UINT8 ESCAPE;
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-extern UINT32 check_response_command(void);
-extern UINT32 check_response_message(void);
+extern uint32_t check_response_command(void);
+
+/***************************************************************************
+*  Funtion Name: check_response_message                                    *
+*--------------------------------------------------------------------------*
+*  Description: This function will check for the response given by GSM/GPS *
+*  module after sending message.                                           *
+*--------------------------------------------------------------------------*
+*  Input Parameters: None                                                  *
+*  Output Parameters: Unsigned Int                                         *
+*   1. Returns 0 if every thing is ok.                                     *
+*   2. Returns 1 if there is and error.                                    *
+*--------------------------------------------------------------------------*
+*  Comments:                                                               *
+*                                                                          *
+***************************************************************************/
+extern uint32_t check_response_message(void);
   
 /***************************************************************************
-*  Funtion Name: response_back                                         *
+*  Funtion Name: response_back                                             *
 *--------------------------------------------------------------------------*
 *  Description: This function will interact with owner(Rohan).             *
 *--------------------------------------------------------------------------*
@@ -41,23 +60,8 @@ extern UINT32 check_response_message(void);
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-  extern void response_back(const INT8 *,const INT8 *);
-	
-	  
-/***************************************************************************
-*  Funtion Name: response_to_user                                          *
-*--------------------------------------------------------------------------*
-*  Description: This function will interact with user provided by owner    *
-*--------------------------------------------------------------------------*
-*  Input Parameters: String(Message which needs to be sent to user)        *
-*  Output Parameters: None                                                 *
-*--------------------------------------------------------------------------*
-*  Comments:                                                               *
-*                                                                          *
-***************************************************************************/
-  extern void response_to_user(const INT8 *);
-	
-		
+extern void response_back(const int8_t *,const int8_t *);
+
 /***************************************************************************
 *  Funtion Name: get_user_info                                             *
 *--------------------------------------------------------------------------*
@@ -70,7 +74,7 @@ extern UINT32 check_response_message(void);
 *  Comments:                                                               *
 *                                                                          *
 ***************************************************************************/
-	void get_user_info(void);
+extern void get_user_info(void);
 		
 #endif
 /********************************End of File*******************************/
