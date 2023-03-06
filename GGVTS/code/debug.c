@@ -77,7 +77,7 @@ void debug(const char * dbgdata)
 ***************************************************************************/
 void init_uart_diagnose(void)
 {
-  U1LCR = 0x83;	                    /* DLAB = 1, 1 stop bit, 8-bit character length */
+    U1LCR = 0x83;	                    /* DLAB = 1, 1 stop bit, 8-bit character length */
 	U1DLM = 0x00;	                    /* For baud rate of 9600 with Pclk = 12MHz */
 	U1DLL = 0x4E;	                    /* We get these values of U0DLL and U0DLM from formula */
 	U1LCR = 0x03;                       /* DLAB = 0 */

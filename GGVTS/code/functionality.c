@@ -18,7 +18,7 @@
 /***************************************************************************
 *  Below are the global variable(s) used in this file                      *
 ***************************************************************************/
-static uint32_t user_info_stored = ON;
+static uint32_t user_info_stored = NO;
 
 /***************************************************************************
 *  Funtion Name: perform_functionality                                     *
@@ -237,34 +237,34 @@ void perform_functionality(void)
 void wait_for_message()
 {
     uint32_t lcMessage = OFF;                                      /* Local variable, used to determine current reading message */
-    if (user_info_stored)                                              /* If user info is not stored, this block will execute */
+    if (user_info_stored == NO)                                              /* If user info is not stored, this block will execute */
     {
 		if (new_message > 0)                                   /* Check if there is any new message in buffer */
 		{
-			response_back(USER_NUMBER,"Initialization in Progress, Please wait!!!");   /* Message to owner for initialization progress */
-			while(CmdSentCount < 5)                            /* While there is less than 5 errors for sending any message/command */
-		    {
-	            gsm_transmit("AT+CMGD=1,4\r");                 /* Delete all the messages in buffer */
-		        CmdSentCount++;                                /* Increment command sent counter to identify any error*/
+            response_back(USER_NUMBER,"Initialization in Progress, Please wait!!!");   /* Message to owner for initialization progress */
+            while(CmdSentCount < 5)                            /* While there is less than 5 errors for sending any message/command */
+            {
+                gsm_transmit("AT+CMGD=1,4\r");                 /* Delete all the messages in buffer */
+                CmdSentCount++;                                /* Increment command sent counter to identify any error*/
                 if (!check_response_command())                 /* If there is no error while sending any command */
-	            {
-	        		clear_buffer();     /* Clear the main buffer */
-		      	    CmdSentCount = 0;   /* Clear the command sent counter */
-		      		break;              /* Break from the loop */
-	            }
-	            else                                           /* If there is any error while sending command */
-	            {
-		      		clear_buffer();       /* Clears the main buffer */
-		      		delay(0.5);           /* Wait for 500ms */
-	            }
-				if (CmdSentCount >= 5)  /* If there was errors more than 5 times while sending any command */
-		        {
-		        	reset_module(OFF);  /* Initiate soft reset for GGVTS */
-					CmdSentCount = 0;   /* Clearing command sent buffer */
-		        }
-		    }
-			new_message = 0;            /* Clearing new message counter */
-			Read_Message_Count = 0;     /* Clearing read message counter */
+                {
+                    clear_buffer();     /* Clear the main buffer */
+                    CmdSentCount = 0;   /* Clear the command sent counter */
+                    break;              /* Break from the loop */
+                }
+                else                                           /* If there is any error while sending command */
+                {
+                    clear_buffer();       /* Clears the main buffer */
+                    delay(0.5);           /* Wait for 500ms */
+                }
+                if (CmdSentCount >= 5)  /* If there was errors more than 5 times while sending any command */
+                {
+                    reset_module(OFF);  /* Initiate soft reset for GGVTS */
+                    CmdSentCount = 0;   /* Clearing command sent buffer */
+                }
+            }
+            new_message = 0;            /* Clearing new message counter */
+            Read_Message_Count = 0;     /* Clearing read message counter */
 		}
         get_user_info();   /* Message to owner for user details */
     }
@@ -272,7 +272,7 @@ void wait_for_message()
     while(ON)                                                          /* Infinite Loop */
     {
         delay(0.1);
-        if (user_info_stored == OFF && DIAGNOSE == OFF)                /* If there is no error and user information is stored successfull, this block will execute */
+        if (user_info_stored == YES && DIAGNOSE == OFF)                /* If there is no error and user information is stored successfull, this block will execute */
         {
             delay(0.1);                                            /* delay of 0.1 seconds */
             while(new_message > 0)                                 /* Loop back untill there is no new message */
@@ -286,7 +286,7 @@ void wait_for_message()
 #ifdef DEBUG_START
     debug(alpha[new_message]);                                         /* for debug purpose */
     debug(alpha[lcMessage]); 
-	debug(alpha[Received_Message_Count]);
+	  debug(alpha[Received_Message_Count]);
 #endif
             }
             if (SEND_LOCATION == ON)                               /* If location has to be sent now due to interrupt */
@@ -297,19 +297,19 @@ void wait_for_message()
             }
 			if (DELETE_MESSAGES == ON)
 			{	
-				while(CmdSentCount < 5)
+		        while(CmdSentCount < 5)
 		        {
 	                gsm_transmit("AT+CMGD=1,4\r");
 		            CmdSentCount++;
                     if (!check_response_command())
 	                {
-	                	clear_buffer();     /* Clear the main buffer */
+	                    clear_buffer();     /* Clear the main buffer */
 		              	CmdSentCount = 0;
 		                break;
 	                }
 	                else
 	                {
-		              	clear_buffer();       /* Clears the main buffer */
+		                clear_buffer();       /* Clears the main buffer */
 		              	delay(0.5);
 	                }
 					if (CmdSentCount >= 5)
@@ -322,17 +322,17 @@ void wait_for_message()
 		        Received_Message_Count = 0;
 		        lcMessage = 0;
 		        TIMER0 = OFF;
-			}
+            }
 #ifdef DEBUG_START
     debug(alpha[new_message]);                                         /* for debug purpose */
     debug(alpha[Received_Message_Count]); 										/* for debug purpose */
 #endif
-		    if (Read_Message_Count == Received_Message_Count && TIMER0 == OFF && Read_Message_Count > 0)
-		    {							
+            if (Read_Message_Count == Received_Message_Count && TIMER0 == OFF && Read_Message_Count > 0)
+            {							
 		        delete_message_timer();
 		    }
         }
-        else if(user_info_stored == ON && DIAGNOSE == OFF)                            /* If there is no error and user info is not stored */
+        else if(user_info_stored == NO && DIAGNOSE == OFF)                            /* If there is no error and user info is not stored */
         {
             if(new_message > 0)                                 /* Loop until there is no unread message */
             {
@@ -346,28 +346,28 @@ void wait_for_message()
                 delete_message_timer();
             }
 /* Below block of code is to delete all the messages */
-			if (DELETE_MESSAGES == ON)
+            if (DELETE_MESSAGES == ON)
 			{
-				while(CmdSentCount < 5)
+			    while(CmdSentCount < 5)
 	            {
-	                gsm_transmit("AT+CMGD=1,4\r");
-		            CmdSentCount++;
+                    gsm_transmit("AT+CMGD=1,4\r");
+                    CmdSentCount++;
                     if (!check_response_command())
-	                {
-	                	clear_buffer();     /* Clear the main buffer */
-	                  	CmdSentCount = 0;
-	                  	break;
+                    {
+                        clear_buffer();     /* Clear the main buffer */
+                        CmdSentCount = 0;
+                        break;
                     }
-	                else
-	                {
-		            	clear_buffer();       /* Clears the main buffer */
-		            	delay(0.5);
-	                }
-					if (CmdSentCount >= 5)
-		            {
-		            	reset_module(OFF);
-						CmdSentCount = 0;
-		            }
+                    else
+                    {
+                        clear_buffer();       /* Clears the main buffer */
+                        delay(0.5);
+                    }
+                    if (CmdSentCount >= 5)
+                    {
+                        reset_module(OFF);
+                        CmdSentCount = 0;
+                    }
 		        }
 		        Read_Message_Count = 0;
 		        Received_Message_Count = 0;
@@ -437,8 +437,8 @@ uint32_t extract_user_info(void)
 #endif
     uint32_t i,j,lcStringLength;                   /* Local variables used as index */
     char temp[200];               /* Local buffer for temporary use */
-	  lcStringLength = strlen_mod(extracted_message);
-	  memset(USER_NUMBER,'\0',14);
+	lcStringLength = strlen_mod(extracted_message);
+	memset(USER_NUMBER,'\0',14);
 	if (lcStringLength > 13 && !(strstr_mod(extracted_message," ")))
 	{
         for (i=0;i<lcStringLength ;i++)   /* For loop */
@@ -468,14 +468,14 @@ uint32_t extract_user_info(void)
             response_back(*OWNER_NUMBER,"Invalid Format!!! Try again!! Pro Tip: Add Country code!!"); /* If country code is not mentioned user will be informed of that */
             memset(extracted_message,0,50);         /* Clearing buffer which is used to extract message */
             memset(extracted_number,0,14);          /* Clearing buffer which is used to extract user number */
-            return ON;                              /* Informing GGVTS that valid user name and number is not received yet */
+            return NO;                              /* Informing GGVTS that valid user name and number is not received yet */
         }
 		if (strlen_mod(USER_NUMBER) != 13)
 		{
 			response_back(*OWNER_NUMBER,"Invalid Number!!! Try again!! Pro Tip: Check Phone Number!!"); /* If country code is not mentioned user will be informed of that */
             memset(extracted_message,0,50);         /* Clearing buffer which is used to extract message */
             memset(extracted_number,0,14);          /* Clearing buffer which is used to extract user number */
-			return ON;
+			return NO;
 		}
         join_strings("Greetings!!! Mr. ",USER_NAME);  /* Joining greeting message for user */  
         strcpy_mod(temp,joined_string);               /* Copying joined_string buffer in temporary buffer */
@@ -483,14 +483,14 @@ uint32_t extract_user_info(void)
         response_back(USER_NUMBER,temp);              /* Sending greeting message to user */
         memset(extracted_message,0,50);               /* Emptying extracted_message buffer for further use */
         memset(extracted_number,0,14);                /* Emptying extracted number buffer for further use */
-        return OFF;		/* Informing processor that valid user name and number is received */
+        return YES;		/* Informing processor that valid user name and number is received */
 	}
 	else
     {
 		response_back(*OWNER_NUMBER,"Invalid Name/Number, Try Again!!!"); /* If there is format issue, user will be informed of that */
         memset(extracted_message,0,50);         /* Clearing buffer which is used to extract message */
         memset(extracted_number,0,14);          /* Clearing buffer which is used to extract user number */
-        return ON;
+        return NO;				/* Informing processor that valid user name and number is not received */
 	}
 }
 
@@ -518,15 +518,15 @@ void reset_module(uint8_t bypass_attempts)
 		    IO0SET = IO0SET | ERROR_INDICATOR;
 			gsm_transmit("AT+CFUN=0\r");     /* Transmitting command of Airplane mode ON to GGVTS */
 			delay(10);
- 	    gsm_transmit("AT+CFUN=1\r"); /* Transmitting command of Airplane mode OFF to GGVTS */
+ 	        gsm_transmit("AT+CFUN=1\r"); /* Transmitting command of Airplane mode OFF to GGVTS */
 			delay(1);
 			gsm_transmit("AT+CPOWD=1\r");        /* Transmitting command of Switch OFF to GSM/GPS module */
 			ATTEMPTS = 0;
 		    ERROR = 0;
 			while(1);                            /* Wait here until manual reset is not done */
-	  }
-	  while (lcCmdSentCount < 5)
-		{
+	    }
+	    while (lcCmdSentCount < 5)
+        {
             gsm_transmit("AT+CFUN=0\r");     /* Transmitting command of Airplane mode ON to GGVTS */
 	        lcCmdSentCount++;
             if(!check_response_command())    /* Checking whether transmission of command happened successfully, if yes this block will execute */
@@ -548,9 +548,9 @@ void reset_module(uint8_t bypass_attempts)
 		      	delay(5);                    /* Delay of 5 Seconds */
 		    	ATTEMPTS++;
 		    	initialize_gsm();                  /* Initialize GSM again after module reset */
- 	        initialize_gps();                  /* Initialize GPS again after module reset */
+ 	            initialize_gps();                  /* Initialize GPS again after module reset */
 		    	ERROR = 0;
-		    	if (user_info_stored == OFF)
+		    	if (user_info_stored == YES)
 		    	{
 		    		response_back(USER_NUMBER,"Module Reset Complete!!!!!");
 		    	}
@@ -567,7 +567,7 @@ void reset_module(uint8_t bypass_attempts)
 		ATTEMPTS++;
 		ERROR = 0;
 		initialize_gsm();                  /* Initialize GSM again after module reset */
- 	  initialize_gps();                  /* Initialize GPS again after module reset */
+ 	    initialize_gps();                  /* Initialize GPS again after module reset */
 	}
     clear_buffer();                  /* Clears the main buffer */
     delay(1);                        /* Wait for 1 second(s) */
