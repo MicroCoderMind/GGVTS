@@ -12,6 +12,8 @@
 #define __GLOBAL__ 1
 #define OFF 0
 #define ON 1
+#define NO 0
+#define YES 1
 #define NA 5
 #define TRUE 1
 #define FALSE 0
@@ -38,15 +40,15 @@
 	extern uint32_t REC;
 	extern uint32_t receiving;
 	extern uint32_t SYSTEM_STRUCT;
-	extern uint32_t Ignore_Char;
+	extern uint32_t Ignore_int8_t;
 	extern uint8_t ATTEMPTS;
-	extern char joined_string[200];
-	extern char LOCATION;
-	extern char TIMER;
-	extern char TIMER0;
-	extern char TIMER0_OVER;
-	extern char extracted_message[50];
-	extern char extracted_number[14];
+	extern int8_t joined_string[200];
+	extern int8_t LOCATION;
+	extern int8_t TIMER;
+	extern int8_t TIMER0;
+	extern int8_t TIMER0_OVER;
+	extern int8_t extracted_message[50];
+	extern int8_t extracted_number[14];
 	extern void init_module(void);
 	extern uint32_t new_mes,comp;
 	extern volatile uint32_t new_message;
@@ -56,7 +58,7 @@
 	extern int8_t diagnose_data;
 	extern int8_t diagnoseDataSent;
 	extern uint8_t Read_Message_Count;
-	extern char DELETE_MESSAGES;
+	extern int8_t DELETE_MESSAGES;
 	extern uint8_t CmdSentCount;
 	extern int32_t message;                                                   /* Local variable to count number of messages already read */
 #endif

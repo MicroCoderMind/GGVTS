@@ -26,7 +26,7 @@ void timer1_isr(void) __irq
     T1IR = 0x01;                        /* Clear timer interrupt */
 	if (LOCATION == ON)
 	{
-    SEND_LOCATION = ON;                 /* Global variable to enable functionality of sending location as per user desired frequency */
+        SEND_LOCATION = ON;                 /* Global variable to enable functionality of sending location as per user desired frequency */
 	}
     VICVectAddr = 0x00;                 /* Inform processor that ISR ends here */
 }
@@ -65,7 +65,7 @@ void timer0_isr(void) __irq
 ***************************************************************************/
 void set_location_frequency(uint32_t freq)
 {
-	  LOCATION = ON;
+	LOCATION = ON;
     T1PR = 11999 * freq * 60; 	/* To make timer run for desired time, freq can have values 1,3,5,7,10 */
 #ifdef DEBUG_START
     debug("Timer Start");       /* Debug purpose */
@@ -103,9 +103,9 @@ void delay(float seconds)
     TIMER0_OVER = ON;
     T0PR = (uint32_t)(11999 * seconds); 	   /* Value to make delay of desired seconds. */
     T0TCR = 0x01;    	                   /* Start Timer */
-		IO0SET = 0x00000010;
+    IO0SET = 0x00000010;
 	while(TIMER0_OVER);                    /* Wait for timer to over */
-		IO0CLR = 0x00000010;
+	IO0CLR = 0x00000010;
 	return;
 }
 

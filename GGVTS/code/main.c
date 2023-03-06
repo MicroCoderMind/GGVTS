@@ -79,13 +79,12 @@ void init_module(void)
 {
 	IO0CLR = IO0CLR | ERROR_INDICATOR;   	/* Switching OFF bulb */
 	pll_init();
-  interrupt_init();
+    interrupt_init();
 	timer_0_init();
 	timer_1_init();
 	init_uart();
  	init_uart_diagnose();
  	delay(1);
  	initialize_gsm();
-
  	initialize_gps();
 }
