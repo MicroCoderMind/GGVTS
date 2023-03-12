@@ -1,3 +1,4 @@
+//Below code is to convert any string with only numbers and dot to float format
 #include<stdio.h>
 double convert(char *);
 int num[10] = {48,49,50,51,52,53,54,55,56,57};
