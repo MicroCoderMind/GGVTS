@@ -1,0 +1,10 @@
+active: true
+derived: false
+header: ''
+level: 1.1.8
+links: []
+normative: true
+ref: ''
+reviewed: J0wQQM2tXDxSES49XyVUlnPQAXCoA9KPLNXCAJ_3ky4=
+text: |
+  GGVTS shall be capable of turning ON (Ignition ON) host when requested by user via SMS.

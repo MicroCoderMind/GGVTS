@@ -1,0 +1,10 @@
+active: true
+derived: false
+header: ''
+level: 1.1.4
+links: []
+normative: true
+ref: ''
+reviewed: tdv0E7fN4jJX7Cdb5jAnIoUSCv-S-RYt0CVneVA4jTM=
+text: |
+  GGVTS shall be capable of accessing coordinates of host when required and Location is fixed.

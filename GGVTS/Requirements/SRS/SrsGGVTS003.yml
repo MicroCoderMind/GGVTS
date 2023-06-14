@@ -1,0 +1,10 @@
+active: true
+derived: false
+header: ''
+level: 1.1.1
+links: []
+normative: true
+ref: ''
+reviewed: jBznvmvEgREtuLsNCsJ-KU9AaHggvXIPU57IM7kZ4xs=
+text: |
+  Product name GGVTS, should include components GSM, GPS, Processor LPC2148, 2xUART, 1x switch to reset, 1x switch to turn ON/OFF, 1x switch to turn ON PARK MODE, ISP (In system programming).

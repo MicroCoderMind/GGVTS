@@ -1,11 +1,11 @@
 active: true
 derived: false
 header: |
-  SRS_01
+  Features and components of GGVTS
 level: 1.0
 links: []
 normative: true
 ref: None
 reviewed: XQ-lsdqQPaZ9sm-JIXcCVm7IBPd7D3y9try_FBHytAc=
 text: |
-  This is a dummy requirement to check functionality of doorstop which is alternate of IBM Doors
+  This document consist of system requirements for GGVTS (GPS GSM Vehicle Tracking System).
