@@ -27,7 +27,7 @@ const int8_t * glbWarmStart[1] = {"AT+CGPSRST=2\r"};
 const int8_t * glbColdStart[1] = {"AT+CGPSRST=0\r"};
 
 /***************************************************************************
-*  Funtion Name: initialize_gps                                                  *
+*  Funtion Name: initialize_gps                                            *
 *  Function prototype: void initialize_gps(void)                           *
 *  Function return type: void                                              *
 *  Function description: This function will perform gps initialization by  *
