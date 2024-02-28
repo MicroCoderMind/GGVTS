@@ -1,0 +1,9 @@
+active: true
+derived: false
+header: ''
+level: 1.3
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: 'As soon as Park Mode functionality started, GGVTS shall request for battery statuses of host as well as GGVTS from charging Module (CM) and wait for batStatusWaitMax for the status.'

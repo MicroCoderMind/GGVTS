@@ -1,0 +1,9 @@
+active: true
+derived: false
+header: ''
+level: 1.5
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: 'If battery level for GGVTS is more than or equal to GGVTSbatLvltoStartGGVTS, GGVTS shall check if host battery level is more than hostbatLvltoStartGGVTS.'

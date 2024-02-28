@@ -1,0 +1,9 @@
+active: true
+derived: false
+header: ''
+level: 1.11
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: 'As soon as current location is stored, GGVTS shall compare current location with stored location (stored in previous requirement) every 10 mins.'
