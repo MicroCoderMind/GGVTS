@@ -1,0 +1,10 @@
+active: true
+derived: false
+header: ''
+level: 3.1.3
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  If Location is fixed, User shall be informed as GPSWorkingFineMessage.

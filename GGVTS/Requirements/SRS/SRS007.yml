@@ -6,4 +6,5 @@ links: []
 normative: true
 ref: ''
 reviewed: null
-text: 'If battery level of GGVTS is less than 5% and host battery level is above hostbatlvltoStartGGVTSchrg GGVTS shall request CM to enable charging for GGVTS battery until GGVTS battery reaches for GGVTSMaxBatteryLvl.'
+text: |
+  If battery level of GGVTS is less than 5% and host battery level is above hostbatlvltoStartGGVTSchrg GGVTS shall request CM to enable charging for GGVTS battery until GGVTS battery reaches for GGVTSMaxBatteryLvl.

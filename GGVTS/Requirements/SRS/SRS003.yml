@@ -6,4 +6,5 @@ links: []
 normative: true
 ref: ''
 reviewed: null
-text: 'As soon as button to turn Park Mode is pressed, GGVTS shall perform Park Mode functionality.'
+text: |
+  As soon as button to turn Park Mode is pressed, GGVTS shall perform Park Mode functionality.

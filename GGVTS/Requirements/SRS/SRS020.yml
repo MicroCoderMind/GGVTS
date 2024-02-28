@@ -1,0 +1,10 @@
+active: true
+derived: false
+header: ''
+level: 2.6
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  Once user confirms the PIN, GGVTS shall behave as Security Overridden.

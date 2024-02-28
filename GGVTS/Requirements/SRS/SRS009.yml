@@ -6,4 +6,5 @@ links: []
 normative: true
 ref: ''
 reviewed: null
-text: 'If GPS is working fine, GGVTS shall perform location status check.'
+text: |
+  If GPS is working fine, GGVTS shall perform location status check.

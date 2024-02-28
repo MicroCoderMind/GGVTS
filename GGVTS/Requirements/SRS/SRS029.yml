@@ -1,0 +1,10 @@
+active: true
+derived: false
+header: ''
+level: 3.1.5
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  If GPS working flag is OFF and a GPS related functionality is requested by user, user shall be informed as a GPSNotWorkingMessage.

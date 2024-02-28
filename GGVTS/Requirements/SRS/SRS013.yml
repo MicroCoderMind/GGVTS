@@ -6,4 +6,5 @@ links: []
 normative: true
 ref: ''
 reviewed: null
-text: 'If anything goes wrong, GGVTS shall behave as per Host Crammed Situation.'
+text: |
+  If anything goes wrong, GGVTS shall behave as per Host Crammed Situation.

@@ -6,4 +6,5 @@ links: []
 normative: true
 ref: ''
 reviewed: null
-text: '4. If  battery statuses received in batStatusWaitMax, GGVTS shall check if battery level of GGVTS is equal to or above GGVTSbatLvltoStartGGVTS.'
+text: |
+  If  battery statuses received in batStatusWaitMax, GGVTS shall check if battery level of GGVTS is equal to or above GGVTSbatLvltoStartGGVTS.

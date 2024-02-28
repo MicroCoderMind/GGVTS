@@ -6,4 +6,5 @@ links: []
 normative: true
 ref: ''
 reviewed: null
-text: 'As soon as Park Mode functionality started, GGVTS shall check GPS status.'
+text: |
+  As soon as Park Mode functionality started, GGVTS shall check GPS status.

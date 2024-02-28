@@ -6,4 +6,5 @@ links: []
 normative: true
 ref: ''
 reviewed: null
-text: 'If location is fixed and GPS is working fine, GGVTS shall check for GSM functionality by checking range level of GSM.'
+text: |
+  If location is fixed and GPS is working fine, GGVTS shall check for GSM functionality by checking range level of GSM.

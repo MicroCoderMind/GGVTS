@@ -1,0 +1,10 @@
+active: true
+derived: false
+header: ''
+level: 2.4
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  During Host Crammed Situation, If host is tried to turn on again either manually or by sending request, GGVTS shall ignore all the requests  and shall not provide power to engine to turn on.

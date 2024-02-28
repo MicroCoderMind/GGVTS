@@ -1,0 +1,10 @@
+active: true
+derived: false
+header: ''
+level: 3.1.4
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  If location is not fixed as per LocationFixingFunctionality, GPS working flag shall be turn OFF and user shall be informed as a GPSNotWorkingMessage.

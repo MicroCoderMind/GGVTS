@@ -1,4 +1,4 @@
-#!/home/rohan/.pyenv/shims/python
+#!/usr/bin/python3
 import os
 os.system("cd ~/repos/PersonlaProjects && doorstop-gui")
 exit()
