@@ -1,0 +1,4 @@
+#!/opt/homebrew/bin/python3
+import os
+os.system("cd ~/Repos/PersonlaProjects && doorstop-gui")
+exit()
