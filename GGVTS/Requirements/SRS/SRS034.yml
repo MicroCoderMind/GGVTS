@@ -1,9 +1,11 @@
 active: true
 derived: false
-header: ''
-level: 3.1.10
+header: |
+  Engine Power Functionality of GGVTS
+level: 4
 links: []
 normative: true
 ref: ''
 reviewed: null
-text: ''
+text: |
+  Engine Power Functionality of GGVTS

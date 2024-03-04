@@ -1,9 +1,11 @@
 active: true
 derived: false
-header: ''
-level: 3.1.12
+header: |
+  SRS036
+level: 4.2
 links: []
 normative: true
 ref: ''
 reviewed: null
-text: ''
+text: |
+  Upon receiving Power Off request from user, GGVTS shall check if power of host is already OFF. If not GGVTS shall Power Off host, else ignore the message by following ignore message light pattern.

@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS132
+level: 5.3
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  If Condition1 is true and Condition2 is false, user shall be informed as a InvalidOption. Refer SRS128

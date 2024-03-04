@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS149
+level: 7.2.1.1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  Text "GPS is initialized and its up and running"
