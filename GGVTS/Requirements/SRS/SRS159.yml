@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS159
+level: 6.1.1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  AT+CGPSPWR=1\r

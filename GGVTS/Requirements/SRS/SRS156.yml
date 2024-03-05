@@ -8,4 +8,4 @@ normative: true
 ref: ''
 reviewed: null
 text: |
-  1. As soon as GGVTS is turned on, GPS shall be initialized by sending following command(s): "AT+CGPSPWR=1\r"
+  1. As soon as GGVTS is turned on, GPS shall be initialized by sending following command(s):
