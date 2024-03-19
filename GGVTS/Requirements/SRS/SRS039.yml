@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS039
+level: 9.1.1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  Microcontroller PIC16

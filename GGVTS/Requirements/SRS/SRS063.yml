@@ -1,0 +1,10 @@
+active: true
+derived: false
+header: ''
+level: 1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  When wake up sequence is received by BMS from GGVTS, BMS shall wake up and move to working state.

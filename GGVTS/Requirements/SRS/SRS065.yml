@@ -1,0 +1,10 @@
+active: true
+derived: false
+header: ''
+level: 1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  When GGVTs receives vehicle battery low event, A message shall be triggered to user to inform about BatLow event as VehcileBatLow message and a timer needs to be started for timerBatLowwaitforuserresponse. Refer section “Various Message Formats”

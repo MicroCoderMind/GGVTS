@@ -8,4 +8,4 @@ normative: true
 ref: ''
 reviewed: null
 text: |
-  If Condition1 and Condition2 are false, user should be informed as a InformationMessage. Refer SRS128
+  If Condition1 and Condition2 are false, user should be informed as a InformationMessage. Refer Section “Various Message Formats”

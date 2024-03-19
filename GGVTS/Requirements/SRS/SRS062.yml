@@ -1,0 +1,10 @@
+active: true
+derived: false
+header: ''
+level: 1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  As soon as BatLow iterrupt occurs. A wake sequence shall be sent to BMS from GGVTS.
