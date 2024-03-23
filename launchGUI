@@ -2,3 +2,4 @@
 import os
 os.system("cd ~/repos/PersonlaProjects && doorstop-gui")
 exit()
+
