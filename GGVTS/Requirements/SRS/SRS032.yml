@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS032
+level: 3.1.8
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  Once GPS working flag is checked as ON and location is fixed with 2D or 3D, GGVTS shall reply with current location of host.

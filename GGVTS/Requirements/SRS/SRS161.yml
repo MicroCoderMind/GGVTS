@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  VehileBatLow message format
+level: 7.6
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  VehileBatLow message format

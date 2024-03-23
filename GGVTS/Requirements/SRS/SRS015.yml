@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS015
+level: 2.1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  During active Park Mode, If current location of host is deviate more than maxDevaiationallowedinlocation from the stored location then a communication with owner shall start via SMS to inform user about theft in every 30 seconds until user responds and this situation shall be known as Theft Alert.

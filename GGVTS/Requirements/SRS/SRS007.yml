@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS007
+level: 1.6
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  If battery level of GGVTS is less than GGVTSbatLvltoStartGGVTS and host battery level is above hostbatlvltoStartGGVTSchrg GGVTS shall request CM to enable charging for GGVTS battery until GGVTS battery reaches for GGVTSMaxBatteryLvl.

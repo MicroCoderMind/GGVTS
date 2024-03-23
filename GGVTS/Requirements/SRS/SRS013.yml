@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS013
+level: 1.12
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  If anything goes wrong, GGVTS shall behave as per Host Crammed Situation.

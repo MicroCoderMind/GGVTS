@@ -1,0 +1,10 @@
+active: true
+derived: false
+header: ''
+level: 1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  In working state, BMS shall check for vehicle battery. If vehicle battery is equal or lower than minBatRequiredtoSelfStart, GGVTS shall be informed about vehicle battery low event.

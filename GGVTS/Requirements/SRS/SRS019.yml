@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS019
+level: 2.5
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  In case of security violation, If GGVTS receives request to turn OFF alerts from user, GGVTS shall ask user for security overwrite PIN.

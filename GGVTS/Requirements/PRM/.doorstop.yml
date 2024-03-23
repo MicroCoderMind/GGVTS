@@ -1,4 +1,5 @@
 settings:
   digits: 3
-  prefix: SRS
+  parent: SRS
+  prefix: PRM
   sep: ''

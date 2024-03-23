@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS162
+level: 7.6.1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  Message for VehicleBatLow shall contain following information:

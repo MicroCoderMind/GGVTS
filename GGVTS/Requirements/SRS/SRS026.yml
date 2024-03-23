@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS026
+level: 3.1.2
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  As soon as GPS is initialized, GGVTS shall try to fix the location as 2D or 3D as per LocationFixingFunctionality.

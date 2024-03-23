@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS005
+level: 1.4
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  If  battery statuses received in batStatusWaitMax, GGVTS shall check if battery level of GGVTS is equal to or above GGVTSbatLvltoStartGGVTS.

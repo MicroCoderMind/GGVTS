@@ -1,0 +1,8 @@
+Install python version greater than 3.11
+Install pip
+install doorstop using pip install doorstop. pip3 can be used in place of pip, It depends how installation of pip and python is.
+Install python module tkinter by using pip install tkinter
+Install python moduel tcl-tk using pip install tcl-tk
+Install python module doorstop-edit
+
+After all the above mentioned installatiosn. Launch doors using file launchGUI

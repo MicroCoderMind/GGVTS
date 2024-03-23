@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS022
+level: 2.8
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  In case of Fake Host Crammed situation, GGVTS can be put on POWER OFF mode with power off request from owner or via power off switch.

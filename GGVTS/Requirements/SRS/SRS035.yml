@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS035
+level: 4.1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  Upon receiving Power On request from user, GGVTS shall check if power of host is already ON. If not GGVTS shall Power On host, else ignore the message by following ignore message light pattern.

@@ -1,0 +1,10 @@
+active: true
+derived: false
+header: ''
+level: 1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  Software interrupt BatLow shall trigger in GGVTS when battery of GGVTs is lower than Ggvtsbatlvltostartggvts.

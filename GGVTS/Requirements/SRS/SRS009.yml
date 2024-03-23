@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS009
+level: 1.8
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  If GPS is working fine, GGVTS shall perform location status check.

@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS128
+level: 5.1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  As soon as GGVTS receives a new message, sender number and message content shall be extracted and check for below conditions.

@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS152
+level: 7.1.1.1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  Text "Unable to Initialize GPS"

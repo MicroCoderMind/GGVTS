@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS156
+level: 6.1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  1. As soon as GGVTS is turned on, GPS shall be initialized by sending following command(s):

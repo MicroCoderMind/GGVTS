@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS144
+level: 7.3.1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  Invalid option message to user shall contains following components:

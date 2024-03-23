@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head><title>Doorstop</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" href="assets/doorstop/bootstrap.min.css" />
+  <link rel="stylesheet" href="assets/doorstop/general.css" />
+  <link type="text/css" rel="stylesheet" href="assets/doorstop/sidebar.css" />
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+  });
+  </script>
+</head>
+<body>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-2 hidden-sm hidden-xs">
+          <nav id="TOC" class="nav nav-stacked fixed sidebar">
+              <h3>Table of Contents</h3>
+<ul>
+<li><a href="#SRS001">1 Park Mode</a></li>
+<li><a href="#SRS041">1 SRS041</a></li>
+<li><a href="#SRS042">1 SRS042</a></li>
+<li><a href="#SRS043">1 SRS043</a></li>
+<li><a href="#SRS044">1 SRS044</a></li>
+<li><a href="#SRS046">1 SRS046</a></li>
+<li><a href="#SRS047">1 SRS047</a></li>
+<li><a href="#SRS048">1 SRS048</a></li>
+<li><a href="#SRS049">1 SRS049</a></li>
+<li><a href="#SRS050">1 SRS050</a></li>
+<li><a href="#SRS051">1 SRS051</a></li>
+<li><a href="#SRS052">1 SRS052</a></li>
+<li><a href="#SRS053">1 SRS053</a></li>
+<li><a href="#SRS054">1 SRS054</a></li>
+<li><a href="#SRS055">1 SRS055</a></li>
+<li><a href="#SRS056">1 SRS056</a></li>
+<li><a href="#SRS057">1 SRS057</a></li>
+<li><a href="#SRS058">1 SRS058</a></li>
+<li><a href="#SRS059">1 SRS059</a></li>
+<li><a href="#SRS060">1 SRS060</a></li>
+<li><a href="#SRS061">1 SRS061</a></li>
+<li><a href="#SRS062">1 SRS062</a></li>
+<li><a href="#SRS063">1 SRS063</a></li>
+<li><a href="#SRS064">1 SRS064</a></li>
+<li><a href="#SRS065">1 SRS065</a></li>
+<li><a href="#SRS066">1 SRS066</a></li>
+<li><a href="#SRS067">1 SRS067</a></li>
+<li><a href="#SRS068">1 SRS068</a></li>
+<li><a href="#SRS069">1 SRS069</a><ul>
+<li><a href="#SRS002">1.1 SRS002</a></li>
+<li><a href="#SRS003">1.2 SRS003</a></li>
+<li><a href="#SRS004">1.3 SRS004</a></li>
+<li><a href="#SRS005">1.4 SRS005</a></li>
+<li><a href="#SRS126">1.5 SRS126</a></li>
+<li><a href="#SRS007">1.6 SRS007</a></li>
+<li><a href="#SRS008">1.7 SRS008</a></li>
+<li><a href="#SRS009">1.8 SRS009</a></li>
+<li><a href="#SRS010">1.9 SRS010</a></li>
+<li><a href="#SRS011">1.10 SRS011</a></li>
+<li><a href="#SRS012">1.11 SRS012</a></li>
+<li><a href="#SRS013">1.12 SRS013</a></li>
+</ul>
+</li>
+<li><a href="#SRS014">2 Host Crammed Situation</a><ul>
+<li><a href="#SRS015">2.1 SRS015</a></li>
+<li><a href="#SRS016">2.2 SRS016</a></li>
+<li><a href="#SRS017">2.3 SRS017</a></li>
+<li><a href="#SRS018">2.4 SRS018</a></li>
+<li><a href="#SRS019">2.5 SRS019</a></li>
+<li><a href="#SRS020">2.6 SRS020</a></li>
+<li><a href="#SRS021">2.7 SRS021</a></li>
+<li><a href="#SRS022">2.8 SRS022</a></li>
+</ul>
+</li>
+<li><a href="#SRS023">3 Security Overridden</a><ul>
+<li><a href="#SRS024">3.1 Location Functionality of GGVTS</a><ul>
+<li><a href="#SRS025">3.1.1 SRS025</a></li>
+<li><a href="#SRS026">3.1.2 SRS026</a></li>
+<li><a href="#SRS027">3.1.3 SRS027</a></li>
+<li><a href="#SRS028">3.1.4 SRS028</a></li>
+<li><a href="#SRS029">3.1.5 SRS029</a></li>
+<li><a href="#SRS030">3.1.6 SRS030</a></li>
+<li><a href="#SRS031">3.1.7 SRS031</a></li>
+<li><a href="#SRS032">3.1.8 SRS032</a></li>
+<li><a href="#SRS033">3.1.9 SRS033</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#SRS034">4 Engine Power Functionality of GGVTS</a><ul>
+<li><a href="#SRS035">4.1 SRS035</a></li>
+<li><a href="#SRS036">4.2 SRS036</a></li>
+</ul>
+</li>
+<li><a href="#SRS127">5 Message Handler</a><ul>
+<li><a href="#SRS128">5.1 SRS128</a><ul>
+<li><a href="#SRS129">5.1.1 SRS129</a></li>
+<li><a href="#SRS130">5.1.2 SRS130</a></li>
+</ul>
+</li>
+<li><a href="#SRS131">5.2 SRS131</a></li>
+<li><a href="#SRS132">5.3 SRS132</a></li>
+<li><a href="#SRS133">5.4 SRS133</a></li>
+<li><a href="#SRS134">5.5 SRS134</a></li>
+</ul>
+</li>
+<li><a href="#SRS155">6 GPS Init Functionality</a><ul>
+<li><a href="#SRS156">6.1 SRS156</a><ul>
+<li><a href="#SRS159">6.1.1 SRS159</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#SRS157">7 Various Message Formats</a><ul>
+<li><a href="#SRS150">7.1 GPS Not Working Message Format</a><ul>
+<li><a href="#SRS151">7.1.1 SRS151</a><ul>
+<li><a href="#SRS152">7.1.1.1 SRS152</a></li>
+<li><a href="#SRS153">7.1.1.2 SRS153</a></li>
+<li><a href="#SRS154">7.1.1.3 SRS154</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#SRS147">7.2 GPS Working Fine Message Format</a><ul>
+<li><a href="#SRS148">7.2.1 SRS148</a><ul>
+<li><a href="#SRS149">7.2.1.1 SRS149</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#SRS143">7.3 Invalid Option Message Format:</a><ul>
+<li><a href="#SRS144">7.3.1 SRS144</a><ul>
+<li><a href="#SRS145">7.3.1.1 SRS145</a></li>
+<li><a href="#SRS146">7.3.1.2 SRS146</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#SRS140">7.4 Information Message Format</a><ul>
+<li><a href="#SRS141">7.4.1 SRS141</a><ul>
+<li><a href="#SRS142">7.4.1.1 SRS142</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#SRS135">7.5 Security Violation Message Format</a><ul>
+<li><a href="#SRS136">7.5.1 SRS136</a><ul>
+<li><a href="#SRS137">7.5.1.1 SRS137</a></li>
+<li><a href="#SRS138">7.5.1.2 SRS138</a></li>
+<li><a href="#SRS139">7.5.1.3 SRS139</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#SRS161">7.6 VehileBatLow message format</a><ul>
+<li><a href="#SRS162">7.6.1 SRS162</a><ul>
+<li><a href="#SRS163">7.6.1.1 SRS163</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#SRS158">8 Waiting for Message</a><ul>
+<li><a href="#SRS160">8.1 SRS160</a></li>
+</ul>
+</li>
+<li><a href="#SRS037">9 Battery Management System</a><ul>
+<li><a href="#SRS038">9.1 SRS038</a><ul>
+<li><a href="#SRS039">9.1.1 SRS039</a></li>
+<li><a href="#SRS040">9.1.2 SRS040</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+          </nav>
+      </div>
+      <div class="col-lg-8" id="main">
+        <h1 id="SRS001">1 Park Mode <small>SRS001</small></h1>
+<p>PARK MODE</p>
+<h1 id="SRS041">1 SRS041</h1>
+<p>Hardware Connections:</p>
+<h1 id="SRS042">1 SRS042</h1>
+<p>BMS shall be connected to GGVTS over SPI.</p>
+<h1 id="SRS043">1 SRS043</h1>
+<p>Inbuilt ADC of BMS shall be connected to vehicle battery.</p>
+<h1 id="SRS044">1 SRS044</h1>
+<p>PIN(TBD) shall control relay to start stop charging of GGVTS.</p>
+<h1 id="SRS046">1 SRS046</h1>
+<p>Working of BMS:</p>
+<h1 id="SRS047">1 SRS047</h1>
+<p>Initialisation</p>
+<h1 id="SRS048">1 SRS048</h1>
+<p>Once Power-up, Internal registers related to timers shall get intialized.</p>
+<h1 id="SRS049">1 SRS049</h1>
+<p>Once Power-Up, Internal registers for Interrupts shall e initailized.</p>
+<h1 id="SRS050">1 SRS050</h1>
+<p>Once Power-Up, Internal registers for timer interrupts shall be initialized.</p>
+<h1 id="SRS051">1 SRS051</h1>
+<p>Once Power-Up, Internal registers for SPI shall get initilized.</p>
+<h1 id="SRS052">1 SRS052</h1>
+<p>Once Power-Up, BMS shall act as slave for SPI communication.</p>
+<h1 id="SRS053">1 SRS053</h1>
+<p>Once Power-Up, GGVTS shall act as master for SPI communication.</p>
+<h1 id="SRS054">1 SRS054</h1>
+<p>Once Power-Up, BMS shall perform handshake with GGVTS.</p>
+<h1 id="SRS055">1 SRS055</h1>
+<p>Once Handshake is confirmed and successful, BMS shall go to sleep until and unless its functionality is required by GGVTS.</p>
+<h1 id="SRS056">1 SRS056</h1>
+<p>Sleep State:</p>
+<h1 id="SRS057">1 SRS057</h1>
+<p>Once in sleep, There shall be only two ways to wake BMS up.</p>
+<h1 id="SRS058">1 SRS058</h1>
+<ol>
+<li>GGVTS wake BMS up as it needed BMS functionality.</li>
+</ol>
+<h1 id="SRS059">1 SRS059</h1>
+<ol start="2">
+<li>If vehicle battery comes equal to or goes down from minBatRequiredtoSelfStart,</li>
+</ol>
+<h1 id="SRS060">1 SRS060</h1>
+<p>Working State:</p>
+<h1 id="SRS061">1 SRS061</h1>
+<p>Software interrupt BatLow shall trigger in GGVTS when battery of GGVTs is lower than Ggvtsbatlvltostartggvts.</p>
+<h1 id="SRS062">1 SRS062</h1>
+<p>As soon as BatLow iterrupt occurs. A wake sequence shall be sent to BMS from GGVTS.</p>
+<h1 id="SRS063">1 SRS063</h1>
+<p>When wake up sequence is received by BMS from GGVTS, BMS shall wake up and move to working state.</p>
+<h1 id="SRS064">1 SRS064</h1>
+<p>In working state, BMS shall check for vehicle battery. If vehicle battery is equal or lower than minBatRequiredtoSelfStart, GGVTS shall be informed about vehicle battery low event.</p>
+<h1 id="SRS065">1 SRS065</h1>
+<p>When GGVTs receives vehicle battery low event, A message shall be triggered to user to inform about BatLow event as VehcileBatLow message and a timer needs to be started for timerBatLowwaitforuserresponse. Refer section “Various Message Formats”</p>
+<h1 id="SRS066">1 SRS066</h1>
+<h1 id="SRS067">1 SRS067</h1>
+<h1 id="SRS068">1 SRS068</h1>
+<h1 id="SRS069">1 SRS069</h1>
+<h2 id="SRS002">1.1 SRS002 <small>SRS002</small></h2>
+<p>As soon as GGVTS receives request to turn ON Park Mode, GGVTS shall perform Park Mode functionality.</p>
+<h2 id="SRS003">1.2 SRS003 <small>SRS003</small></h2>
+<p>As soon as button to turn Park Mode is pressed, GGVTS shall perform Park Mode functionality.</p>
+<h2 id="SRS004">1.3 SRS004 <small>SRS004</small></h2>
+<p>As soon as Park Mode functionality started, GGVTS shall request for battery statuses of host as well as GGVTS from charging Module (CM) and wait for batStatusWaitMax for the status.</p>
+<h2 id="SRS005">1.4 SRS005 <small>SRS005</small></h2>
+<p>If  battery statuses received in batStatusWaitMax, GGVTS shall check if battery level of GGVTS is equal to or above GGVTSbatLvltoStartGGVTS.</p>
+<h2 id="SRS126">1.5 SRS126 <small>SRS126</small></h2>
+<p>If batter level for GGVTS is more than or equal to GGVTSbatLvltoStartGGVTS, GGVTS shall check if host battery level is more than hostbatLvltoStartGGVTS.</p>
+<h2 id="SRS007">1.6 SRS007 <small>SRS007</small></h2>
+<p>If battery level of GGVTS is less than GGVTSbatLvltoStartGGVTS and host battery level is above hostbatlvltoStartGGVTSchrg GGVTS shall request CM to enable charging for GGVTS battery until GGVTS battery reaches for GGVTSMaxBatteryLvl.</p>
+<h2 id="SRS008">1.7 SRS008 <small>SRS008</small></h2>
+<p>As soon as Park Mode functionality started, GGVTS shall check GPS status.</p>
+<h2 id="SRS009">1.8 SRS009 <small>SRS009</small></h2>
+<p>If GPS is working fine, GGVTS shall perform location status check.</p>
+<h2 id="SRS010">1.9 SRS010 <small>SRS010</small></h2>
+<p>If location is fixed and GPS is working fine, GGVTS shall check for GSM functionality by checking range level of GSM.</p>
+<h2 id="SRS011">1.10 SRS011 <small>SRS011</small></h2>
+<p>If GSM have enough range level, GGVTS shall fetch current location and store it.</p>
+<h2 id="SRS012">1.11 SRS012 <small>SRS012</small></h2>
+<p>As soon as current location is stored, GGVTS shall compare current location with stored location (stored in previous requirement) every 10 mins.</p>
+<h2 id="SRS013">1.12 SRS013 <small>SRS013</small></h2>
+<p>If anything goes wrong, GGVTS shall behave as per Host Crammed Situation.</p>
+<h1 id="SRS014">2 Host Crammed Situation <small>SRS014</small></h1>
+<p>Host Crammed Situation</p>
+<h2 id="SRS015">2.1 SRS015 <small>SRS015</small></h2>
+<p>During active Park Mode, If current location of host is deviate more than maxDevaiationallowedinlocation from the stored location then a communication with owner shall start via SMS to inform user about theft in every 30 seconds until user responds and this situation shall be known as Theft Alert.</p>
+<h2 id="SRS016">2.2 SRS016 <small>SRS016</small></h2>
+<p>In case of Theft Alert, If GGVTS receives request to stop engine from User, GGVTS shall disable all the power of engine and take control of power and host shall be turned off instantly and user should be informed about location of host stopped and this situation will be known as Host Crammed.</p>
+<h2 id="SRS017">2.3 SRS017 <small>SRS017</small></h2>
+<p>In case of Host Crammed situation, GGVTS shall not have any impact from Park Mode functionality button active/Inactive.</p>
+<h2 id="SRS018">2.4 SRS018 <small>SRS018</small></h2>
+<p>During Host Crammed Situation, If host is tried to turn on again either manually or by sending request, GGVTS shall ignore all the requests  and shall not provide power to engine to turn on.</p>
+<h2 id="SRS019">2.5 SRS019 <small>SRS019</small></h2>
+<p>In case of security violation, If GGVTS receives request to turn OFF alerts from user, GGVTS shall ask user for security overwrite PIN.</p>
+<h2 id="SRS020">2.6 SRS020 <small>SRS020</small></h2>
+<p>Once user confirms the PIN, GGVTS shall behave as Security Overridden.</p>
+<h2 id="SRS021">2.7 SRS021 <small>SRS021</small></h2>
+<p>In case of Pin Mismatch, GGVTS should inform Soldiers.</p>
+<h2 id="SRS022">2.8 SRS022 <small>SRS022</small></h2>
+<p>In case of Fake Host Crammed situation, GGVTS can be put on POWER OFF mode with power off request from owner or via power off switch.</p>
+<h1 id="SRS023">3 Security Overridden <small>SRS023</small></h1>
+<p>Security Overridden</p>
+<h2 id="SRS024">3.1 Location Functionality of GGVTS <small>SRS024</small></h2>
+<p>Location Functionality of GGVTS</p>
+<h3 id="SRS025">3.1.1 SRS025 <small>SRS025</small></h3>
+<p>Upon power ON of GGVTS, GPS shall be initialized by following GPSInitFunctionality.</p>
+<h3 id="SRS026">3.1.2 SRS026 <small>SRS026</small></h3>
+<p>As soon as GPS is initialized, GGVTS shall try to fix the location as 2D or 3D as per LocationFixingFunctionality.</p>
+<h3 id="SRS027">3.1.3 SRS027 <small>SRS027</small></h3>
+<p>If Location is fixed, User shall be informed as GPSWorkingFineMessage.</p>
+<h3 id="SRS028">3.1.4 SRS028 <small>SRS028</small></h3>
+<p>If location is not fixed as per LocationFixingFunctionality, GPS working flag shall be turn OFF and user shall be informed as a GPSNotWorkingMessage.</p>
+<h3 id="SRS029">3.1.5 SRS029 <small>SRS029</small></h3>
+<p>If GPS working flag is OFF and a GPS related functionality is requested by user, user shall be informed as a GPSNotWorkingMessage.</p>
+<h3 id="SRS030">3.1.6 SRS030 <small>SRS030</small></h3>
+<p>If Location fixed as per LocationFixingFunctionality, GPS working flag shall be turn ON and GGVTS shall perform further functionalities.</p>
+<h3 id="SRS031">3.1.7 SRS031 <small>SRS031</small></h3>
+<p>Upon receiving location related request from user, GGVTS shall check for the GPS working flag status.</p>
+<h3 id="SRS032">3.1.8 SRS032 <small>SRS032</small></h3>
+<p>Once GPS working flag is checked as ON and location is fixed with 2D or 3D, GGVTS shall reply with current location of host.</p>
+<h3 id="SRS033">3.1.9 SRS033 <small>SRS033</small></h3>
+<p>Upon receiving continuous location request, GGVTS shall continuously send location to the user Location as per ContinuousLocationFunctionality.</p>
+<h1 id="SRS034">4 Engine Power Functionality of GGVTS <small>SRS034</small></h1>
+<p>Engine Power Functionality of GGVTS</p>
+<h2 id="SRS035">4.1 SRS035 <small>SRS035</small></h2>
+<p>Upon receiving Power On request from user, GGVTS shall check if power of host is already ON. If not GGVTS shall Power On host, else ignore the message by following ignore message light pattern.</p>
+<h2 id="SRS036">4.2 SRS036 <small>SRS036</small></h2>
+<p>Upon receiving Power Off request from user, GGVTS shall check if power of host is already OFF. If not GGVTS shall Power Off host, else ignore the message by following ignore message light pattern.</p>
+<h1 id="SRS127">5 Message Handler <small>SRS127</small></h1>
+<p>Message Handler</p>
+<h2 id="SRS128">5.1 SRS128 <small>SRS128</small></h2>
+<p>As soon as GGVTS receives a new message, sender number and message content shall be extracted and check for below conditions.</p>
+<h3 id="SRS129">5.1.1 SRS129 <small>SRS129</small></h3>
+<p>Cond 1: Sender number and stored user number are same.</p>
+<h3 id="SRS130">5.1.2 SRS130 <small>SRS130</small></h3>
+<p>Cond 2: Extracted message is from list of functionalities.</p>
+<h2 id="SRS131">5.2 SRS131 <small>SRS131</small></h2>
+<p>If Condition1 and Condition2 are true,  GGVTS shall perform requested functionality. Refer SRS128</p>
+<h2 id="SRS132">5.3 SRS132 <small>SRS132</small></h2>
+<p>If Condition1 is true and Condition2 is false, user shall be informed as a InvalidOption. Refer SRS128</p>
+<h2 id="SRS133">5.4 SRS133 <small>SRS133</small></h2>
+<p>If Condition1 is false and Condition2 is true, user should be informed as a SecurityViolationMessage. Refer SRS128</p>
+<h2 id="SRS134">5.5 SRS134 <small>SRS134</small></h2>
+<p>If Condition1 and Condition2 are false, user should be informed as a InformationMessage. Refer Section “Various Message Formats”</p>
+<h1 id="SRS155">6 GPS Init Functionality <small>SRS155</small></h1>
+<p>GPS Init Functionality</p>
+<h2 id="SRS156">6.1 SRS156 <small>SRS156</small></h2>
+<ol>
+<li>As soon as GGVTS is turned on, GPS shall be initialized by sending following command(s):</li>
+</ol>
+<h3 id="SRS159">6.1.1 SRS159 <small>SRS159</small></h3>
+<p>AT+CGPSPWR=1\r</p>
+<h1 id="SRS157">7 Various Message Formats <small>SRS157</small></h1>
+<p>Various Message Formats</p>
+<h2 id="SRS150">7.1 GPS Not Working Message Format <small>SRS150</small></h2>
+<p>GPS Not Working Message Format</p>
+<h3 id="SRS151">7.1.1 SRS151 <small>SRS151</small></h3>
+<p>GPS not working fine message to user shall contains following components</p>
+<h4 id="SRS152">7.1.1.1 SRS152 <small>SRS152</small></h4>
+<p>Text "Unable to Initialize GPS"</p>
+<h4 id="SRS153">7.1.1.2 SRS153 <small>SRS153</small></h4>
+<p>Text "Hard reset required"</p>
+<h4 id="SRS154">7.1.1.3 SRS154 <small>SRS154</small></h4>
+<p>Ignore Message Light Pattern:</p>
+<h2 id="SRS147">7.2 GPS Working Fine Message Format <small>SRS147</small></h2>
+<p>GPS Working Fine Message Format</p>
+<h3 id="SRS148">7.2.1 SRS148 <small>SRS148</small></h3>
+<p>GPS working fine message to user shall contains following components</p>
+<h4 id="SRS149">7.2.1.1 SRS149 <small>SRS149</small></h4>
+<p>Text "GPS is initialized and its up and running"</p>
+<h2 id="SRS143">7.3 Invalid Option Message Format: <small>SRS143</small></h2>
+<p>Invalid Option Message Format:</p>
+<h3 id="SRS144">7.3.1 SRS144 <small>SRS144</small></h3>
+<p>Invalid option message to user shall contains following components:</p>
+<h4 id="SRS145">7.3.1.1 SRS145 <small>SRS145</small></h4>
+<p>Text "Invalid Command"</p>
+<h4 id="SRS146">7.3.1.2 SRS146 <small>SRS146</small></h4>
+<p>Text "Try Again!!"</p>
+<h2 id="SRS140">7.4 Information Message Format <small>SRS140</small></h2>
+<p>Information Message Format</p>
+<h3 id="SRS141">7.4.1 SRS141 <small>SRS141</small></h3>
+<p>Information message to user shall contains following components</p>
+<h4 id="SRS142">7.4.1.1 SRS142 <small>SRS142</small></h4>
+<p>Whole message as it is including phone number from which message received.</p>
+<h2 id="SRS135">7.5 Security Violation Message Format <small>SRS135</small></h2>
+<p>Security Violation Message Format</p>
+<h3 id="SRS136">7.5.1 SRS136 <small>SRS136</small></h3>
+<p>Message for security violation for user shall contains following components:</p>
+<h4 id="SRS137">7.5.1.1 SRS137 <small>SRS137</small></h4>
+<p>Text "Security Violation Alert"</p>
+<h4 id="SRS138">7.5.1.2 SRS138 <small>SRS138</small></h4>
+<p>Mobile number from which message received as "From XXXXXXXXXXXXX"</p>
+<h4 id="SRS139">7.5.1.3 SRS139 <small>SRS139</small></h4>
+<p>Requested functionality "COMMAND"</p>
+<h2 id="SRS161">7.6 VehileBatLow message format <small>SRS161</small></h2>
+<p>VehileBatLow message format</p>
+<h3 id="SRS162">7.6.1 SRS162 <small>SRS162</small></h3>
+<p>Message for VehicleBatLow shall contain following information:</p>
+<h4 id="SRS163">7.6.1.1 SRS163 <small>SRS163</small></h4>
+<p>Text “Vehicle Battery Low Remaining XX%”. Where XX stands for exact percentage of battery level of vehicle.</p>
+<h1 id="SRS158">8 Waiting for Message <small>SRS158</small></h1>
+<p>Waiting for Message</p>
+<h2 id="SRS160">8.1 SRS160 <small>SRS160</small></h2>
+<p>As soon as initialisation finishes, GGVTS shall start waiting for the message.</p>
+<h1 id="SRS037">9 Battery Management System <small>SRS037</small></h1>
+<p>Battery Management System</p>
+<h2 id="SRS038">9.1 SRS038 <small>SRS038</small></h2>
+<p>Hardware Components</p>
+<h3 id="SRS039">9.1.1 SRS039 <small>SRS039</small></h3>
+<p>Microcontroller PIC16</p>
+<h3 id="SRS040">9.1.2 SRS040</h3>
+<p>Hardware circuitry to provide charge to GGVTS</p>
+      </div>
+    </div>
+</div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="assets/doorstop/jquery.min.js"></script>
+<script src="assets/doorstop/bootstrap.min.js"></script>
+<script>
+    $(function() {
+        $("table").addClass("table");
+        $("nav ul").addClass("nav nav-stacked");
+        $("nav").affix();
+        $('body').scrollspy({
+          target: '.sidebar'
+        });
+        $("#main a").attr("target", "parent");
+
+  $(window).on('hashchange', function() {
+    $(window).scrollTop($(location.hash.toLowerCase()).offset().top);});
+  });
+</script>
+</body>
+</html>
+

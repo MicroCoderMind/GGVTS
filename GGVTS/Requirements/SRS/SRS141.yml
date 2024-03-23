@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS141
+level: 7.4.1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  Information message to user shall contains following components

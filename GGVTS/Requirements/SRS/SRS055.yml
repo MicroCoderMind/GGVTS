@@ -1,0 +1,10 @@
+active: true
+derived: false
+header: ''
+level: 1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  Once Handshake is confirmed and successful, BMS shall go to sleep until and unless its functionality is required by GGVTS.

@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS021
+level: 2.7
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  In case of Pin Mismatch, GGVTS should inform Soldiers.

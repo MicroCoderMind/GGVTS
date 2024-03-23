@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS151
+level: 7.1.1
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  GPS not working fine message to user shall contains following components

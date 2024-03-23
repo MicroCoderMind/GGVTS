@@ -1,0 +1,11 @@
+active: true
+derived: false
+header: |
+  SRS016
+level: 2.2
+links: []
+normative: true
+ref: ''
+reviewed: null
+text: |
+  In case of Theft Alert, If GGVTS receives request to stop engine from User, GGVTS shall disable all the power of engine and take control of power and host shall be turned off instantly and user should be informed about location of host stopped and this situation will be known as Host Crammed.
