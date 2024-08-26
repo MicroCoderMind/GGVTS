@@ -1,0 +1,2 @@
+/// \tag::uart_advanced[]
+

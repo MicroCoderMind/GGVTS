@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "stdlib.h": "c",
+        "uartinit.h": "c",
+        "common.h": "c",
+        "cstring": "c",
+        "stringoperations.h": "c",
+        "ledfunctionality.h": "c",
+        "functionality.h": "c",
+        "authenticator.h": "c",
+        "globalconsts.h": "c",
+        "response.h": "c",
+        "string.h": "c",
+        "timer.h": "c",
+        "__locale": "c"
+    }
+}
